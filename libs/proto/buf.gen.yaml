@@ -4,7 +4,7 @@ managed:
 
 plugins:
   - remote: buf.build/community/stephenh-ts-proto:v2.6.1
-    out: ../proto-ts/src/gen
+    out: ../ts/proto-ts/src/gen
     opt:
       - outputServices=false
       - useExactTypes=true
@@ -13,7 +13,7 @@ plugins:
       - exportCommonSymbols=false
 
   - remote: buf.build/protocolbuffers/csharp
-    out: ../proto-csharp/src/gen
+    out: ../cs/proto-cs/src/gen
 
   - remote: buf.build/grpc/csharp
-    out: ../proto-csharp/src/gen
+    out: ../cs/proto-cs/src/gen
