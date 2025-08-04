@@ -1,0 +1,3 @@
+@import "../../../../../libs/ts/ui/src/globals.css";
+@source "../../src/**/*.{ts,tsx,js,jsx}";
+@source "../../../../../libs/ts/ui/src/**/*.{ts,tsx,js,jsx}";

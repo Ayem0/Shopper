@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package shop;
+
+import "common/common_messages.proto";
+import "google/protobuf/timestamp.proto";
+
+message ShopCreatedEvent {
+  string shop_id = 1;
+  common.ShopType shop_type = 2;
+}
