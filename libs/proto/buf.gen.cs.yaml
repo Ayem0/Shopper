@@ -1,0 +1,10 @@
+version: v2
+managed:
+  enabled: false
+
+plugins:
+  - remote: buf.build/protocolbuffers/csharp
+    out: ../cs/proto-cs/src/gen
+
+  - remote: buf.build/grpc/csharp
+    out: ../cs/proto-cs/src/gen

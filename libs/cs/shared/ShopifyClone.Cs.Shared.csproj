@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="src\" />
+    <Folder Include="src\core\" />
+    <Folder Include="src\infrastructure\" />
+    <Folder Include="src\infrastructure\auth\" />
+    <Folder Include="src\infrastructure\kafka\" />
+    <Folder Include="src\infrastructure\logging\" />
+  </ItemGroup>
+
+</Project>

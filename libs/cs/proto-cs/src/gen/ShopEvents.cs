@@ -24,13 +24,12 @@ namespace Shop {
     static ShopEventsReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChZzaG9wL3Nob3BfZXZlbnRzLnByb3RvEgRzaG9wGhxjb21tb24vY29tbW9u",
-            "X21lc3NhZ2VzLnByb3RvGh9nb29nbGUvcHJvdG9idWYvdGltZXN0YW1wLnBy",
-            "b3RvIloKEFNob3BDcmVhdGVkRXZlbnQSFwoHc2hvcF9pZBgBIAEoCVIGc2hv",
-            "cElkEi0KCXNob3BfdHlwZRgCIAEoDjIQLmNvbW1vbi5TaG9wVHlwZVIIc2hv",
-            "cFR5cGViBnByb3RvMw=="));
+            "ChZzaG9wL3Nob3BfZXZlbnRzLnByb3RvEgRzaG9wGhljb21tb24vY29tbW9u",
+            "X3R5cGVzLnByb3RvIloKEFNob3BDcmVhdGVkRXZlbnQSFwoHc2hvcF9pZBgB",
+            "IAEoCVIGc2hvcElkEi0KCXNob3BfdHlwZRgCIAEoDjIQLmNvbW1vbi5TaG9w",
+            "VHlwZVIIc2hvcFR5cGViBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Common.CommonMessagesReflection.Descriptor, global::Google.Protobuf.WellKnownTypes.TimestampReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::Common.CommonTypesReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::Shop.ShopCreatedEvent), global::Shop.ShopCreatedEvent.Parser, new[]{ "ShopId", "ShopType" }, null, null, null, null)
           }));

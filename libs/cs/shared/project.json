@@ -1,0 +1,9 @@
+{
+  "name": "cs-shared",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/cs/shared",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project cs-shared --web",
+  "targets": {}
+}

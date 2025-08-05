@@ -15,9 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "libs", "libs", "{6C4D298B-8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cs", "cs", "{F0184DDB-17C4-25BF-874B-7F2B6E20BB7C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{72B78B33-AD66-2B91-A279-2FA0E33785E7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{72B78B33-AD66-2B91-A279-2FA0E33785E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopifyClone.Cs.Common", "libs\cs\common\ShopifyClone.Cs.Common.csproj", "{6B7F7F08-7A89-48EC-A9EE-1CC28B95061F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopifyClone.Cs.Shared", "libs\cs\Shared\ShopifyClone.Cs.Shared.csproj", "{6B7F7F08-7A89-48EC-A9EE-1CC28B95061F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "proto-cs", "proto-cs", "{84A05A41-93C3-08D6-141E-15F459CAF611}"
 EndProject

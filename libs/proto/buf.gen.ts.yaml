@@ -1,6 +1,10 @@
 version: v2
 managed:
-  enabled: false
+  enabled: true
+inputs:
+  - directory: .
+    exclude_paths:
+      - shop/shop_events.proto
 
 plugins:
   - remote: buf.build/community/stephenh-ts-proto:v2.6.1
@@ -11,9 +15,3 @@ plugins:
       - esModuleInterop=true
       - importSuffix=.js
       - exportCommonSymbols=false
-
-  - remote: buf.build/protocolbuffers/csharp
-    out: ../cs/proto-cs/src/gen
-
-  - remote: buf.build/grpc/csharp
-    out: ../cs/proto-cs/src/gen

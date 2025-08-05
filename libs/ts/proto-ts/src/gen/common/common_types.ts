@@ -2,7 +2,7 @@
 // versions:
 //   protoc-gen-ts_proto  v2.6.1
 //   protoc               unknown
-// source: common/common_messages.proto
+// source: common/common_types.proto
 
 /* eslint-disable */
 
