@@ -2,7 +2,10 @@ syntax = "proto3";
 
 package shop;
 
+option csharp_namespace = "ShopifyClone.Cs.ProtoCs.Shop.Events";
+
 import "common/common_types.proto";
+
 
 message ShopCreatedEvent {
   string shop_id = 1;

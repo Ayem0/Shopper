@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package common;
+
+option csharp_namespace = "ShopifyClone.Cs.ProtoCs.Common.Types";
+
+enum ShopType
+{
+    SHOP_TYPE_UNSPECIFIED = 0;
+    SHOP_TYPE_FASHION = 1;
+}
+
+enum SubscriptionType
+{
+    SUBSCRIPTION_TYPE_STANDARD = 0;
+    SUBSCRIPTION_TYPE_TEAM = 1;
+    SUBSCRIPTION_TYPE_BUSINESS = 2;
+}
+
+enum SubscriptionStatus
+{
+    SUBSCRIPTION_STATUS_INACTIVE = 0;
+    SUBSCRIPTION_STATUS_PENDING_PAYMENT = 1;
+    SUBSCRIPTION_STATUS_ACTIVE = 2;
+    SUBSCRIPTION_STATUS_CANCELED = 3;
+}
+
+enum CreationStatus
+{
+    CREATION_STATUS_NOT_STARTED = 0;
+    CREATION_STATUS_IN_PROGRESS = 1;
+    CREATION_STATUS_SUCCEEDED = 2;
+    CREATION_STATUS_FAILED = 3;
+}

@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package shop;
+
+option csharp_namespace = "ShopifyClone.Cs.ProtoCs.Shop.Types";
+
+import "common/common_types.proto";
+
+
+message CreateShopRequest {
+    string name = 1;
+    string subdomain_name = 2;
+    common.ShopType type = 3;
+}
+
+message CreateShopResponse {
+    string shop_id = 1;
+}
+
+message GetShopRequest {
+    string shop_id = 1;
+}
+
+message GetShopResponse {
+    ShopData shop = 1;
+}
+
+message ShopData {
+    string id = 1;
+    string owner_user_id = 2;
+    string name = 3;
+    string subdomainName = 4;
+    bool is_active = 5;
+    common.ShopType type = 6;
+}

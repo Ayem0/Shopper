@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace Common {
+namespace ShopifyClone.Cs.ProtoCs.Common.Types {
 
   /// <summary>Holder for reflection information generated from common/common_types.proto</summary>
   public static partial class CommonTypesReflection {
@@ -35,10 +35,11 @@ namespace Common {
             "VVNfQ0FOQ0VMRUQQAyqNAQoOQ3JlYXRpb25TdGF0dXMSHwobQ1JFQVRJT05f",
             "U1RBVFVTX05PVF9TVEFSVEVEEAASHwobQ1JFQVRJT05fU1RBVFVTX0lOX1BS",
             "T0dSRVNTEAESHQoZQ1JFQVRJT05fU1RBVFVTX1NVQ0NFRURFRBACEhoKFkNS",
-            "RUFUSU9OX1NUQVRVU19GQUlMRUQQA2IGcHJvdG8z"));
+            "RUFUSU9OX1NUQVRVU19GQUlMRUQQA0InqgIkU2hvcGlmeUNsb25lLkNzLlBy",
+            "b3RvQ3MuQ29tbW9uLlR5cGVzYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::Common.ShopType), typeof(global::Common.SubscriptionType), typeof(global::Common.SubscriptionStatus), typeof(global::Common.CreationStatus), }, null, null));
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType), typeof(global::ShopifyClone.Cs.ProtoCs.Common.Types.SubscriptionType), typeof(global::ShopifyClone.Cs.ProtoCs.Common.Types.SubscriptionStatus), typeof(global::ShopifyClone.Cs.ProtoCs.Common.Types.CreationStatus), }, null, null));
     }
     #endregion
 

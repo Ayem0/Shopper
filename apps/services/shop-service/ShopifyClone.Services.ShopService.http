@@ -1,6 +1,0 @@
-@ShopifyClone.Services.ShopService_HostAddress = http://localhost:5100
-
-GET {{ShopifyClone.Services.ShopService_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

@@ -7,12 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="src\" />
-    <Folder Include="src\core\" />
-    <Folder Include="src\infrastructure\" />
-    <Folder Include="src\infrastructure\auth\" />
-    <Folder Include="src\infrastructure\kafka\" />
-    <Folder Include="src\infrastructure\logging\" />
+    <Folder Include="src\Core\" />
+    <Folder Include="src\Core\Models\" />
+    <Folder Include="src\Infra\Auth\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Confluent.Kafka" Version="2.11.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.8" />
+    <PackageReference Include="Serilog" Version="4.3.0" />
+    <PackageReference Include="Serilog.Enrichers.Environment" Version="3.0.1" />
+    <PackageReference Include="Serilog.Enrichers.Process" Version="3.0.0" />
+    <PackageReference Include="Serilog.Enrichers.Thread" Version="4.0.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+    <PackageReference Include="Serilog.Sinks.Elasticsearch" Version="10.0.0" />
   </ItemGroup>
 
 </Project>

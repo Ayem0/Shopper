@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace Shop {
+namespace ShopifyClone.Cs.ProtoCs.Shop.Events {
 
   /// <summary>Holder for reflection information generated from shop/shop_events.proto</summary>
   public static partial class ShopEventsReflection {
@@ -27,11 +27,12 @@ namespace Shop {
             "ChZzaG9wL3Nob3BfZXZlbnRzLnByb3RvEgRzaG9wGhljb21tb24vY29tbW9u",
             "X3R5cGVzLnByb3RvIloKEFNob3BDcmVhdGVkRXZlbnQSFwoHc2hvcF9pZBgB",
             "IAEoCVIGc2hvcElkEi0KCXNob3BfdHlwZRgCIAEoDjIQLmNvbW1vbi5TaG9w",
-            "VHlwZVIIc2hvcFR5cGViBnByb3RvMw=="));
+            "VHlwZVIIc2hvcFR5cGVCJqoCI1Nob3BpZnlDbG9uZS5Dcy5Qcm90b0NzLlNo",
+            "b3AuRXZlbnRzYgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Common.CommonTypesReflection.Descriptor, },
+          new pbr::FileDescriptor[] { global::ShopifyClone.Cs.ProtoCs.Common.Types.CommonTypesReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::Shop.ShopCreatedEvent), global::Shop.ShopCreatedEvent.Parser, new[]{ "ShopId", "ShopType" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::ShopifyClone.Cs.ProtoCs.Shop.Events.ShopCreatedEvent), global::ShopifyClone.Cs.ProtoCs.Shop.Events.ShopCreatedEvent.Parser, new[]{ "ShopId", "ShopType" }, null, null, null, null)
           }));
     }
     #endregion
@@ -53,7 +54,7 @@ namespace Shop {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::Shop.ShopEventsReflection.Descriptor.MessageTypes[0]; }
+      get { return global::ShopifyClone.Cs.ProtoCs.Shop.Events.ShopEventsReflection.Descriptor.MessageTypes[0]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -98,10 +99,10 @@ namespace Shop {
 
     /// <summary>Field number for the "shop_type" field.</summary>
     public const int ShopTypeFieldNumber = 2;
-    private global::Common.ShopType shopType_ = global::Common.ShopType.Unspecified;
+    private global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType shopType_ = global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType.Unspecified;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::Common.ShopType ShopType {
+    public global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType ShopType {
       get { return shopType_; }
       set {
         shopType_ = value;
@@ -133,7 +134,7 @@ namespace Shop {
     public override int GetHashCode() {
       int hash = 1;
       if (ShopId.Length != 0) hash ^= ShopId.GetHashCode();
-      if (ShopType != global::Common.ShopType.Unspecified) hash ^= ShopType.GetHashCode();
+      if (ShopType != global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType.Unspecified) hash ^= ShopType.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -156,7 +157,7 @@ namespace Shop {
         output.WriteRawTag(10);
         output.WriteString(ShopId);
       }
-      if (ShopType != global::Common.ShopType.Unspecified) {
+      if (ShopType != global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType.Unspecified) {
         output.WriteRawTag(16);
         output.WriteEnum((int) ShopType);
       }
@@ -174,7 +175,7 @@ namespace Shop {
         output.WriteRawTag(10);
         output.WriteString(ShopId);
       }
-      if (ShopType != global::Common.ShopType.Unspecified) {
+      if (ShopType != global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType.Unspecified) {
         output.WriteRawTag(16);
         output.WriteEnum((int) ShopType);
       }
@@ -191,7 +192,7 @@ namespace Shop {
       if (ShopId.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(ShopId);
       }
-      if (ShopType != global::Common.ShopType.Unspecified) {
+      if (ShopType != global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType.Unspecified) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) ShopType);
       }
       if (_unknownFields != null) {
@@ -209,7 +210,7 @@ namespace Shop {
       if (other.ShopId.Length != 0) {
         ShopId = other.ShopId;
       }
-      if (other.ShopType != global::Common.ShopType.Unspecified) {
+      if (other.ShopType != global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType.Unspecified) {
         ShopType = other.ShopType;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -236,7 +237,7 @@ namespace Shop {
             break;
           }
           case 16: {
-            ShopType = (global::Common.ShopType) input.ReadEnum();
+            ShopType = (global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType) input.ReadEnum();
             break;
           }
         }
@@ -263,7 +264,7 @@ namespace Shop {
             break;
           }
           case 16: {
-            ShopType = (global::Common.ShopType) input.ReadEnum();
+            ShopType = (global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType) input.ReadEnum();
             break;
           }
         }
