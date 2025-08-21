@@ -26,10 +26,10 @@ internal class KafkaConsumerBackgroundService<TConsumer, TEvent> : BackgroundSer
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken) {
-        using var scope = _serviceProvider.CreateScope();
-        var internalConsumer = scope.ServiceProvider.GetRequiredService<IConsumer<TEvent>>();
         try {
             while (!stoppingToken.IsCancellationRequested) {
+                using var scope = _serviceProvider.CreateScope();
+                var internalConsumer = scope.ServiceProvider.GetRequiredService<IConsumer<TEvent>>();
                 try {
                     var consumeResult = _consumer.Consume(stoppingToken);
                     if (consumeResult != null) {
