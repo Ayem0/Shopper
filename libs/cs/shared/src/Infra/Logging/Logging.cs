@@ -19,7 +19,7 @@ public static class Logging
     /// <param name="configuration">The IConfiguration instance to read general Serilog settings (like minimum level overrides) from.</param>
     /// <param name="configureOptions">An action to configure the ElasticLoggingOptions.</param>
     /// <returns>The modified IServiceCollection.</returns>
-    public static IServiceCollection AddLogging(this IServiceCollection services, Action<LoggingOptions> configureOptions)
+    public static IServiceCollection AddSharedLogging(this IServiceCollection services, Action<LoggingOptions> configureOptions)
     {
         SelfLog.Enable(Console.Error);
 

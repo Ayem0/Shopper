@@ -1,3 +1,7 @@
+using Confluent.Kafka;
+using Confluent.Kafka.SyncOverAsync;
+using Confluent.SchemaRegistry;
+using Confluent.SchemaRegistry.Serdes;
 using Google.Protobuf;
 using ShopifyClone.Cs.ProtoCs.Shop.Events;
 using ShopifyClone.Cs.ProtoCs.Shop.Types;
@@ -10,17 +14,25 @@ namespace ShopifyClone.Services.ShopService.src.Services;
 
 public class ShopService : IShopService
 {
-    private readonly ShopDbContext _context;
+    private readonly ShopDbContext _dbContext;
     private readonly ILogger<ShopService> _logger;
-    public ShopService(ShopDbContext context, ILogger<ShopService> logger)
+    private readonly ProtobufSerializer<ShopEvent> _protobufSerializer;
+    public ShopService(ShopDbContext dbContext, ILogger<ShopService> logger, ISchemaRegistryClient schemaRegistryClient)
     {
         _logger = logger;
-        _context = context;
+        _dbContext = dbContext;
+        // Configure ProtobufSerializer with auto-registration enabled
+        var serializerConfig = new ProtobufSerializerConfig
+        {
+            AutoRegisterSchemas = true
+        };
+        _protobufSerializer = new ProtobufSerializer<ShopEvent>(schemaRegistryClient, serializerConfig);
     }
 
     public async Task<CreateShopResponse> CreateAsync(CreateShopRequest req, string userId)
     {
-        using var transaction = await _context.Database.BeginTransactionAsync();
+        _logger.LogInformation("REQUEST NAME : {name}, DOMAIN-NAME: {domainName} TYPE: {type}", req.Name, req.SubdomainName, req.Type);
+        using var transaction = await _dbContext.Database.BeginTransactionAsync();
         try
         {
             var shop = new Shop()
@@ -31,23 +43,28 @@ public class ShopService : IShopService
                 SubdomainName = req.SubdomainName,
                 Type = req.Type
             };
-            var payload = new ShopCreatedEvent()
+            var payload = new ShopEvent()
             {
-                ShopId = shop.Id.ToString(),
-                ShopType = shop.Type
+                Created = new ShopCreated()
+                {
+                    ShopId = shop.Id.ToString(),
+                    ShopType = shop.Type
+                }
             };
+            var topic = nameof(ShopEvent);
+            var serializedPayload = await _protobufSerializer.SerializeAsync(payload, new SerializationContext(MessageComponentType.Value, topic));
             var msg = new OutboxMessage()
             {
                 Id = Guid.CreateVersion7(),
-                Type = nameof(ShopCreatedEvent),
+                EventType = nameof(ShopCreated),
                 AggregateId = shop.Id.ToString(),
-                AggregateType = nameof(Shop),
-                Payload = payload.ToByteArray(),
-                Timestamp = DateTimeOffset.UtcNow
+                AggregateType = topic,
+                Payload = serializedPayload,
+                Timestamp = DateTime.UtcNow
             };
-            await _context.Shop.AddAsync(shop);
-            await _context.OutboxMessage.AddAsync(msg);
-            await _context.SaveChangesAsync();
+            _dbContext.Shop.Add(shop);
+            _dbContext.OutboxMessage.Add(msg);
+            await _dbContext.SaveChangesAsync();
             await transaction.CommitAsync();
             return new CreateShopResponse
             {

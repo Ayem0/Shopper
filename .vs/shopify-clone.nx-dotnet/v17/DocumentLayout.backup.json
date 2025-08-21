@@ -1,12 +1,105 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\LIFE\\PROJECTS\\shopify-clone\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E71941D3-D279-49F4-AE74-93C73EF08441}|apps\\services\\shop-service\\shop-service.csproj|c:\\life\\projects\\shopify-clone\\apps\\services\\shop-service\\src\\models\\shop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E71941D3-D279-49F4-AE74-93C73EF08441}|apps\\services\\shop-service\\shop-service.csproj|solutionrelative:apps\\services\\shop-service\\src\\models\\shop.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E71941D3-D279-49F4-AE74-93C73EF08441}|apps\\services\\shop-service\\shop-service.csproj|c:\\life\\projects\\shopify-clone\\apps\\services\\shop-service\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E71941D3-D279-49F4-AE74-93C73EF08441}|apps\\services\\shop-service\\shop-service.csproj|solutionrelative:apps\\services\\shop-service\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E71941D3-D279-49F4-AE74-93C73EF08441}|apps\\services\\shop-service\\shop-service.csproj|c:\\life\\projects\\shopify-clone\\apps\\services\\shop-service\\src\\services\\shopservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E71941D3-D279-49F4-AE74-93C73EF08441}|apps\\services\\shop-service\\shop-service.csproj|solutionrelative:apps\\services\\shop-service\\src\\services\\shopservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E71941D3-D279-49F4-AE74-93C73EF08441}|apps\\services\\shop-service\\shop-service.csproj|c:\\life\\projects\\shopify-clone\\apps\\services\\shop-service\\shop-service.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{E71941D3-D279-49F4-AE74-93C73EF08441}|apps\\services\\shop-service\\shop-service.csproj|solutionrelative:apps\\services\\shop-service\\shop-service.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E71941D3-D279-49F4-AE74-93C73EF08441}|apps\\services\\shop-service\\shop-service.csproj|c:\\life\\projects\\shopify-clone\\apps\\services\\shop-service\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{E71941D3-D279-49F4-AE74-93C73EF08441}|apps\\services\\shop-service\\shop-service.csproj|solutionrelative:apps\\services\\shop-service\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Shop.cs",
+              "DocumentMoniker": "C:\\LIFE\\PROJECTS\\shopify-clone\\apps\\services\\shop-service\\src\\Models\\Shop.cs",
+              "RelativeDocumentMoniker": "apps\\services\\shop-service\\src\\Models\\Shop.cs",
+              "ToolTip": "C:\\LIFE\\PROJECTS\\shopify-clone\\apps\\services\\shop-service\\src\\Models\\Shop.cs",
+              "RelativeToolTip": "apps\\services\\shop-service\\src\\Models\\Shop.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T04:41:27.045Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ShopService.cs",
+              "DocumentMoniker": "C:\\LIFE\\PROJECTS\\shopify-clone\\apps\\services\\shop-service\\src\\Services\\ShopService.cs",
+              "RelativeDocumentMoniker": "apps\\services\\shop-service\\src\\Services\\ShopService.cs",
+              "ToolTip": "C:\\LIFE\\PROJECTS\\shopify-clone\\apps\\services\\shop-service\\src\\Services\\ShopService.cs",
+              "RelativeToolTip": "apps\\services\\shop-service\\src\\Services\\ShopService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA5AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T04:40:22.017Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\LIFE\\PROJECTS\\shopify-clone\\apps\\services\\shop-service\\Program.cs",
+              "RelativeDocumentMoniker": "apps\\services\\shop-service\\Program.cs",
+              "ToolTip": "C:\\LIFE\\PROJECTS\\shopify-clone\\apps\\services\\shop-service\\Program.cs",
+              "RelativeToolTip": "apps\\services\\shop-service\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-06T04:40:17.764Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "shop-service",
+              "DocumentMoniker": "C:\\LIFE\\PROJECTS\\shopify-clone\\apps\\services\\shop-service\\shop-service.csproj",
+              "RelativeDocumentMoniker": "apps\\services\\shop-service\\shop-service.csproj",
+              "ToolTip": "C:\\LIFE\\PROJECTS\\shopify-clone\\apps\\services\\shop-service\\shop-service.csproj",
+              "RelativeToolTip": "apps\\services\\shop-service\\shop-service.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2025-08-06T04:37:10.314Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Dockerfile",
+              "DocumentMoniker": "C:\\LIFE\\PROJECTS\\shopify-clone\\apps\\services\\shop-service\\Dockerfile",
+              "RelativeDocumentMoniker": "apps\\services\\shop-service\\Dockerfile",
+              "ToolTip": "C:\\LIFE\\PROJECTS\\shopify-clone\\apps\\services\\shop-service\\Dockerfile",
+              "RelativeToolTip": "apps\\services\\shop-service\\Dockerfile",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-08-06T04:35:45.191Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }

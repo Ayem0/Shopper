@@ -6,8 +6,13 @@ option csharp_namespace = "ShopifyClone.Cs.ProtoCs.Shop.Events";
 
 import "common/common_types.proto";
 
+message ShopEvent {
+  oneof oneof_type {
+    ShopCreated created = 1;
+  }
+}
 
-message ShopCreatedEvent {
+message ShopCreated {
   string shop_id = 1;
   common.ShopType shop_type = 2;
 }

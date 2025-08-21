@@ -25,14 +25,17 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Events {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "ChZzaG9wL3Nob3BfZXZlbnRzLnByb3RvEgRzaG9wGhljb21tb24vY29tbW9u",
-            "X3R5cGVzLnByb3RvIloKEFNob3BDcmVhdGVkRXZlbnQSFwoHc2hvcF9pZBgB",
-            "IAEoCVIGc2hvcElkEi0KCXNob3BfdHlwZRgCIAEoDjIQLmNvbW1vbi5TaG9w",
-            "VHlwZVIIc2hvcFR5cGVCJqoCI1Nob3BpZnlDbG9uZS5Dcy5Qcm90b0NzLlNo",
-            "b3AuRXZlbnRzYgZwcm90bzM="));
+            "X3R5cGVzLnByb3RvIkgKCVNob3BFdmVudBItCgdjcmVhdGVkGAEgASgLMhEu",
+            "c2hvcC5TaG9wQ3JlYXRlZEgAUgdjcmVhdGVkQgwKCm9uZW9mX3R5cGUidAoL",
+            "U2hvcENyZWF0ZWQSFwoHc2hvcF9pZBgBIAEoCVIGc2hvcElkEi0KCXNob3Bf",
+            "dHlwZRgCIAEoDjIQLmNvbW1vbi5TaG9wVHlwZVIIc2hvcFR5cGU6HZqQGwpz",
+            "aG9wLXRvcGlj0sYgC3Nob3AtY3JlYXRlQiaqAiNTaG9waWZ5Q2xvbmUuQ3Mu",
+            "UHJvdG9Dcy5TaG9wLkV2ZW50c2IGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::ShopifyClone.Cs.ProtoCs.Common.Types.CommonTypesReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::ShopifyClone.Cs.ProtoCs.Shop.Events.ShopCreatedEvent), global::ShopifyClone.Cs.ProtoCs.Shop.Events.ShopCreatedEvent.Parser, new[]{ "ShopId", "ShopType" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::ShopifyClone.Cs.ProtoCs.Shop.Events.ShopEvent), global::ShopifyClone.Cs.ProtoCs.Shop.Events.ShopEvent.Parser, new[]{ "Created" }, new[]{ "OneofType" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ShopifyClone.Cs.ProtoCs.Shop.Events.ShopCreated), global::ShopifyClone.Cs.ProtoCs.Shop.Events.ShopCreated.Parser, new[]{ "ShopId", "ShopType" }, null, null, null, null)
           }));
     }
     #endregion
@@ -40,16 +43,16 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Events {
   }
   #region Messages
   [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
-  public sealed partial class ShopCreatedEvent : pb::IMessage<ShopCreatedEvent>
+  public sealed partial class ShopEvent : pb::IMessage<ShopEvent>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<ShopCreatedEvent> _parser = new pb::MessageParser<ShopCreatedEvent>(() => new ShopCreatedEvent());
+    private static readonly pb::MessageParser<ShopEvent> _parser = new pb::MessageParser<ShopEvent>(() => new ShopEvent());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<ShopCreatedEvent> Parser { get { return _parser; } }
+    public static pb::MessageParser<ShopEvent> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -65,7 +68,7 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Events {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public ShopCreatedEvent() {
+    public ShopEvent() {
       OnConstruction();
     }
 
@@ -73,7 +76,248 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Events {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public ShopCreatedEvent(ShopCreatedEvent other) : this() {
+    public ShopEvent(ShopEvent other) : this() {
+      switch (other.OneofTypeCase) {
+        case OneofTypeOneofCase.Created:
+          Created = other.Created.Clone();
+          break;
+      }
+
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ShopEvent Clone() {
+      return new ShopEvent(this);
+    }
+
+    /// <summary>Field number for the "created" field.</summary>
+    public const int CreatedFieldNumber = 1;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::ShopifyClone.Cs.ProtoCs.Shop.Events.ShopCreated Created {
+      get { return oneofTypeCase_ == OneofTypeOneofCase.Created ? (global::ShopifyClone.Cs.ProtoCs.Shop.Events.ShopCreated) oneofType_ : null; }
+      set {
+        oneofType_ = value;
+        oneofTypeCase_ = value == null ? OneofTypeOneofCase.None : OneofTypeOneofCase.Created;
+      }
+    }
+
+    private object oneofType_;
+    /// <summary>Enum of possible cases for the "oneof_type" oneof.</summary>
+    public enum OneofTypeOneofCase {
+      None = 0,
+      Created = 1,
+    }
+    private OneofTypeOneofCase oneofTypeCase_ = OneofTypeOneofCase.None;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public OneofTypeOneofCase OneofTypeCase {
+      get { return oneofTypeCase_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearOneofType() {
+      oneofTypeCase_ = OneofTypeOneofCase.None;
+      oneofType_ = null;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as ShopEvent);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(ShopEvent other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(Created, other.Created)) return false;
+      if (OneofTypeCase != other.OneofTypeCase) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (oneofTypeCase_ == OneofTypeOneofCase.Created) hash ^= Created.GetHashCode();
+      hash ^= (int) oneofTypeCase_;
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (oneofTypeCase_ == OneofTypeOneofCase.Created) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Created);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (oneofTypeCase_ == OneofTypeOneofCase.Created) {
+        output.WriteRawTag(10);
+        output.WriteMessage(Created);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (oneofTypeCase_ == OneofTypeOneofCase.Created) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Created);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(ShopEvent other) {
+      if (other == null) {
+        return;
+      }
+      switch (other.OneofTypeCase) {
+        case OneofTypeOneofCase.Created:
+          if (Created == null) {
+            Created = new global::ShopifyClone.Cs.ProtoCs.Shop.Events.ShopCreated();
+          }
+          Created.MergeFrom(other.Created);
+          break;
+      }
+
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            global::ShopifyClone.Cs.ProtoCs.Shop.Events.ShopCreated subBuilder = new global::ShopifyClone.Cs.ProtoCs.Shop.Events.ShopCreated();
+            if (oneofTypeCase_ == OneofTypeOneofCase.Created) {
+              subBuilder.MergeFrom(Created);
+            }
+            input.ReadMessage(subBuilder);
+            Created = subBuilder;
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            global::ShopifyClone.Cs.ProtoCs.Shop.Events.ShopCreated subBuilder = new global::ShopifyClone.Cs.ProtoCs.Shop.Events.ShopCreated();
+            if (oneofTypeCase_ == OneofTypeOneofCase.Created) {
+              subBuilder.MergeFrom(Created);
+            }
+            input.ReadMessage(subBuilder);
+            Created = subBuilder;
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
+  public sealed partial class ShopCreated : pb::IMessage<ShopCreated>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<ShopCreated> _parser = new pb::MessageParser<ShopCreated>(() => new ShopCreated());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<ShopCreated> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::ShopifyClone.Cs.ProtoCs.Shop.Events.ShopEventsReflection.Descriptor.MessageTypes[1]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ShopCreated() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ShopCreated(ShopCreated other) : this() {
       shopId_ = other.shopId_;
       shopType_ = other.shopType_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -81,8 +325,8 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Events {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public ShopCreatedEvent Clone() {
-      return new ShopCreatedEvent(this);
+    public ShopCreated Clone() {
+      return new ShopCreated(this);
     }
 
     /// <summary>Field number for the "shop_id" field.</summary>
@@ -112,12 +356,12 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Events {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as ShopCreatedEvent);
+      return Equals(other as ShopCreated);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(ShopCreatedEvent other) {
+    public bool Equals(ShopCreated other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
@@ -203,7 +447,7 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Events {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(ShopCreatedEvent other) {
+    public void MergeFrom(ShopCreated other) {
       if (other == null) {
         return;
       }

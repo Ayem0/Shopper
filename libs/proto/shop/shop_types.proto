@@ -6,7 +6,6 @@ option csharp_namespace = "ShopifyClone.Cs.ProtoCs.Shop.Types";
 
 import "common/common_types.proto";
 
-
 message CreateShopRequest {
     string name = 1;
     string subdomain_name = 2;

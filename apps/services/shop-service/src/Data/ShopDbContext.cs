@@ -16,5 +16,13 @@ public class ShopDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        base.OnModelCreating(builder);
+
+        builder.Entity<OutboxMessage>(entity =>
+        {
+            entity.Property(e => e.Timestamp)
+                .HasColumnType("timestamptz") // PostgreSQL timestamp with timezone
+                .IsRequired();
+        });
     }
 }

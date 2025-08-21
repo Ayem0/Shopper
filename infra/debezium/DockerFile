@@ -1,0 +1,33 @@
+FROM quay.io/debezium/connect:2.2
+
+USER root
+
+# Install tools
+RUN microdnf install -y wget tar gzip curl && microdnf clean all
+
+# Create plugin dir
+RUN mkdir -p /kafka/connect/plugins
+
+# Copy Debezium Postgres connector
+RUN cp -r /kafka/connect/debezium-connector-postgres/. /kafka/connect/plugins/debezium-connector-postgres/
+
+# Download and install Confluent Hub Client
+RUN curl -sL -o /tmp/confluent-hub-client.tar.gz \
+    http://client.hub.confluent.io/confluent-hub-client-latest.tar.gz \
+    && mkdir -p /usr/share/java \
+    && tar -xzf /tmp/confluent-hub-client.tar.gz -C /usr/local \
+    && rm -f /tmp/confluent-hub-client.tar.gz
+
+# Create dummy worker config file (needed by confluent-hub client)
+RUN echo "bootstrap.servers=localhost:9092" > /tmp/worker-configs.properties
+
+# Install Protobuf Converter (with dependencies) into plugins dir
+RUN /usr/local/bin/confluent-hub install --no-prompt \
+    confluentinc/kafka-connect-protobuf-converter:7.6.1 \
+    --component-dir /kafka/connect/plugins \
+    --worker-configs /tmp/worker-configs.properties
+
+# Ensure Kafka Connect sees plugins
+ENV CONNECT_PLUGIN_PATH="/kafka/connect/plugins"
+
+USER 1000

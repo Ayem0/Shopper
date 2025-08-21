@@ -1,0 +1,17 @@
+# .editorconfig is a text file that helps maintain consistent coding styles
+# between different editors and IDEs
+
+# top-most EditorConfig file
+root = true
+
+# C# files
+[*.cs]
+
+# New line preferences for braces
+csharp_new_line_before_open_brace = none
+
+# Optional: You can also specify other formatting rules here, for example:
+# csharp_indent_braces = false
+# csharp_new_line_before_else = false
+# csharp_new_line_before_catch = false
+# csharp_new_line_before_finally = false
