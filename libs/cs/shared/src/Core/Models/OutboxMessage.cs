@@ -1,7 +1,6 @@
 namespace ShopifyClone.Cs.Shared.src.Core.Models;
 
-public class OutboxMessage
-{
+public class OutboxMessage {
     // Event id 
     public Guid Id { get; set; }
     // Topic type

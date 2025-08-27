@@ -5,8 +5,7 @@ namespace ShopifyClone.Cs.Shared.src.Infra.Logging;
 /// <summary>
 /// Options class to configure the Serilog Elasticsearch sink.
 /// </summary>
-public class LoggingOptions
-{
+public class LoggingOptions {
     /// <summary>
     /// Gets or sets the URI(s) of the Elasticsearch node(s).
     /// Example: "https://es01:9200"

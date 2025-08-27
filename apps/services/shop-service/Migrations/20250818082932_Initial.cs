@@ -3,18 +3,14 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace shop_service.Migrations
-{
+namespace shop_service.Migrations {
     /// <inheritdoc />
-    public partial class Initial : Migration
-    {
+    public partial class Initial : Migration {
         /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
+        protected override void Up(MigrationBuilder migrationBuilder) {
             migrationBuilder.CreateTable(
                 name: "OutboxMessage",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     AggregateType = table.Column<string>(type: "text", nullable: false),
                     AggregateId = table.Column<string>(type: "text", nullable: false),
@@ -22,15 +18,13 @@ namespace shop_service.Migrations
                     Timestamp = table.Column<DateTime>(type: "timestamptz", nullable: false),
                     Payload = table.Column<byte[]>(type: "bytea", nullable: false)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_OutboxMessage", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Shop",
-                columns: table => new
-                {
+                columns: table => new {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     OwnerUserId = table.Column<string>(type: "text", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
@@ -46,15 +40,13 @@ namespace shop_service.Migrations
                     ActivatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
                     LastActivedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
-                constraints: table =>
-                {
+                constraints: table => {
                     table.PrimaryKey("PK_Shop", x => x.Id);
                 });
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
+        protected override void Down(MigrationBuilder migrationBuilder) {
             migrationBuilder.DropTable(
                 name: "OutboxMessage");
 

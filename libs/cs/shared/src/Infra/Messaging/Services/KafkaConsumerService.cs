@@ -15,9 +15,9 @@ internal class KafkaConsumerBackgroundService<TConsumer, TEvent> : BackgroundSer
     private readonly IServiceProvider _serviceProvider;
 
     public KafkaConsumerBackgroundService(
-        ILogger<KafkaConsumerBackgroundService<TConsumer, TEvent>> logger,
-        IServiceProvider serviceProvider,
-        IConsumer<string, TEvent> consumer
+      ILogger<KafkaConsumerBackgroundService<TConsumer, TEvent>> logger,
+      IServiceProvider serviceProvider,
+      IConsumer<string, TEvent> consumer
     ) {
         _serviceProvider = serviceProvider;
         _logger = logger;

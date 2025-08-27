@@ -8,8 +8,7 @@ using Serilog.Sinks.Elasticsearch;
 
 namespace ShopifyClone.Cs.Shared.src.Infra.Logging;
 
-public static class Logging
-{
+public static class Logging {
     /// <summary>
     /// Configures Serilog for logging to Console and Elasticsearch.
     /// Reads Elasticsearch configuration from the provided options.
@@ -19,8 +18,7 @@ public static class Logging
     /// <param name="configuration">The IConfiguration instance to read general Serilog settings (like minimum level overrides) from.</param>
     /// <param name="configureOptions">An action to configure the ElasticLoggingOptions.</param>
     /// <returns>The modified IServiceCollection.</returns>
-    public static IServiceCollection AddSharedLogging(this IServiceCollection services, Action<LoggingOptions> configureOptions)
-    {
+    public static IServiceCollection AddSharedLogging(this IServiceCollection services, Action<LoggingOptions> configureOptions) {
         SelfLog.Enable(Console.Error);
 
         var options = new LoggingOptions();
@@ -37,8 +35,7 @@ public static class Logging
             .Enrich.WithThreadId() // Adds the thread ID to logs
             .Enrich.WithProperty("Application", options.ApplicationName)
             .WriteTo.Console() // Always write to console for local visibility
-            .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(options.NodeUris))
-            {
+            .WriteTo.Elasticsearch(new ElasticsearchSinkOptions(new Uri(options.NodeUris)) {
                 AutoRegisterTemplate = true,
                 AutoRegisterTemplateVersion = AutoRegisterTemplateVersion.ESv8,
                 IndexFormat = options.IndexFormat,
@@ -53,11 +50,9 @@ public static class Logging
                 NumberOfShards = 1,
                 NumberOfReplicas = 0,
                 ConnectionTimeout = TimeSpan.FromSeconds(5),
-                ModifyConnectionSettings = c =>
-                {
+                ModifyConnectionSettings = c => {
                     // Add Authorization header if provided
-                    if (!string.IsNullOrEmpty(options.AuthHeader))
-                    {
+                    if (!string.IsNullOrEmpty(options.AuthHeader)) {
                         var base64 = Convert.ToBase64String(Encoding.UTF8.GetBytes($"elastic:{options.AuthHeader}"));
                         var headers = new NameValueCollection
                         {

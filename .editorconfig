@@ -6,8 +6,8 @@ root = true
 
 # C# files
 [*.cs]
-
-# New line preferences for braces
+indent_style = space
+indent_size = 4
 csharp_new_line_before_open_brace = none
 
 # Optional: You can also specify other formatting rules here, for example:

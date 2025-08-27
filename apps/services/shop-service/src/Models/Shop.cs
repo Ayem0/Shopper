@@ -2,8 +2,7 @@ using ShopifyClone.Cs.ProtoCs.Common.Types;
 
 namespace ShopifyClone.Services.ShopService.src.Models;
 
-public class Shop
-{
+public class Shop {
     public Guid Id { get; set; }
     public string OwnerUserId { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;

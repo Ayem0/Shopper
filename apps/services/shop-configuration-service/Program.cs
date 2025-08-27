@@ -13,29 +13,31 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
-builder.Services.AddSingleton(new ConsumerConfig {
-    BootstrapServers = "kafka:9092",
-    GroupId = "shop-service-consumer",
-    AutoOffsetReset = AutoOffsetReset.Earliest
-});
-builder.Services.AddSingleton(new ProducerConfig {
-
-});
-builder.Services.AddSingleton<ISchemaRegistryClient>(_ =>
-    new CachedSchemaRegistryClient(new SchemaRegistryConfig {
-        Url = "http://kafka-registry:8081"
-    })
-);
 builder.Services.AddSharedLogging(options => {
-    options.ApplicationName = "shop-configuratin-service";
+    options.ApplicationName = "shop-configuration-service";
     options.NodeUris = "https://es01:9200";
     options.IndexFormat = "shop-configuratin-service-{0:yyyy.MM.dd}";
     options.CertificateFilePath = "/app/certs/ca/ca.crt";
     options.AuthHeader = builder.Configuration["Elastic:Password"];
     options.MinimumLevel = LogEventLevel.Debug;
 });
+builder.Services.AddSingleton(new ConsumerConfig {
+    BootstrapServers = "kafka:9092",
+    GroupId = "shop-configuration-service",
+    AutoOffsetReset = AutoOffsetReset.Earliest
+});
+builder.Services.AddSingleton(new ProducerConfig {
+
+});
+builder.Services.AddSingleton<ISchemaRegistryClient>(_ =>
+  new CachedSchemaRegistryClient(new SchemaRegistryConfig {
+      Url = "http://kafka-registry:8081"
+  })
+);
 builder.Services.AddScoped<IShopConfigurationService, ShopConfigurationService>();
 builder.Services.AddKafkaConsumer<ShopConsumer, ShopEvent>();
+
+
 builder.WebHost.ConfigureKestrel(options => {
     options.ListenAnyIP(80); // Listen on container's HTTP port 80
     options.ListenAnyIP(443, listenOptions => // Listen on container's HTTPS port 443

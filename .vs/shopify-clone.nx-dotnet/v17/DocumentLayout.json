@@ -40,7 +40,7 @@
               "RelativeDocumentMoniker": "apps\\services\\shop-service\\src\\Models\\Shop.cs",
               "ToolTip": "C:\\LIFE\\PROJECTS\\shopify-clone\\apps\\services\\shop-service\\src\\Models\\Shop.cs",
               "RelativeToolTip": "apps\\services\\shop-service\\src\\Models\\Shop.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-06T04:41:27.045Z",
               "EditorCaption": ""
@@ -92,6 +92,10 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2025-08-06T04:35:45.191Z"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             }
           ]
         }

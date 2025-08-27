@@ -55,8 +55,7 @@
               "RelativeToolTip": "apps\\services\\shop-service\\src\\Services\\ShopService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAA5AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-06T04:40:22.017Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-06T04:40:22.017Z"
             },
             {
               "$type": "Document",
@@ -68,21 +67,19 @@
               "RelativeToolTip": "apps\\services\\shop-service\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-06T04:40:17.764Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-06T04:40:17.764Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "shop-service",
+              "Title": "shop-service.csproj",
               "DocumentMoniker": "C:\\LIFE\\PROJECTS\\shopify-clone\\apps\\services\\shop-service\\shop-service.csproj",
               "RelativeDocumentMoniker": "apps\\services\\shop-service\\shop-service.csproj",
               "ToolTip": "C:\\LIFE\\PROJECTS\\shopify-clone\\apps\\services\\shop-service\\shop-service.csproj",
               "RelativeToolTip": "apps\\services\\shop-service\\shop-service.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-08-06T04:37:10.314Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-06T04:37:10.314Z"
             },
             {
               "$type": "Document",
@@ -94,8 +91,7 @@
               "RelativeToolTip": "apps\\services\\shop-service\\Dockerfile",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-08-06T04:35:45.191Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-06T04:35:45.191Z"
             }
           ]
         }
