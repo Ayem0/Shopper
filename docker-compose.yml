@@ -1,18 +1,18 @@
 services:
   ## BACKEND
   localstack:
-    container_name: 'localstack_main'
+    container_name: "localstack_main"
     image: localstack/localstack
     ports:
-      - '127.0.0.1:4566:4566' # LocalStack Gateway
-      - '127.0.0.1:4510-4559:4510-4559' # external services port range
+      - "127.0.0.1:4566:4566" # LocalStack Gateway
+      - "127.0.0.1:4510-4559:4510-4559" # external services port range
     environment:
       # LocalStack configuration: https://docs.localstack.cloud/references/configuration/
-      - SERVICES=apigateway,route53,s3,lambda
+      - SERVICES=apigateway,route53,s3,lambda,cloudwatch,logs,iam,cloudformation
       - DEBUG=${DEBUG:-0}
     volumes:
-      - '${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack'
-      - '/var/run/docker.sock:/var/run/docker.sock'
+      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
     networks:
       - my-shop-network
   keycloak:
@@ -22,22 +22,22 @@ services:
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://keycloack-database:5432/keycloack-database # Connect to the postgres service by name
       KC_DB_USERNAME: root
-      KC_DB_PASSWORD: 'root' # Matches postgres password
+      KC_DB_PASSWORD: "root" # Matches postgres password
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
       KC_BOOTSTRAP_ADMIN_PASSWORD: admin # Use a strong password
-      KC_HEALTH_ENABLED: 'true' # For health checks
-      KC_LOG_LEVEL: 'INFO'
-      KC_HTTP_PORT: '8080'
+      KC_HEALTH_ENABLED: "true" # For health checks
+      KC_LOG_LEVEL: "INFO"
+      KC_HTTP_PORT: "8080"
       KC_HTTP_HOST: 0.0.0.0 # Listen on all interfaces
       # For local dev, allow wildcards in redirect URIs and disable strict hostname checking
       # IMPORTANT: Do NOT use these in production without understanding security implications
-      KC_HOSTNAME_STRICT: 'false'
-      KC_HOSTNAME_STRICT_HTTPS: 'false'
-      KC_HOSTNAME_STRICT_BACKCHANNEL: 'false'
-      KC_PROXY_HEADERS: 'xforwarded' # If running behind a reverse proxy
-    command: ['start-dev'] # Start in development mode
+      KC_HOSTNAME_STRICT: "false"
+      KC_HOSTNAME_STRICT_HTTPS: "false"
+      KC_HOSTNAME_STRICT_BACKCHANNEL: "false"
+      KC_PROXY_HEADERS: "xforwarded" # If running behind a reverse proxy
+    command: ["start-dev"] # Start in development mode
     ports:
-      - '8080:8080' # Expose Keycloak UI
+      - "8080:8080" # Expose Keycloak UI
     depends_on:
       - keycloack-database
     networks:
@@ -54,87 +54,69 @@ services:
     #    tmpfs:
     #      size: 134217728 # 128*2^20 bytes = 128Mb
     environment:
-      POSTGRES_USER: 'root'
-      POSTGRES_DB: 'keycloack-database'
-      POSTGRES_PASSWORD: 'root'
+      POSTGRES_USER: "root"
+      POSTGRES_DB: "keycloack-database"
+      POSTGRES_PASSWORD: "root"
     ports:
       - 5433:5432
     networks:
       - my-shop-network
-  shop-service:
+  kafka-lambda-bridge:
     build:
       context: .
-      dockerfile: ./apps/services/shop-service/Dockerfile
-    hostname: shop-service
-    container_name: shop-service
-    environment:
-      ASPNETCORE_URLS: 'https://+:443;http://+:80' # Listen on standard HTTPS (443) and HTTP (80)
-      ASPNETCORE_FORWARDEDHEADERS_ENABLED: true
-      ASPNETCORE_ENVIRONMENT: 'Development'
-      ConnectionStrings__Database: 'Host=shop-service-database;Port=5432;Database=shop-database;Username=root;Password=root'
-    depends_on:
-      shop-service-connect:
-        condition: service_healthy
-      kafka:
-        condition: service_healthy
-      es01:
-        condition: service_healthy
-    ports:
-      - '50000:80'
-      - '50001:443'
-    volumes:
-      - ./certs:/app/certs
-      - logs:/var/log/shop-service
-    user: '0:0' # temporarily run as root to ensure write access
-    command: >
-      sh -c "chown -R 1000:1000 /app/logs"
-    networks:
-      - my-shop-network
-  shop-configuration-service:
-    build:
-      context: .
-      dockerfile: ./apps/services/shop-configuration-service/Dockerfile
-    hostname: shop-configuration-service
-    container_name: shop-configuration-service
-    environment:
-      ASPNETCORE_URLS: 'https://+:443;http://+:80' # Listen on standard HTTPS (443) and HTTP (80)
-      ASPNETCORE_FORWARDEDHEADERS_ENABLED: true
-      ASPNETCORE_ENVIRONMENT: 'Development'
+      dockerfile: ./apps/services/KafkaLambdaBridge/Dockerfile
+    hostname: kafka-lambda-bridge
+    container_name: kafka-lambda-bridge
     depends_on:
       kafka:
         condition: service_healthy
-      es01:
-        condition: service_healthy
-    ports:
-      - '50002:80'
-      - '50003:443'
-    volumes:
-      - ./certs:/app/certs
-      - logs:/var/log/shop-configuration-service
-    user: '0:0' # temporarily run as root to ensure write access
-    command: >
-      sh -c "chown -R 1000:1000 /app/logs"
     networks:
       - my-shop-network
+  # shop-configuration-service:
+  #   build:
+  #     context: .
+  #     dockerfile: ./apps/services/shop-configuration-service/Dockerfile
+  #   hostname: shop-configuration-service
+  #   container_name: shop-configuration-service
+  #   environment:
+  #     ASPNETCORE_URLS: 'https://+:443;http://+:80' # Listen on standard HTTPS (443) and HTTP (80)
+  #     ASPNETCORE_FORWARDEDHEADERS_ENABLED: true
+  #     ASPNETCORE_ENVIRONMENT: 'Development'
+  #   depends_on:
+  #     kafka:
+  #       condition: service_healthy
+  #     es01:
+  #       condition: service_healthy
+  #   ports:
+  #     - '50002:80'
+  #     - '50003:443'
+  #   volumes:
+  #     - ./certs:/app/certs
+  #     - logs:/var/log/shop-configuration-service
+  #   user: '0:0' # temporarily run as root to ensure write access
+  #   command: >
+  #     sh -c "chown -R 1000:1000 /app/logs"
+  #   networks:
+  #     - my-shop-network
   shop-service-database:
     image: quay.io/debezium/postgres:17-alpine # Use Debezium's PostgreSQL image [1]
     restart: always
     shm_size: 128mb
     environment:
-      POSTGRES_USER: 'root' # Changed to 'postgres' for Debezium compatibility
-      POSTGRES_DB: 'shop-database' # Changed to 'shopdb' for Debezium compatibility
-      POSTGRES_PASSWORD: 'root' # Changed to 'postgres' for Debezium compatibility
+      POSTGRES_USER: "root" # Changed to 'postgres' for Debezium compatibility
+      POSTGRES_DB: "shop-database" # Changed to 'shopdb' for Debezium compatibility
+      POSTGRES_PASSWORD: "root" # Changed to 'postgres' for Debezium compatibility
       # Essential PostgreSQL settings for logical replication [1]
-      POSTGRES_INITDB_ARGS: '--auth-host=scram-sha-256'
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
       wal_level: logical
       max_wal_senders: 10
       max_replication_slots: 10
     ports:
-      - '5434:5432'
+      - "5434:5432"
     networks:
       - my-shop-network
     healthcheck:
-      test: ['CMD', 'pg_isready', '-U', 'root', '-d', 'shop-database']
+      test: ["CMD", "pg_isready", "-U", "root", "-d", "shop-database"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -146,7 +128,7 @@ services:
     hostname: connect
     container_name: connect
     ports:
-      - '8083:8083'
+      - "8083:8083"
     depends_on:
       kafka:
         condition: service_healthy
@@ -164,7 +146,7 @@ services:
     networks:
       - my-shop-network
     healthcheck:
-      test: ['CMD-SHELL', 'curl -f http://localhost:8083/ || exit 1']
+      test: ["CMD-SHELL", "curl -f http://localhost:8083/ || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -175,12 +157,12 @@ services:
     hostname: zookeeper
     container_name: zookeeper
     ports:
-      - '2181:2181'
+      - "2181:2181"
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
     healthcheck:
-      test: ['CMD', 'sh', '-c', 'echo ruok | nc localhost 2181']
+      test: ["CMD", "sh", "-c", "echo ruok | nc localhost 2181"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -192,20 +174,20 @@ services:
     hostname: kafka
     container_name: kafka
     ports:
-      - '9092:9092'
-      - '29092:29092'
+      - "9092:9092"
+      - "29092:29092"
     depends_on:
       zookeeper:
         condition: service_healthy
     environment:
       KAFKA_BROKER_ID: 1
-      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
     healthcheck:
-      test: ['CMD', 'nc', '-z', 'localhost', '9092']
+      test: ["CMD", "nc", "-z", "localhost", "9092"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -220,7 +202,7 @@ services:
       - SCHEMA_REGISTRY_HOST_NAME=kafka-registry
       - SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS=kafka:9092
     ports:
-      - '8081:8081'
+      - "8081:8081"
     networks:
       - my-shop-network
   # # Mailpit service
@@ -241,7 +223,7 @@ services:
     image: docker.elastic.co/elasticsearch/elasticsearch:${STACK_VERSION}
     volumes:
       - certs:/usr/share/elasticsearch/config/certs
-    user: '0'
+    user: "0"
     command: >
       bash -c '
         if [ x${ELASTIC_PASSWORD} == x ]; then
@@ -287,7 +269,7 @@ services:
             echo "All done!";
       '
     healthcheck:
-      test: ['CMD-SHELL', '[ -f config/certs/es01/es01.crt ]']
+      test: ["CMD-SHELL", "[ -f config/certs/es01/es01.crt ]"]
       interval: 1s
       timeout: 5s
       retries: 120
@@ -330,7 +312,7 @@ services:
     healthcheck:
       test:
         [
-          'CMD-SHELL',
+          "CMD-SHELL",
           "curl -s --cacert config/certs/ca/ca.crt https://localhost:9200 | grep -q 'missing authentication credentials'",
         ]
       interval: 10s
@@ -363,7 +345,7 @@ services:
     healthcheck:
       test:
         [
-          'CMD-SHELL',
+          "CMD-SHELL",
           "curl -s -I http://localhost:5601 | grep -q 'HTTP/1.1 302 Found'",
         ]
       interval: 10s
@@ -382,11 +364,11 @@ services:
     volumes:
       - certs:/usr/share/metricbeat/certs
       - metricbeatdata01:/usr/share/metricbeat/data
-      - './metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro'
-      - '/var/run/docker.sock:/var/run/docker.sock:ro'
-      - '/sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro'
-      - '/proc:/hostfs/proc:ro'
-      - '/:/hostfs:ro'
+      - "./metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "/sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro"
+      - "/proc:/hostfs/proc:ro"
+      - "/:/hostfs:ro"
     environment:
       - ELASTIC_USER=elastic
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
@@ -404,10 +386,10 @@ services:
     volumes:
       - certs:/usr/share/filebeat/certs
       - filebeatdata01:/usr/share/filebeat/data
-      - './filebeat_ingest_data/:/usr/share/filebeat/ingest_data/'
-      - './filebeat.yml:/usr/share/filebeat/filebeat.yml:ro'
-      - '/var/lib/docker/containers:/var/lib/docker/containers:ro'
-      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+      - "./filebeat_ingest_data/:/usr/share/filebeat/ingest_data/"
+      - "./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro"
+      - "/var/lib/docker/containers:/var/lib/docker/containers:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
     environment:
       - ELASTIC_USER=elastic
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
@@ -429,8 +411,8 @@ services:
     volumes:
       - certs:/usr/share/logstash/certs
       - logstashdata01:/usr/share/logstash/data
-      - './logstash_ingest_data/:/usr/share/logstash/ingest_data/'
-      - './logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro'
+      - "./logstash_ingest_data/:/usr/share/logstash/ingest_data/"
+      - "./logstash.conf:/usr/share/logstash/pipeline/logstash.conf:ro"
     environment:
       - xpack.monitoring.enabled=false
       - ELASTIC_USER=elastic
@@ -454,8 +436,8 @@ volumes:
     driver: local
   shopservicedatabase:
     driver: local
-  logs:
-    driver: local
+  # logs:
+  #   driver: local
 
 networks:
   my-shop-network:

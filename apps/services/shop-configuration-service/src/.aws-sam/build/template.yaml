@@ -1,0 +1,25 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: An AWS Serverless Application. This template is partially managed by
+  Amazon.Lambda.Annotations (v1.7.0.0).
+Resources:
+  shopconfigurationserviceKafkaConsumersConsumeShopEventsGenerated:
+    Type: AWS::Serverless::Function
+    Metadata:
+      SamResourceId: shopconfigurationserviceKafkaConsumersConsumeShopEventsGenerated
+      Tool: Amazon.Lambda.Annotations
+    Properties:
+      Runtime: dotnet8
+      CodeUri: shopconfigurationserviceKafkaConsumersConsumeShopEventsGenerated
+      FunctionName: shop-configuration-service-consume-shop-events
+      MemorySize: 512
+      Timeout: 30
+      Policies:
+      - AWSLambdaBasicExecutionRole
+      PackageType: Zip
+      Handler: shop-configuration-service::shop_configuration_service.KafkaConsumers_ConsumeShopEvents_Generated::ConsumeShopEvents
+Outputs:
+  ApiURL:
+    Description: API endpoint URL for Prod environment
+    Value:
+      Fn::Sub: https://${ServerlessHttpApi}.execute-api.${AWS::Region}.amazonaws.com/

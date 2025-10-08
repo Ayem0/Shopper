@@ -8,8 +8,12 @@ export const authOptions = {
       clientId: process.env.KEYCLOAK_ID ?? '',
       clientSecret: process.env.KEYCLOAK_SECRET ?? '',
       issuer: process.env.KEYCLOAK_ISSUER,
+      // authorization: {
+      //   params: { prompt: 'login' },
+      // },
     }),
   ],
 };
 
-export default NextAuth(authOptions);
+const handler = NextAuth(authOptions);
+export { handler as GET, handler as POST };

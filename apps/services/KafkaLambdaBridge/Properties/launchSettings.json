@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "KafkaLambdaBridge": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
