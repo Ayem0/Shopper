@@ -1,8 +1,12 @@
 export * from './components/avatar';
 export * from './components/button';
+export * from './components/card';
 export * from './components/dialog';
 export * from './components/dropdown-menu';
+export * from './components/empty';
+export * from './components/field';
 export * from './components/form';
+export * from './components/item';
 export * from './components/label';
 export * from './components/navigation-menu';
 export * from './components/popover';
@@ -10,3 +14,4 @@ export * from './components/separator';
 export * from './components/sheet';
 export * from './components/skeleton';
 export * from './components/spinner';
+export * from './components/switch';

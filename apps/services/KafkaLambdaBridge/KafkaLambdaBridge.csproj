@@ -20,5 +20,10 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\libs\cs\proto-cs\ShopifyClone.Cs.ProtoCs.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
 </Project>

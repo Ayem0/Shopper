@@ -61,43 +61,7 @@ services:
       - 5433:5432
     networks:
       - my-shop-network
-  kafka-lambda-bridge:
-    build:
-      context: .
-      dockerfile: ./apps/services/KafkaLambdaBridge/Dockerfile
-    hostname: kafka-lambda-bridge
-    container_name: kafka-lambda-bridge
-    depends_on:
-      kafka:
-        condition: service_healthy
-    networks:
-      - my-shop-network
-  # shop-configuration-service:
-  #   build:
-  #     context: .
-  #     dockerfile: ./apps/services/shop-configuration-service/Dockerfile
-  #   hostname: shop-configuration-service
-  #   container_name: shop-configuration-service
-  #   environment:
-  #     ASPNETCORE_URLS: 'https://+:443;http://+:80' # Listen on standard HTTPS (443) and HTTP (80)
-  #     ASPNETCORE_FORWARDEDHEADERS_ENABLED: true
-  #     ASPNETCORE_ENVIRONMENT: 'Development'
-  #   depends_on:
-  #     kafka:
-  #       condition: service_healthy
-  #     es01:
-  #       condition: service_healthy
-  #   ports:
-  #     - '50002:80'
-  #     - '50003:443'
-  #   volumes:
-  #     - ./certs:/app/certs
-  #     - logs:/var/log/shop-configuration-service
-  #   user: '0:0' # temporarily run as root to ensure write access
-  #   command: >
-  #     sh -c "chown -R 1000:1000 /app/logs"
-  #   networks:
-  #     - my-shop-network
+
   shop-service-database:
     image: quay.io/debezium/postgres:17-alpine # Use Debezium's PostgreSQL image [1]
     restart: always
@@ -121,12 +85,12 @@ services:
       timeout: 5s
       retries: 5
       start_period: 15s
-  shop-service-connect:
+  debzium:
     build:
       context: .
       dockerfile: ./infra/debezium/DockerFile
-    hostname: connect
-    container_name: connect
+    hostname: debezium
+    container_name: debezium
     ports:
       - "8083:8083"
     depends_on:
@@ -203,6 +167,19 @@ services:
       - SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS=kafka:9092
     ports:
       - "8081:8081"
+    networks:
+      - my-shop-network
+  kafka-lambda-bridge:
+    build:
+      context: .
+      dockerfile: ./apps/services/KafkaLambdaBridge/Dockerfile
+    hostname: kafka-lambda-bridge
+    container_name: kafka-lambda-bridge
+    volumes:
+      - ./apps/services/KafkaLambdaBridge/config.json:/app/config.json:rw
+    depends_on:
+      kafka:
+        condition: service_healthy
     networks:
       - my-shop-network
   # # Mailpit service

@@ -3,7 +3,7 @@ import Header from '@/components/header/header';
 import { Providers } from '@/components/providers/providers';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import './global.css';
+import '../global.css';
 
 export const metadata: Metadata = {
   title: 'Platform',
