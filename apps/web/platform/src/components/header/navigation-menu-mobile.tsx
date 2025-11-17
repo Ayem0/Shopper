@@ -42,6 +42,7 @@ export function NavigationMenuMobile(props: NavigationMenuMobileProps) {
                     href={item.link}
                     className="text-lg font-medium hover:underline"
                     key={item.link}
+                    onClick={() => setIsOpen(false)}
                   >
                     {item.name}
                   </Link>

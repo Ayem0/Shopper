@@ -1,12 +1,12 @@
 using ShopifyClone.Cs.ProtoCs.Common.Types;
+using ShopifyClone.Cs.ProtoCs.Shop.Types;
 
-namespace ShopifyClone.Services.ShopService.src.Models;
+namespace Models;
 
-public class Shop {
+public class Shop
+{
     public Guid Id { get; set; }
-    public string OwnerUserId { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
-    public string SubdomainName { get; set; } = string.Empty;
     public bool IsActive { get; set; } = false;
     public ShopType Type { get; set; } = ShopType.Unspecified;
     public CreationStatus DnsCreationStatus { get; set; } = CreationStatus.NotStarted;
@@ -17,4 +17,5 @@ public class Shop {
     public DateTime? UpdatedAt { get; set; }
     public DateTime? ActivatedAt { get; set; }
     public DateTime? LastActivedAt { get; set; }
+    public List<ShopUser> ShopUsers = [];
 }

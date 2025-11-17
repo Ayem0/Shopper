@@ -10,7 +10,6 @@ import Link from 'next/link';
 
 export const menuItems = [
   { link: '/', name: 'Home' },
-  { link: '/docs', name: 'Docs' },
   { link: '/pricing', name: 'Pricing' },
   { link: '/about', name: 'About' },
 ];

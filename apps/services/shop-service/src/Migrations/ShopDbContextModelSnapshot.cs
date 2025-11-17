@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using ShopifyClone.Services.ShopService.src.Data;
+using Data;
 
 #nullable disable
 
@@ -83,14 +83,6 @@ namespace shopservice.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("OwnerUserId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("SubdomainName")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<int>("SubscriptionStatus")
                         .HasColumnType("integer");
 
@@ -102,7 +94,63 @@ namespace shopservice.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Name");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("Name"), "GIN");
+                    NpgsqlIndexBuilderExtensions.HasOperators(b.HasIndex("Name"), new[] { "gin_trgm_ops" });
+
+                    b.HasIndex("IsActive", "Type", "Name", "Id");
+
+                    NpgsqlIndexBuilderExtensions.IncludeProperties(b.HasIndex("IsActive", "Type", "Name", "Id"), new[] { "UpdatedAt" });
+
+                    b.HasIndex("IsActive", "Type", "UpdatedAt", "Id");
+
+                    NpgsqlIndexBuilderExtensions.IncludeProperties(b.HasIndex("IsActive", "Type", "UpdatedAt", "Id"), new[] { "Name" });
+
                     b.ToTable("Shop");
+                });
+
+            modelBuilder.Entity("ShopifyClone.Services.ShopService.src.Models.ShopUser", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("ShopId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("ShopUserType")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ShopId");
+
+                    b.HasIndex("UserId");
+
+                    b.HasIndex("UserId", "ShopId");
+
+                    b.ToTable("ShopUser");
+                });
+
+            modelBuilder.Entity("ShopifyClone.Services.ShopService.src.Models.ShopUser", b =>
+                {
+                    b.HasOne("ShopifyClone.Services.ShopService.src.Models.Shop", "Shop")
+                        .WithMany()
+                        .HasForeignKey("ShopId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Shop");
                 });
 #pragma warning restore 612, 618
         }

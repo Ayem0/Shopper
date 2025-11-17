@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
-namespace ShopifyClone.Services.ShopService.src.Data;
+namespace Data;
 
 public class ShopDbContextFactory : IDesignTimeDbContextFactory<ShopDbContext>
 {

@@ -24,33 +24,67 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
     static ShopTypesReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "ChVzaG9wL3Nob3BfdHlwZXMucHJvdG8SBHNob3AaGWNvbW1vbi9jb21tb25f",
-            "dHlwZXMucHJvdG8idAoRQ3JlYXRlU2hvcFJlcXVlc3QSEgoEbmFtZRgBIAEo",
-            "CVIEbmFtZRIlCg5zdWJkb21haW5fbmFtZRgCIAEoCVINc3ViZG9tYWluTmFt",
-            "ZRIkCgR0eXBlGAMgASgOMhAuY29tbW9uLlNob3BUeXBlUgR0eXBlIi0KEkNy",
-            "ZWF0ZVNob3BSZXNwb25zZRIXCgdzaG9wX2lkGAEgASgJUgZzaG9wSWQiKQoO",
-            "R2V0U2hvcFJlcXVlc3QSFwoHc2hvcF9pZBgBIAEoCVIGc2hvcElkIjUKD0dl",
-            "dFNob3BSZXNwb25zZRIiCgRzaG9wGAEgASgLMg4uc2hvcC5TaG9wRGF0YVIE",
-            "c2hvcCK7AQoIU2hvcERhdGESDgoCaWQYASABKAlSAmlkEiIKDW93bmVyX3Vz",
-            "ZXJfaWQYAiABKAlSC293bmVyVXNlcklkEhIKBG5hbWUYAyABKAlSBG5hbWUS",
-            "JAoNc3ViZG9tYWluTmFtZRgEIAEoCVINc3ViZG9tYWluTmFtZRIbCglpc19h",
-            "Y3RpdmUYBSABKAhSCGlzQWN0aXZlEiQKBHR5cGUYBiABKA4yEC5jb21tb24u",
-            "U2hvcFR5cGVSBHR5cGVCJaoCIlNob3BpZnlDbG9uZS5Dcy5Qcm90b0NzLlNo",
-            "b3AuVHlwZXNiBnByb3RvMw=="));
+            "ChVzaG9wL3Nob3BfdHlwZXMucHJvdG8SBHNob3AiSwoRQ3JlYXRlU2hvcFJl",
+            "cXVlc3QSEgoEbmFtZRgBIAEoCVIEbmFtZRIiCgR0eXBlGAIgASgOMg4uc2hv",
+            "cC5TaG9wVHlwZVIEdHlwZSItChJDcmVhdGVTaG9wUmVzcG9uc2USFwoHc2hv",
+            "cF9pZBgBIAEoCVIGc2hvcElkIokCCg9HZXRTaG9wc1JlcXVlc3QSKQoHc29y",
+            "dF9ieRgBIAEoDjIQLnNob3AuU2hvcFNvcnRCeVIGc29ydEJ5EiQKBXR5cGVz",
+            "GAIgAygOMg4uc2hvcC5TaG9wVHlwZVIFdHlwZXMSHwoLYWN0aXZlX29ubHkY",
+            "AyABKAhSCmFjdGl2ZU9ubHkSGwoJcGFnZV9zaXplGAQgASgFUghwYWdlU2l6",
+            "ZRIdCgpwYWdlX2luZGV4GAUgASgFUglwYWdlSW5kZXgSJwoPc29ydF9kZXNj",
+            "ZW5kaW5nGAYgASgIUg5zb3J0RGVzY2VuZGluZxIfCgtzZWFyY2hfdGVybRgH",
+            "IAEoCVIKc2VhcmNoVGVybSK/AQoQR2V0U2hvcHNSZXNwb25zZRIkCgVzaG9w",
+            "cxgBIAMoCzIOLnNob3AuU2hvcERhdGFSBXNob3BzEiMKDXRvdGFsX3Jlc3Vs",
+            "dHMYAiABKANSDHRvdGFsUmVzdWx0cxIbCglwYWdlX3NpemUYAyABKAVSCHBh",
+            "Z2VTaXplEh0KCnBhZ2VfaW5kZXgYBCABKAVSCXBhZ2VJbmRleBIkCg5tYXhf",
+            "cGFnZV9pbmRleBgFIAEoBVIMbWF4UGFnZUluZGV4IqIBCghTaG9wRGF0YRIO",
+            "CgJpZBgBIAEoCVICaWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIiCgR0eXBlGAMg",
+            "ASgOMg4uc2hvcC5TaG9wVHlwZVIEdHlwZRIbCglpc19hY3RpdmUYBCABKAhS",
+            "CGlzQWN0aXZlEiIKCnVwZGF0ZWRfYXQYBSABKAlIAFIJdXBkYXRlZEF0iAEB",
+            "Qg0KC191cGRhdGVkX2F0KjwKCFNob3BUeXBlEhkKFVNIT1BfVFlQRV9VTlNQ",
+            "RUNJRklFRBAAEhUKEVNIT1BfVFlQRV9GQVNISU9OEAEqXgoKU2hvcFNvcnRC",
+            "eRIcChhTSE9QX1NPUlRfQllfVU5TUEVDSUZJRUQQABIbChdTSE9QX1NPUlRf",
+            "QllfVVBEQVRFRF9BVBABEhUKEVNIT1BfU09SVF9CWV9OQU1FEAIqKAoMU2hv",
+            "cFVzZXJUeXBlEhgKFFNIT1BfVVNFUl9UWVBFX09XTkVSEABCJaoCIlNob3Bp",
+            "ZnlDbG9uZS5Dcy5Qcm90b0NzLlNob3AuVHlwZXNiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::ShopifyClone.Cs.ProtoCs.Common.Types.CommonTypesReflection.Descriptor, },
-          new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::ShopifyClone.Cs.ProtoCs.Shop.Types.CreateShopRequest), global::ShopifyClone.Cs.ProtoCs.Shop.Types.CreateShopRequest.Parser, new[]{ "Name", "SubdomainName", "Type" }, null, null, null, null),
+          new pbr::FileDescriptor[] { },
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType), typeof(global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopSortBy), typeof(global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopUserType), }, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::ShopifyClone.Cs.ProtoCs.Shop.Types.CreateShopRequest), global::ShopifyClone.Cs.ProtoCs.Shop.Types.CreateShopRequest.Parser, new[]{ "Name", "Type" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ShopifyClone.Cs.ProtoCs.Shop.Types.CreateShopResponse), global::ShopifyClone.Cs.ProtoCs.Shop.Types.CreateShopResponse.Parser, new[]{ "ShopId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ShopifyClone.Cs.ProtoCs.Shop.Types.GetShopRequest), global::ShopifyClone.Cs.ProtoCs.Shop.Types.GetShopRequest.Parser, new[]{ "ShopId" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ShopifyClone.Cs.ProtoCs.Shop.Types.GetShopResponse), global::ShopifyClone.Cs.ProtoCs.Shop.Types.GetShopResponse.Parser, new[]{ "Shop" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopData), global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopData.Parser, new[]{ "Id", "OwnerUserId", "Name", "SubdomainName", "IsActive", "Type" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::ShopifyClone.Cs.ProtoCs.Shop.Types.GetShopsRequest), global::ShopifyClone.Cs.ProtoCs.Shop.Types.GetShopsRequest.Parser, new[]{ "SortBy", "Types_", "ActiveOnly", "PageSize", "PageIndex", "SortDescending", "SearchTerm" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ShopifyClone.Cs.ProtoCs.Shop.Types.GetShopsResponse), global::ShopifyClone.Cs.ProtoCs.Shop.Types.GetShopsResponse.Parser, new[]{ "Shops", "TotalResults", "PageSize", "PageIndex", "MaxPageIndex" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopData), global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopData.Parser, new[]{ "Id", "Name", "Type", "IsActive", "UpdatedAt" }, new[]{ "UpdatedAt" }, null, null, null)
           }));
     }
     #endregion
 
   }
+  #region Enums
+  /// <summary>
+  /// Enums
+  /// </summary>
+  public enum ShopType {
+    [pbr::OriginalName("SHOP_TYPE_UNSPECIFIED")] Unspecified = 0,
+    [pbr::OriginalName("SHOP_TYPE_FASHION")] Fashion = 1,
+  }
+
+  public enum ShopSortBy {
+    [pbr::OriginalName("SHOP_SORT_BY_UNSPECIFIED")] Unspecified = 0,
+    [pbr::OriginalName("SHOP_SORT_BY_UPDATED_AT")] UpdatedAt = 1,
+    [pbr::OriginalName("SHOP_SORT_BY_NAME")] Name = 2,
+  }
+
+  public enum ShopUserType {
+    [pbr::OriginalName("SHOP_USER_TYPE_OWNER")] Owner = 0,
+  }
+
+  #endregion
+
   #region Messages
+  /// <summary>
+  /// Create Shop
+  /// </summary>
   [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class CreateShopRequest : pb::IMessage<CreateShopRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
@@ -87,7 +121,6 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public CreateShopRequest(CreateShopRequest other) : this() {
       name_ = other.name_;
-      subdomainName_ = other.subdomainName_;
       type_ = other.type_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -110,24 +143,12 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
       }
     }
 
-    /// <summary>Field number for the "subdomain_name" field.</summary>
-    public const int SubdomainNameFieldNumber = 2;
-    private string subdomainName_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string SubdomainName {
-      get { return subdomainName_; }
-      set {
-        subdomainName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
     /// <summary>Field number for the "type" field.</summary>
-    public const int TypeFieldNumber = 3;
-    private global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType type_ = global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType.Unspecified;
+    public const int TypeFieldNumber = 2;
+    private global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType type_ = global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType.Unspecified;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType Type {
+    public global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType Type {
       get { return type_; }
       set {
         type_ = value;
@@ -150,7 +171,6 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
         return true;
       }
       if (Name != other.Name) return false;
-      if (SubdomainName != other.SubdomainName) return false;
       if (Type != other.Type) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
@@ -160,8 +180,7 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
     public override int GetHashCode() {
       int hash = 1;
       if (Name.Length != 0) hash ^= Name.GetHashCode();
-      if (SubdomainName.Length != 0) hash ^= SubdomainName.GetHashCode();
-      if (Type != global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType.Unspecified) hash ^= Type.GetHashCode();
+      if (Type != global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType.Unspecified) hash ^= Type.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -184,12 +203,8 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
         output.WriteRawTag(10);
         output.WriteString(Name);
       }
-      if (SubdomainName.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(SubdomainName);
-      }
-      if (Type != global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType.Unspecified) {
-        output.WriteRawTag(24);
+      if (Type != global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType.Unspecified) {
+        output.WriteRawTag(16);
         output.WriteEnum((int) Type);
       }
       if (_unknownFields != null) {
@@ -206,12 +221,8 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
         output.WriteRawTag(10);
         output.WriteString(Name);
       }
-      if (SubdomainName.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(SubdomainName);
-      }
-      if (Type != global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType.Unspecified) {
-        output.WriteRawTag(24);
+      if (Type != global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType.Unspecified) {
+        output.WriteRawTag(16);
         output.WriteEnum((int) Type);
       }
       if (_unknownFields != null) {
@@ -227,10 +238,7 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
       if (Name.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
       }
-      if (SubdomainName.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(SubdomainName);
-      }
-      if (Type != global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType.Unspecified) {
+      if (Type != global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType.Unspecified) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
       }
       if (_unknownFields != null) {
@@ -248,10 +256,7 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
       if (other.Name.Length != 0) {
         Name = other.Name;
       }
-      if (other.SubdomainName.Length != 0) {
-        SubdomainName = other.SubdomainName;
-      }
-      if (other.Type != global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType.Unspecified) {
+      if (other.Type != global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType.Unspecified) {
         Type = other.Type;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -277,12 +282,8 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
             Name = input.ReadString();
             break;
           }
-          case 18: {
-            SubdomainName = input.ReadString();
-            break;
-          }
-          case 24: {
-            Type = (global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType) input.ReadEnum();
+          case 16: {
+            Type = (global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType) input.ReadEnum();
             break;
           }
         }
@@ -308,12 +309,8 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
             Name = input.ReadString();
             break;
           }
-          case 18: {
-            SubdomainName = input.ReadString();
-            break;
-          }
-          case 24: {
-            Type = (global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType) input.ReadEnum();
+          case 16: {
+            Type = (global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType) input.ReadEnum();
             break;
           }
         }
@@ -521,17 +518,20 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
 
   }
 
+  /// <summary>
+  /// Get Shops
+  /// </summary>
   [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
-  public sealed partial class GetShopRequest : pb::IMessage<GetShopRequest>
+  public sealed partial class GetShopsRequest : pb::IMessage<GetShopsRequest>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<GetShopRequest> _parser = new pb::MessageParser<GetShopRequest>(() => new GetShopRequest());
+    private static readonly pb::MessageParser<GetShopsRequest> _parser = new pb::MessageParser<GetShopsRequest>(() => new GetShopsRequest());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<GetShopRequest> Parser { get { return _parser; } }
+    public static pb::MessageParser<GetShopsRequest> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -547,7 +547,7 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public GetShopRequest() {
+    public GetShopsRequest() {
       OnConstruction();
     }
 
@@ -555,45 +555,128 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public GetShopRequest(GetShopRequest other) : this() {
-      shopId_ = other.shopId_;
+    public GetShopsRequest(GetShopsRequest other) : this() {
+      sortBy_ = other.sortBy_;
+      types_ = other.types_.Clone();
+      activeOnly_ = other.activeOnly_;
+      pageSize_ = other.pageSize_;
+      pageIndex_ = other.pageIndex_;
+      sortDescending_ = other.sortDescending_;
+      searchTerm_ = other.searchTerm_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public GetShopRequest Clone() {
-      return new GetShopRequest(this);
+    public GetShopsRequest Clone() {
+      return new GetShopsRequest(this);
     }
 
-    /// <summary>Field number for the "shop_id" field.</summary>
-    public const int ShopIdFieldNumber = 1;
-    private string shopId_ = "";
+    /// <summary>Field number for the "sort_by" field.</summary>
+    public const int SortByFieldNumber = 1;
+    private global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopSortBy sortBy_ = global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopSortBy.Unspecified;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string ShopId {
-      get { return shopId_; }
+    public global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopSortBy SortBy {
+      get { return sortBy_; }
       set {
-        shopId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        sortBy_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "types" field.</summary>
+    public const int Types_FieldNumber = 2;
+    private static readonly pb::FieldCodec<global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType> _repeated_types_codec
+        = pb::FieldCodec.ForEnum(18, x => (int) x, x => (global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType) x);
+    private readonly pbc::RepeatedField<global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType> types_ = new pbc::RepeatedField<global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType> Types_ {
+      get { return types_; }
+    }
+
+    /// <summary>Field number for the "active_only" field.</summary>
+    public const int ActiveOnlyFieldNumber = 3;
+    private bool activeOnly_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool ActiveOnly {
+      get { return activeOnly_; }
+      set {
+        activeOnly_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "page_size" field.</summary>
+    public const int PageSizeFieldNumber = 4;
+    private int pageSize_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int PageSize {
+      get { return pageSize_; }
+      set {
+        pageSize_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "page_index" field.</summary>
+    public const int PageIndexFieldNumber = 5;
+    private int pageIndex_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int PageIndex {
+      get { return pageIndex_; }
+      set {
+        pageIndex_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "sort_descending" field.</summary>
+    public const int SortDescendingFieldNumber = 6;
+    private bool sortDescending_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool SortDescending {
+      get { return sortDescending_; }
+      set {
+        sortDescending_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "search_term" field.</summary>
+    public const int SearchTermFieldNumber = 7;
+    private string searchTerm_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string SearchTerm {
+      get { return searchTerm_; }
+      set {
+        searchTerm_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as GetShopRequest);
+      return Equals(other as GetShopsRequest);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(GetShopRequest other) {
+    public bool Equals(GetShopsRequest other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (ShopId != other.ShopId) return false;
+      if (SortBy != other.SortBy) return false;
+      if(!types_.Equals(other.types_)) return false;
+      if (ActiveOnly != other.ActiveOnly) return false;
+      if (PageSize != other.PageSize) return false;
+      if (PageIndex != other.PageIndex) return false;
+      if (SortDescending != other.SortDescending) return false;
+      if (SearchTerm != other.SearchTerm) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -601,7 +684,13 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (ShopId.Length != 0) hash ^= ShopId.GetHashCode();
+      if (SortBy != global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopSortBy.Unspecified) hash ^= SortBy.GetHashCode();
+      hash ^= types_.GetHashCode();
+      if (ActiveOnly != false) hash ^= ActiveOnly.GetHashCode();
+      if (PageSize != 0) hash ^= PageSize.GetHashCode();
+      if (PageIndex != 0) hash ^= PageIndex.GetHashCode();
+      if (SortDescending != false) hash ^= SortDescending.GetHashCode();
+      if (SearchTerm.Length != 0) hash ^= SearchTerm.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -620,9 +709,30 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (ShopId.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(ShopId);
+      if (SortBy != global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopSortBy.Unspecified) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) SortBy);
+      }
+      types_.WriteTo(output, _repeated_types_codec);
+      if (ActiveOnly != false) {
+        output.WriteRawTag(24);
+        output.WriteBool(ActiveOnly);
+      }
+      if (PageSize != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(PageSize);
+      }
+      if (PageIndex != 0) {
+        output.WriteRawTag(40);
+        output.WriteInt32(PageIndex);
+      }
+      if (SortDescending != false) {
+        output.WriteRawTag(48);
+        output.WriteBool(SortDescending);
+      }
+      if (SearchTerm.Length != 0) {
+        output.WriteRawTag(58);
+        output.WriteString(SearchTerm);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -634,9 +744,30 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (ShopId.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(ShopId);
+      if (SortBy != global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopSortBy.Unspecified) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) SortBy);
+      }
+      types_.WriteTo(ref output, _repeated_types_codec);
+      if (ActiveOnly != false) {
+        output.WriteRawTag(24);
+        output.WriteBool(ActiveOnly);
+      }
+      if (PageSize != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(PageSize);
+      }
+      if (PageIndex != 0) {
+        output.WriteRawTag(40);
+        output.WriteInt32(PageIndex);
+      }
+      if (SortDescending != false) {
+        output.WriteRawTag(48);
+        output.WriteBool(SortDescending);
+      }
+      if (SearchTerm.Length != 0) {
+        output.WriteRawTag(58);
+        output.WriteString(SearchTerm);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -648,8 +779,24 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (ShopId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(ShopId);
+      if (SortBy != global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopSortBy.Unspecified) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) SortBy);
+      }
+      size += types_.CalculateSize(_repeated_types_codec);
+      if (ActiveOnly != false) {
+        size += 1 + 1;
+      }
+      if (PageSize != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(PageSize);
+      }
+      if (PageIndex != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(PageIndex);
+      }
+      if (SortDescending != false) {
+        size += 1 + 1;
+      }
+      if (SearchTerm.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(SearchTerm);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -659,12 +806,28 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(GetShopRequest other) {
+    public void MergeFrom(GetShopsRequest other) {
       if (other == null) {
         return;
       }
-      if (other.ShopId.Length != 0) {
-        ShopId = other.ShopId;
+      if (other.SortBy != global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopSortBy.Unspecified) {
+        SortBy = other.SortBy;
+      }
+      types_.Add(other.types_);
+      if (other.ActiveOnly != false) {
+        ActiveOnly = other.ActiveOnly;
+      }
+      if (other.PageSize != 0) {
+        PageSize = other.PageSize;
+      }
+      if (other.PageIndex != 0) {
+        PageIndex = other.PageIndex;
+      }
+      if (other.SortDescending != false) {
+        SortDescending = other.SortDescending;
+      }
+      if (other.SearchTerm.Length != 0) {
+        SearchTerm = other.SearchTerm;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -685,8 +848,33 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
-          case 10: {
-            ShopId = input.ReadString();
+          case 8: {
+            SortBy = (global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopSortBy) input.ReadEnum();
+            break;
+          }
+          case 18:
+          case 16: {
+            types_.AddEntriesFrom(input, _repeated_types_codec);
+            break;
+          }
+          case 24: {
+            ActiveOnly = input.ReadBool();
+            break;
+          }
+          case 32: {
+            PageSize = input.ReadInt32();
+            break;
+          }
+          case 40: {
+            PageIndex = input.ReadInt32();
+            break;
+          }
+          case 48: {
+            SortDescending = input.ReadBool();
+            break;
+          }
+          case 58: {
+            SearchTerm = input.ReadString();
             break;
           }
         }
@@ -708,8 +896,33 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
           default:
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
-          case 10: {
-            ShopId = input.ReadString();
+          case 8: {
+            SortBy = (global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopSortBy) input.ReadEnum();
+            break;
+          }
+          case 18:
+          case 16: {
+            types_.AddEntriesFrom(ref input, _repeated_types_codec);
+            break;
+          }
+          case 24: {
+            ActiveOnly = input.ReadBool();
+            break;
+          }
+          case 32: {
+            PageSize = input.ReadInt32();
+            break;
+          }
+          case 40: {
+            PageIndex = input.ReadInt32();
+            break;
+          }
+          case 48: {
+            SortDescending = input.ReadBool();
+            break;
+          }
+          case 58: {
+            SearchTerm = input.ReadString();
             break;
           }
         }
@@ -720,16 +933,16 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
   }
 
   [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
-  public sealed partial class GetShopResponse : pb::IMessage<GetShopResponse>
+  public sealed partial class GetShopsResponse : pb::IMessage<GetShopsResponse>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
   #endif
   {
-    private static readonly pb::MessageParser<GetShopResponse> _parser = new pb::MessageParser<GetShopResponse>(() => new GetShopResponse());
+    private static readonly pb::MessageParser<GetShopsResponse> _parser = new pb::MessageParser<GetShopsResponse>(() => new GetShopsResponse());
     private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public static pb::MessageParser<GetShopResponse> Parser { get { return _parser; } }
+    public static pb::MessageParser<GetShopsResponse> Parser { get { return _parser; } }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -745,7 +958,7 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public GetShopResponse() {
+    public GetShopsResponse() {
       OnConstruction();
     }
 
@@ -753,45 +966,100 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public GetShopResponse(GetShopResponse other) : this() {
-      shop_ = other.shop_ != null ? other.shop_.Clone() : null;
+    public GetShopsResponse(GetShopsResponse other) : this() {
+      shops_ = other.shops_.Clone();
+      totalResults_ = other.totalResults_;
+      pageSize_ = other.pageSize_;
+      pageIndex_ = other.pageIndex_;
+      maxPageIndex_ = other.maxPageIndex_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public GetShopResponse Clone() {
-      return new GetShopResponse(this);
+    public GetShopsResponse Clone() {
+      return new GetShopsResponse(this);
     }
 
-    /// <summary>Field number for the "shop" field.</summary>
-    public const int ShopFieldNumber = 1;
-    private global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopData shop_;
+    /// <summary>Field number for the "shops" field.</summary>
+    public const int ShopsFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopData> _repeated_shops_codec
+        = pb::FieldCodec.ForMessage(10, global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopData.Parser);
+    private readonly pbc::RepeatedField<global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopData> shops_ = new pbc::RepeatedField<global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopData>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopData Shop {
-      get { return shop_; }
+    public pbc::RepeatedField<global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopData> Shops {
+      get { return shops_; }
+    }
+
+    /// <summary>Field number for the "total_results" field.</summary>
+    public const int TotalResultsFieldNumber = 2;
+    private long totalResults_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long TotalResults {
+      get { return totalResults_; }
       set {
-        shop_ = value;
+        totalResults_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "page_size" field.</summary>
+    public const int PageSizeFieldNumber = 3;
+    private int pageSize_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int PageSize {
+      get { return pageSize_; }
+      set {
+        pageSize_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "page_index" field.</summary>
+    public const int PageIndexFieldNumber = 4;
+    private int pageIndex_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int PageIndex {
+      get { return pageIndex_; }
+      set {
+        pageIndex_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "max_page_index" field.</summary>
+    public const int MaxPageIndexFieldNumber = 5;
+    private int maxPageIndex_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int MaxPageIndex {
+      get { return maxPageIndex_; }
+      set {
+        maxPageIndex_ = value;
       }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
-      return Equals(other as GetShopResponse);
+      return Equals(other as GetShopsResponse);
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public bool Equals(GetShopResponse other) {
+    public bool Equals(GetShopsResponse other) {
       if (ReferenceEquals(other, null)) {
         return false;
       }
       if (ReferenceEquals(other, this)) {
         return true;
       }
-      if (!object.Equals(Shop, other.Shop)) return false;
+      if(!shops_.Equals(other.shops_)) return false;
+      if (TotalResults != other.TotalResults) return false;
+      if (PageSize != other.PageSize) return false;
+      if (PageIndex != other.PageIndex) return false;
+      if (MaxPageIndex != other.MaxPageIndex) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -799,7 +1067,11 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override int GetHashCode() {
       int hash = 1;
-      if (shop_ != null) hash ^= Shop.GetHashCode();
+      hash ^= shops_.GetHashCode();
+      if (TotalResults != 0L) hash ^= TotalResults.GetHashCode();
+      if (PageSize != 0) hash ^= PageSize.GetHashCode();
+      if (PageIndex != 0) hash ^= PageIndex.GetHashCode();
+      if (MaxPageIndex != 0) hash ^= MaxPageIndex.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -818,9 +1090,22 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
     #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       output.WriteRawMessage(this);
     #else
-      if (shop_ != null) {
-        output.WriteRawTag(10);
-        output.WriteMessage(Shop);
+      shops_.WriteTo(output, _repeated_shops_codec);
+      if (TotalResults != 0L) {
+        output.WriteRawTag(16);
+        output.WriteInt64(TotalResults);
+      }
+      if (PageSize != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(PageSize);
+      }
+      if (PageIndex != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(PageIndex);
+      }
+      if (MaxPageIndex != 0) {
+        output.WriteRawTag(40);
+        output.WriteInt32(MaxPageIndex);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -832,9 +1117,22 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
-      if (shop_ != null) {
-        output.WriteRawTag(10);
-        output.WriteMessage(Shop);
+      shops_.WriteTo(ref output, _repeated_shops_codec);
+      if (TotalResults != 0L) {
+        output.WriteRawTag(16);
+        output.WriteInt64(TotalResults);
+      }
+      if (PageSize != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(PageSize);
+      }
+      if (PageIndex != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(PageIndex);
+      }
+      if (MaxPageIndex != 0) {
+        output.WriteRawTag(40);
+        output.WriteInt32(MaxPageIndex);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -846,8 +1144,18 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public int CalculateSize() {
       int size = 0;
-      if (shop_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Shop);
+      size += shops_.CalculateSize(_repeated_shops_codec);
+      if (TotalResults != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(TotalResults);
+      }
+      if (PageSize != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(PageSize);
+      }
+      if (PageIndex != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(PageIndex);
+      }
+      if (MaxPageIndex != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(MaxPageIndex);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -857,15 +1165,22 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public void MergeFrom(GetShopResponse other) {
+    public void MergeFrom(GetShopsResponse other) {
       if (other == null) {
         return;
       }
-      if (other.shop_ != null) {
-        if (shop_ == null) {
-          Shop = new global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopData();
-        }
-        Shop.MergeFrom(other.Shop);
+      shops_.Add(other.shops_);
+      if (other.TotalResults != 0L) {
+        TotalResults = other.TotalResults;
+      }
+      if (other.PageSize != 0) {
+        PageSize = other.PageSize;
+      }
+      if (other.PageIndex != 0) {
+        PageIndex = other.PageIndex;
+      }
+      if (other.MaxPageIndex != 0) {
+        MaxPageIndex = other.MaxPageIndex;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -887,10 +1202,23 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
             break;
           case 10: {
-            if (shop_ == null) {
-              Shop = new global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopData();
-            }
-            input.ReadMessage(Shop);
+            shops_.AddEntriesFrom(input, _repeated_shops_codec);
+            break;
+          }
+          case 16: {
+            TotalResults = input.ReadInt64();
+            break;
+          }
+          case 24: {
+            PageSize = input.ReadInt32();
+            break;
+          }
+          case 32: {
+            PageIndex = input.ReadInt32();
+            break;
+          }
+          case 40: {
+            MaxPageIndex = input.ReadInt32();
             break;
           }
         }
@@ -913,10 +1241,23 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
             break;
           case 10: {
-            if (shop_ == null) {
-              Shop = new global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopData();
-            }
-            input.ReadMessage(Shop);
+            shops_.AddEntriesFrom(ref input, _repeated_shops_codec);
+            break;
+          }
+          case 16: {
+            TotalResults = input.ReadInt64();
+            break;
+          }
+          case 24: {
+            PageSize = input.ReadInt32();
+            break;
+          }
+          case 32: {
+            PageIndex = input.ReadInt32();
+            break;
+          }
+          case 40: {
+            MaxPageIndex = input.ReadInt32();
             break;
           }
         }
@@ -926,6 +1267,9 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
 
   }
 
+  /// <summary>
+  /// Shop 
+  /// </summary>
   [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
   public sealed partial class ShopData : pb::IMessage<ShopData>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
@@ -962,11 +1306,10 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public ShopData(ShopData other) : this() {
       id_ = other.id_;
-      ownerUserId_ = other.ownerUserId_;
       name_ = other.name_;
-      subdomainName_ = other.subdomainName_;
-      isActive_ = other.isActive_;
       type_ = other.type_;
+      isActive_ = other.isActive_;
+      updatedAt_ = other.updatedAt_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -988,20 +1331,8 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
       }
     }
 
-    /// <summary>Field number for the "owner_user_id" field.</summary>
-    public const int OwnerUserIdFieldNumber = 2;
-    private string ownerUserId_ = "";
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string OwnerUserId {
-      get { return ownerUserId_; }
-      set {
-        ownerUserId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
     /// <summary>Field number for the "name" field.</summary>
-    public const int NameFieldNumber = 3;
+    public const int NameFieldNumber = 2;
     private string name_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -1012,20 +1343,20 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
       }
     }
 
-    /// <summary>Field number for the "subdomainName" field.</summary>
-    public const int SubdomainNameFieldNumber = 4;
-    private string subdomainName_ = "";
+    /// <summary>Field number for the "type" field.</summary>
+    public const int TypeFieldNumber = 3;
+    private global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType type_ = global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType.Unspecified;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public string SubdomainName {
-      get { return subdomainName_; }
+    public global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType Type {
+      get { return type_; }
       set {
-        subdomainName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        type_ = value;
       }
     }
 
     /// <summary>Field number for the "is_active" field.</summary>
-    public const int IsActiveFieldNumber = 5;
+    public const int IsActiveFieldNumber = 4;
     private bool isActive_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -1036,16 +1367,30 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
       }
     }
 
-    /// <summary>Field number for the "type" field.</summary>
-    public const int TypeFieldNumber = 6;
-    private global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType type_ = global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType.Unspecified;
+    /// <summary>Field number for the "updated_at" field.</summary>
+    public const int UpdatedAtFieldNumber = 5;
+    private readonly static string UpdatedAtDefaultValue = "";
+
+    private string updatedAt_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType Type {
-      get { return type_; }
+    public string UpdatedAt {
+      get { return updatedAt_ ?? UpdatedAtDefaultValue; }
       set {
-        type_ = value;
+        updatedAt_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
       }
+    }
+    /// <summary>Gets whether the "updated_at" field is set</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool HasUpdatedAt {
+      get { return updatedAt_ != null; }
+    }
+    /// <summary>Clears the value of the "updated_at" field</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void ClearUpdatedAt() {
+      updatedAt_ = null;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1064,11 +1409,10 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
         return true;
       }
       if (Id != other.Id) return false;
-      if (OwnerUserId != other.OwnerUserId) return false;
       if (Name != other.Name) return false;
-      if (SubdomainName != other.SubdomainName) return false;
-      if (IsActive != other.IsActive) return false;
       if (Type != other.Type) return false;
+      if (IsActive != other.IsActive) return false;
+      if (UpdatedAt != other.UpdatedAt) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -1077,11 +1421,10 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
     public override int GetHashCode() {
       int hash = 1;
       if (Id.Length != 0) hash ^= Id.GetHashCode();
-      if (OwnerUserId.Length != 0) hash ^= OwnerUserId.GetHashCode();
       if (Name.Length != 0) hash ^= Name.GetHashCode();
-      if (SubdomainName.Length != 0) hash ^= SubdomainName.GetHashCode();
+      if (Type != global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType.Unspecified) hash ^= Type.GetHashCode();
       if (IsActive != false) hash ^= IsActive.GetHashCode();
-      if (Type != global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType.Unspecified) hash ^= Type.GetHashCode();
+      if (HasUpdatedAt) hash ^= UpdatedAt.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1104,25 +1447,21 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
         output.WriteRawTag(10);
         output.WriteString(Id);
       }
-      if (OwnerUserId.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(OwnerUserId);
-      }
       if (Name.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(18);
         output.WriteString(Name);
       }
-      if (SubdomainName.Length != 0) {
-        output.WriteRawTag(34);
-        output.WriteString(SubdomainName);
+      if (Type != global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType.Unspecified) {
+        output.WriteRawTag(24);
+        output.WriteEnum((int) Type);
       }
       if (IsActive != false) {
-        output.WriteRawTag(40);
+        output.WriteRawTag(32);
         output.WriteBool(IsActive);
       }
-      if (Type != global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType.Unspecified) {
-        output.WriteRawTag(48);
-        output.WriteEnum((int) Type);
+      if (HasUpdatedAt) {
+        output.WriteRawTag(42);
+        output.WriteString(UpdatedAt);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
@@ -1138,25 +1477,21 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
         output.WriteRawTag(10);
         output.WriteString(Id);
       }
-      if (OwnerUserId.Length != 0) {
-        output.WriteRawTag(18);
-        output.WriteString(OwnerUserId);
-      }
       if (Name.Length != 0) {
-        output.WriteRawTag(26);
+        output.WriteRawTag(18);
         output.WriteString(Name);
       }
-      if (SubdomainName.Length != 0) {
-        output.WriteRawTag(34);
-        output.WriteString(SubdomainName);
+      if (Type != global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType.Unspecified) {
+        output.WriteRawTag(24);
+        output.WriteEnum((int) Type);
       }
       if (IsActive != false) {
-        output.WriteRawTag(40);
+        output.WriteRawTag(32);
         output.WriteBool(IsActive);
       }
-      if (Type != global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType.Unspecified) {
-        output.WriteRawTag(48);
-        output.WriteEnum((int) Type);
+      if (HasUpdatedAt) {
+        output.WriteRawTag(42);
+        output.WriteString(UpdatedAt);
       }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
@@ -1171,20 +1506,17 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
       if (Id.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Id);
       }
-      if (OwnerUserId.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(OwnerUserId);
-      }
       if (Name.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
       }
-      if (SubdomainName.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(SubdomainName);
+      if (Type != global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType.Unspecified) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
       }
       if (IsActive != false) {
         size += 1 + 1;
       }
-      if (Type != global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType.Unspecified) {
-        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
+      if (HasUpdatedAt) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(UpdatedAt);
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -1201,20 +1533,17 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
       if (other.Id.Length != 0) {
         Id = other.Id;
       }
-      if (other.OwnerUserId.Length != 0) {
-        OwnerUserId = other.OwnerUserId;
-      }
       if (other.Name.Length != 0) {
         Name = other.Name;
       }
-      if (other.SubdomainName.Length != 0) {
-        SubdomainName = other.SubdomainName;
+      if (other.Type != global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType.Unspecified) {
+        Type = other.Type;
       }
       if (other.IsActive != false) {
         IsActive = other.IsActive;
       }
-      if (other.Type != global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType.Unspecified) {
-        Type = other.Type;
+      if (other.HasUpdatedAt) {
+        UpdatedAt = other.UpdatedAt;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -1240,23 +1569,19 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
             break;
           }
           case 18: {
-            OwnerUserId = input.ReadString();
-            break;
-          }
-          case 26: {
             Name = input.ReadString();
             break;
           }
-          case 34: {
-            SubdomainName = input.ReadString();
+          case 24: {
+            Type = (global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType) input.ReadEnum();
             break;
           }
-          case 40: {
+          case 32: {
             IsActive = input.ReadBool();
             break;
           }
-          case 48: {
-            Type = (global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType) input.ReadEnum();
+          case 42: {
+            UpdatedAt = input.ReadString();
             break;
           }
         }
@@ -1283,23 +1608,19 @@ namespace ShopifyClone.Cs.ProtoCs.Shop.Types {
             break;
           }
           case 18: {
-            OwnerUserId = input.ReadString();
-            break;
-          }
-          case 26: {
             Name = input.ReadString();
             break;
           }
-          case 34: {
-            SubdomainName = input.ReadString();
+          case 24: {
+            Type = (global::ShopifyClone.Cs.ProtoCs.Shop.Types.ShopType) input.ReadEnum();
             break;
           }
-          case 40: {
+          case 32: {
             IsActive = input.ReadBool();
             break;
           }
-          case 48: {
-            Type = (global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType) input.ReadEnum();
+          case 42: {
+            UpdatedAt = input.ReadString();
             break;
           }
         }

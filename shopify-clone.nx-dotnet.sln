@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shop-configuration-service.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "shop-service.Tests", "apps\services\shop-service\test\shop-service.Tests\shop-service.Tests.csproj", "{84CA705C-3385-41FB-A112-00EB3190076C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "product-service", "apps\services\product-service\src\product-service\product-service.csproj", "{06F7D261-401F-4EA7-914B-7AAD29DE0854}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +125,18 @@ Global
 		{84CA705C-3385-41FB-A112-00EB3190076C}.Release|x64.Build.0 = Release|Any CPU
 		{84CA705C-3385-41FB-A112-00EB3190076C}.Release|x86.ActiveCfg = Release|Any CPU
 		{84CA705C-3385-41FB-A112-00EB3190076C}.Release|x86.Build.0 = Release|Any CPU
+		{06F7D261-401F-4EA7-914B-7AAD29DE0854}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06F7D261-401F-4EA7-914B-7AAD29DE0854}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06F7D261-401F-4EA7-914B-7AAD29DE0854}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{06F7D261-401F-4EA7-914B-7AAD29DE0854}.Debug|x64.Build.0 = Debug|Any CPU
+		{06F7D261-401F-4EA7-914B-7AAD29DE0854}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{06F7D261-401F-4EA7-914B-7AAD29DE0854}.Debug|x86.Build.0 = Debug|Any CPU
+		{06F7D261-401F-4EA7-914B-7AAD29DE0854}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06F7D261-401F-4EA7-914B-7AAD29DE0854}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06F7D261-401F-4EA7-914B-7AAD29DE0854}.Release|x64.ActiveCfg = Release|Any CPU
+		{06F7D261-401F-4EA7-914B-7AAD29DE0854}.Release|x64.Build.0 = Release|Any CPU
+		{06F7D261-401F-4EA7-914B-7AAD29DE0854}.Release|x86.ActiveCfg = Release|Any CPU
+		{06F7D261-401F-4EA7-914B-7AAD29DE0854}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -139,5 +153,6 @@ Global
 		{6018240C-90D7-4121-B8AC-67D13741E11C} = {7D78A933-E070-91E6-0665-0550164ABA83}
 		{CD31B3BC-841E-470F-AEFB-443F4E6239FE} = {7D78A933-E070-91E6-0665-0550164ABA83}
 		{84CA705C-3385-41FB-A112-00EB3190076C} = {7D78A933-E070-91E6-0665-0550164ABA83}
+		{06F7D261-401F-4EA7-914B-7AAD29DE0854} = {7D78A933-E070-91E6-0665-0550164ABA83}
 	EndGlobalSection
 EndGlobal

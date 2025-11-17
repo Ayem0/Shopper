@@ -4,31 +4,57 @@ package shop;
 
 option csharp_namespace = "ShopifyClone.Cs.ProtoCs.Shop.Types";
 
-import "common/common_types.proto";
-
+// Create Shop
 message CreateShopRequest {
     string name = 1;
-    string subdomain_name = 2;
-    common.ShopType type = 3;
+    ShopType type = 2;
 }
 
 message CreateShopResponse {
     string shop_id = 1;
 }
 
-message GetShopRequest {
-    string shop_id = 1;
+// Get Shops
+message GetShopsRequest {
+    ShopSortBy sort_by = 1;
+    repeated ShopType types = 2;
+    bool active_only = 3;
+    int32 page_size = 4;
+    int32 page_index = 5;
+    bool sort_descending = 6;
+    string search_term = 7;
 }
 
-message GetShopResponse {
-    ShopData shop = 1;
+message GetShopsResponse {
+    repeated ShopData shops = 1;
+    int64 total_results = 2;
+    int32 page_size = 3;
+    int32 page_index = 4;
+    int32 max_page_index = 5;
 }
 
+// Shop 
 message ShopData {
     string id = 1;
-    string owner_user_id = 2;
-    string name = 3;
-    string subdomainName = 4;
-    bool is_active = 5;
-    common.ShopType type = 6;
+    string name = 2;
+    ShopType type = 3;
+    bool is_active = 4;
+    optional string updated_at = 5;
+}
+
+// Enums
+enum ShopType
+{
+    SHOP_TYPE_UNSPECIFIED = 0;
+    SHOP_TYPE_FASHION = 1; 
+}
+
+enum ShopSortBy {
+    SHOP_SORT_BY_UNSPECIFIED = 0;
+    SHOP_SORT_BY_UPDATED_AT = 1;
+    SHOP_SORT_BY_NAME = 2;
+}
+
+enum ShopUserType {
+    SHOP_USER_TYPE_OWNER = 0;
 }

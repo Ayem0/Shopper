@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package product;
+
+option csharp_namespace = "ShopifyClone.Cs.ProtoCs.Product.Types";
+
+message ProductData {
+    string name = 1;
+    repeated ProductCategoryData categories = 2;
+    repeated ProductVariant variants = 3;
+}
+
+message ProductVariant {
+    
+}
+
+message ProductCategoryData {
+    string name = 1;
+    string parent_category_id = 2;
+
+}
+
+message CreateProductCategoryRequest {
+    string name = 1;
+    string parent_category_id = 2;
+    optional string updated_at = 5;
+}
+

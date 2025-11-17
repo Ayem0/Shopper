@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="src\Core\" />
     <Folder Include="src\Core\Models\" />
     <Folder Include="src\Infra\Auth\" />
   </ItemGroup>

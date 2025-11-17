@@ -29,6 +29,32 @@ Resources:
           Properties:
             Path: /
             Method: POST
+  shopserviceApiEndpointsGetShopsGenerated:
+    Type: AWS::Serverless::Function
+    Metadata:
+      SamResourceId: shopserviceApiEndpointsGetShopsGenerated
+      SyncedEventProperties:
+        RootGet:
+        - Path
+        - Method
+      SyncedEvents:
+      - RootGet
+      Tool: Amazon.Lambda.Annotations
+    Properties:
+      Runtime: dotnet8
+      CodeUri: shopserviceApiEndpointsGetShopsGenerated
+      MemorySize: 512
+      Timeout: 30
+      Policies:
+      - AWSLambdaBasicExecutionRole
+      PackageType: Zip
+      Handler: shop-service::shop_service.ApiEndpoints_GetShops_Generated::GetShops
+      Events:
+        RootGet:
+          Type: HttpApi
+          Properties:
+            Path: /
+            Method: GET
 Outputs:
   ApiURL:
     Description: API endpoint URL for Prod environment

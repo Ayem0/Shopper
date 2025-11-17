@@ -10,10 +10,10 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <!-- Generate ready to run images during publishing to improvement cold starts. -->
     <PublishReadyToRun>true</PublishReadyToRun>
-    <!-- Generate using native aot -->
-    <!-- <PublishAot>true</PublishAot>
+    <!-- Generate using native aot 
+    <PublishAot>true</PublishAot> -->
     <StripSymbols>true</StripSymbols>
-    <TrimMode>partial</TrimMode> -->
+    <TrimMode>partial</TrimMode> 
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Amazon.Lambda.Core" Version="2.7.0" />

@@ -4,11 +4,7 @@ package common;
 
 option csharp_namespace = "ShopifyClone.Cs.ProtoCs.Common.Types";
 
-enum ShopType
-{
-    SHOP_TYPE_UNSPECIFIED = 0;
-    SHOP_TYPE_FASHION = 1; 
-}
+
 
 enum SubscriptionType
 {
@@ -32,3 +28,4 @@ enum CreationStatus
     CREATION_STATUS_SUCCEEDED = 2;
     CREATION_STATUS_FAILED = 3;
 }
+

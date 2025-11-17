@@ -4,7 +4,7 @@
   "files": [],
   "references": [
     {
-      "path": "./apps/web/platform"
+      "path": "./apps/web/platform",
     },
     {
       "path": "./libs/ts/ui"
@@ -14,6 +14,9 @@
     },
     {
       "path": "./libs/ts/proto-ts"
+    },
+    {
+      "path": "./libs/ts/auth"
     }
   ]
 }

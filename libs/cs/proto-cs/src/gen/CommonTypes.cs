@@ -24,44 +24,26 @@ namespace ShopifyClone.Cs.ProtoCs.Common.Types {
     static CommonTypesReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Chljb21tb24vY29tbW9uX3R5cGVzLnByb3RvEgZjb21tb24aIGdvb2dsZS9w",
-            "cm90b2J1Zi9kZXNjcmlwdG9yLnByb3RvKjwKCFNob3BUeXBlEhkKFVNIT1Bf",
-            "VFlQRV9VTlNQRUNJRklFRBAAEhUKEVNIT1BfVFlQRV9GQVNISU9OEAEqbgoQ",
-            "U3Vic2NyaXB0aW9uVHlwZRIeChpTVUJTQ1JJUFRJT05fVFlQRV9TVEFOREFS",
-            "RBAAEhoKFlNVQlNDUklQVElPTl9UWVBFX1RFQU0QARIeChpTVUJTQ1JJUFRJ",
-            "T05fVFlQRV9CVVNJTkVTUxACKqEBChJTdWJzY3JpcHRpb25TdGF0dXMSIAoc",
-            "U1VCU0NSSVBUSU9OX1NUQVRVU19JTkFDVElWRRAAEicKI1NVQlNDUklQVElP",
-            "Tl9TVEFUVVNfUEVORElOR19QQVlNRU5UEAESHgoaU1VCU0NSSVBUSU9OX1NU",
-            "QVRVU19BQ1RJVkUQAhIgChxTVUJTQ1JJUFRJT05fU1RBVFVTX0NBTkNFTEVE",
-            "EAMqjQEKDkNyZWF0aW9uU3RhdHVzEh8KG0NSRUFUSU9OX1NUQVRVU19OT1Rf",
-            "U1RBUlRFRBAAEh8KG0NSRUFUSU9OX1NUQVRVU19JTl9QUk9HUkVTUxABEh0K",
-            "GUNSRUFUSU9OX1NUQVRVU19TVUNDRUVERUQQAhIaChZDUkVBVElPTl9TVEFU",
-            "VVNfRkFJTEVEEAM6QAoKdG9waWNfbmFtZRIfLmdvb2dsZS5wcm90b2J1Zi5N",
-            "ZXNzYWdlT3B0aW9ucxiDsgMgASgJUgl0b3BpY05hbWU6QAoKZXZlbnRfbmFt",
-            "ZRIfLmdvb2dsZS5wcm90b2J1Zi5NZXNzYWdlT3B0aW9ucxjqiAQgASgJUgll",
-            "dmVudE5hbWVCJ6oCJFNob3BpZnlDbG9uZS5Dcy5Qcm90b0NzLkNvbW1vbi5U",
-            "eXBlc2IGcHJvdG8z"));
+            "Chljb21tb24vY29tbW9uX3R5cGVzLnByb3RvEgZjb21tb24qbgoQU3Vic2Ny",
+            "aXB0aW9uVHlwZRIeChpTVUJTQ1JJUFRJT05fVFlQRV9TVEFOREFSRBAAEhoK",
+            "FlNVQlNDUklQVElPTl9UWVBFX1RFQU0QARIeChpTVUJTQ1JJUFRJT05fVFlQ",
+            "RV9CVVNJTkVTUxACKqEBChJTdWJzY3JpcHRpb25TdGF0dXMSIAocU1VCU0NS",
+            "SVBUSU9OX1NUQVRVU19JTkFDVElWRRAAEicKI1NVQlNDUklQVElPTl9TVEFU",
+            "VVNfUEVORElOR19QQVlNRU5UEAESHgoaU1VCU0NSSVBUSU9OX1NUQVRVU19B",
+            "Q1RJVkUQAhIgChxTVUJTQ1JJUFRJT05fU1RBVFVTX0NBTkNFTEVEEAMqjQEK",
+            "DkNyZWF0aW9uU3RhdHVzEh8KG0NSRUFUSU9OX1NUQVRVU19OT1RfU1RBUlRF",
+            "RBAAEh8KG0NSRUFUSU9OX1NUQVRVU19JTl9QUk9HUkVTUxABEh0KGUNSRUFU",
+            "SU9OX1NUQVRVU19TVUNDRUVERUQQAhIaChZDUkVBVElPTl9TVEFUVVNfRkFJ",
+            "TEVEEANCJ6oCJFNob3BpZnlDbG9uZS5Dcy5Qcm90b0NzLkNvbW1vbi5UeXBl",
+            "c2IGcHJvdG8z"));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
-          new pbr::FileDescriptor[] { global::Google.Protobuf.Reflection.DescriptorReflection.Descriptor, },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::ShopifyClone.Cs.ProtoCs.Common.Types.ShopType), typeof(global::ShopifyClone.Cs.ProtoCs.Common.Types.SubscriptionType), typeof(global::ShopifyClone.Cs.ProtoCs.Common.Types.SubscriptionStatus), typeof(global::ShopifyClone.Cs.ProtoCs.Common.Types.CreationStatus), }, new pb::Extension[] { CommonTypesExtensions.TopicName, CommonTypesExtensions.EventName }, null));
+          new pbr::FileDescriptor[] { },
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::ShopifyClone.Cs.ProtoCs.Common.Types.SubscriptionType), typeof(global::ShopifyClone.Cs.ProtoCs.Common.Types.SubscriptionStatus), typeof(global::ShopifyClone.Cs.ProtoCs.Common.Types.CreationStatus), }, null, null));
     }
     #endregion
 
   }
-  /// <summary>Holder for extension identifiers generated from the top level of common/common_types.proto</summary>
-  public static partial class CommonTypesExtensions {
-    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, string> TopicName =
-      new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, string>(55555, pb::FieldCodec.ForString(444442, ""));
-    public static readonly pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, string> EventName =
-      new pb::Extension<global::Google.Protobuf.Reflection.MessageOptions, string>(66666, pb::FieldCodec.ForString(533330, ""));
-  }
-
   #region Enums
-  public enum ShopType {
-    [pbr::OriginalName("SHOP_TYPE_UNSPECIFIED")] Unspecified = 0,
-    [pbr::OriginalName("SHOP_TYPE_FASHION")] Fashion = 1,
-  }
-
   public enum SubscriptionType {
     [pbr::OriginalName("SUBSCRIPTION_TYPE_STANDARD")] Standard = 0,
     [pbr::OriginalName("SUBSCRIPTION_TYPE_TEAM")] Team = 1,

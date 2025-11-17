@@ -6,39 +6,6 @@
 
 /* eslint-disable */
 
-export enum ShopType {
-  SHOP_TYPE_UNSPECIFIED = 0,
-  SHOP_TYPE_FASHION = 1,
-  UNRECOGNIZED = -1,
-}
-
-export function shopTypeFromJSON(object: any): ShopType {
-  switch (object) {
-    case 0:
-    case "SHOP_TYPE_UNSPECIFIED":
-      return ShopType.SHOP_TYPE_UNSPECIFIED;
-    case 1:
-    case "SHOP_TYPE_FASHION":
-      return ShopType.SHOP_TYPE_FASHION;
-    case -1:
-    case "UNRECOGNIZED":
-    default:
-      return ShopType.UNRECOGNIZED;
-  }
-}
-
-export function shopTypeToJSON(object: ShopType): string {
-  switch (object) {
-    case ShopType.SHOP_TYPE_UNSPECIFIED:
-      return "SHOP_TYPE_UNSPECIFIED";
-    case ShopType.SHOP_TYPE_FASHION:
-      return "SHOP_TYPE_FASHION";
-    case ShopType.UNRECOGNIZED:
-    default:
-      return "UNRECOGNIZED";
-  }
-}
-
 export enum SubscriptionType {
   SUBSCRIPTION_TYPE_STANDARD = 0,
   SUBSCRIPTION_TYPE_TEAM = 1,

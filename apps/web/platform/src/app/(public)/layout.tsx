@@ -1,6 +1,6 @@
 import { Footer } from '@/components/footer/footer';
-import Header from '@/components/header/header';
-import { Providers } from '@/components/providers/providers';
+import PublicHeader from '@/components/header/public-header';
+import { PublicProviders } from '@/components/providers/public-providers';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import '../global.css';
@@ -30,11 +30,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Providers>
-          <Header />
+        <PublicProviders>
+          <PublicHeader />
           <main className="bg-background">{children}</main>
           <Footer />
-        </Providers>
+        </PublicProviders>
       </body>
     </html>
   );

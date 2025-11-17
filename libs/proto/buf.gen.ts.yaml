@@ -15,3 +15,5 @@ plugins:
       - esModuleInterop=true
       - importSuffix=.js
       - exportCommonSymbols=false
+      - useOptionals=true
+      # - outputSchema=true
