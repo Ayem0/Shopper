@@ -10,7 +10,7 @@ function normalizePathname(pathname: string) {
   return pathname.toLowerCase();
 }
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   const session = await getToken({
     req: request,
     secret: process.env.NEXTAUTH_SECRET,

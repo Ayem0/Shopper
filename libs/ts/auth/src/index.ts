@@ -1,1 +1,1 @@
-export * from './lib/user.js';
+export * from './lib/user';
