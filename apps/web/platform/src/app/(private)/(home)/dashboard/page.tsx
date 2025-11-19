@@ -1,36 +1,26 @@
-import TestDropdownSelect from '@/components/test/test-dropdown-select';
+import { ShopTable } from '@/components/store/shop-table';
 import { getQueryClient } from '@/lib/queries/get-query-client';
 import { getShops } from '@/lib/queries/get-shops-query';
-import { GetShopsRequest, ShopSortBy, ShopType } from '@shopify-clone/proto-ts';
+import { storeSearchParamsCache } from '@/lib/search-params/store-search-params';
+import { GetShopsRequest } from '@shopify-clone/proto-ts';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
+import { SearchParams } from 'nuqs/server';
+
+type PageProps = {
+  searchParams: Promise<SearchParams> // Next.js 15+: async searchParams prop
+}
 
 export default async function DashboardPage({
   searchParams,
-}: {
-  searchParams: Promise<{
-    [key: string]: string | string[] | undefined;
-  }>;
-}) {
+}: PageProps) {
   const queryClient = getQueryClient();
-  const params = await searchParams;
-  const searchTerm = (params.s as string) ?? '';
-  const activeOnly = params.active === 'true';
-  const pageIndex = Number(params.page ?? 0);
-  const pageSize = Number(params.size ?? 10);
-  let sortBy = Number(params.sort);
-  if (sortBy !== 1 && sortBy !== 2) sortBy = 1;
-  const sortDesc = params.desc === 'true';
-  const types: ShopType[] = Array.isArray(params.type)
-    ? params.type.map((t) => Number(t))
-    : params.type
-    ? [Number(params.type)]
-    : [];
+  const { search, active, pageIndex, pageSize, sort, desc, types } = await storeSearchParamsCache.parse(searchParams)
 
   const req: GetShopsRequest = {
-    activeOnly,
-    searchTerm,
-    sortBy: sortBy as ShopSortBy,
-    sortDescending: sortDesc,
+    activeOnly: active,
+    searchTerm: search,
+    sortBy: sort,
+    sortDescending: desc,
     pageIndex,
     pageSize,
     types,
@@ -41,9 +31,9 @@ export default async function DashboardPage({
       'shops',
       {
         pagination: { pageIndex, pageSize },
-        sorting: [{ id: sortBy.toString(), desc: sortDesc }],
-        searchTerm,
-        activeOnly,
+        sorting: [{ id: sort.toString(), desc }],
+        searchTerm: search,
+        activeOnly: active,
         types,
       },
     ],
@@ -54,14 +44,7 @@ export default async function DashboardPage({
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className="flex size-full">
-        <TestDropdownSelect />
-        {/* <ShopTable
-          activeOnly={activeOnly}
-          pagination={{ pageIndex: pageIndex, pageSize: pageSize }}
-          searchTerm={searchTerm}
-          sorting={[{ id: String(sortBy), desc: sortDesc }]}
-          types={types}
-        /> */}
+        <ShopTable/>
       </div>
     </HydrationBoundary>
   );

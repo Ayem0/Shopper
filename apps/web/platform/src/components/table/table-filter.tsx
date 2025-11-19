@@ -1,5 +1,6 @@
 'use client';
 
+import { useDebounceCallback } from '@/hooks/use-debounce-callback';
 import {
   Button,
   DropdownMenu,
@@ -16,6 +17,7 @@ import {
   Switch,
 } from '@shopify-clone/ui';
 import { ListFilter } from 'lucide-react';
+import { memo, useState } from 'react';
 
 export type TableFilterType = 'checkbox' | 'switch' | 'radio';
 
@@ -41,7 +43,7 @@ export type TableFilterSwitch = {
 
 export type TableFilterRadio = {
   type: 'radio';
-  value?: string;
+  value: string;
   onValueChange: (value: string) => void;
   options: {
     label: string;
@@ -58,7 +60,9 @@ type TableFilterProps = {
   filters: TableFilterItem[];
 };
 
-export function TableFilter({ filters }: TableFilterProps) {
+export const TableFilter = memo(function TableFilter({
+  filters,
+}: TableFilterProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -80,14 +84,22 @@ export function TableFilter({ filters }: TableFilterProps) {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+});
 
-function TableFilterRadio({ filter }: { filter: TableFilterRadio }) {
+const TableFilterRadio = memo(function TableFilterRadio({
+  filter,
+}: {
+  filter: TableFilterRadio;
+}) {
+  const [value, setValue] = useState(filter.value);
+
+  useDebounceCallback(value, filter.onValueChange, 500);
+
   return (
     <TableFilterGroup label={filter.label}>
       <DropdownMenuRadioGroup
-        value={filter.value}
-        onValueChange={(v) => filter.onValueChange(v)}
+        value={value}
+        onValueChange={(v) => setValue(v)}
       >
         {filter.options.map((o) => (
           <DropdownMenuRadioItem key={o.label} value={o.value}>
@@ -97,36 +109,70 @@ function TableFilterRadio({ filter }: { filter: TableFilterRadio }) {
       </DropdownMenuRadioGroup>
     </TableFilterGroup>
   );
-}
+});
 
-function TableFilterCheckbox({ filter }: { filter: TableFilterCheckbox }) {
+const TableFilterCheckbox = memo(function TableFilterCheckbox({
+  filter,
+}: {
+  filter: TableFilterCheckbox;
+}) {
   return (
     <TableFilterGroup label={filter.label}>
       {filter.options.map((o) => (
-        <DropdownMenuCheckboxItem
-          checked={o.checked}
+        <DebouncedDropdownCheckboxItem
           key={o.label}
-          onSelect={(e) => e.preventDefault()}
-          onCheckedChange={(e) => o.onCheckedChange(e)}
-        >
-          {o.label}
-        </DropdownMenuCheckboxItem>
+          label={o.label}
+          checked={o.checked}
+          onCheckedChange={o.onCheckedChange}
+        />
       ))}
     </TableFilterGroup>
   );
+});
+
+function DebouncedDropdownCheckboxItem({
+  label,
+  checked: initialChecked,
+  onCheckedChange,
+}: {
+  label: string;
+  checked: boolean;
+  onCheckedChange: (checked: boolean) => void;
+}) {
+  const [checked, setChecked] = useState(initialChecked);
+
+  useDebounceCallback(checked, onCheckedChange, 500);
+
+  return (
+    <DropdownMenuCheckboxItem
+      checked={checked}
+      onSelect={(e) => e.preventDefault()}
+      onCheckedChange={setChecked}
+    >
+      {label}
+    </DropdownMenuCheckboxItem>
+  );
 }
 
-function TableFilterSwitch({ filter }: { filter: TableFilterSwitch }) {
+const TableFilterSwitch = memo(function TableFilterSwitch({
+  filter,
+}: {
+  filter: TableFilterSwitch;
+}) {
+  const [checked, setChecked] = useState(filter.checked);
+
+  useDebounceCallback(checked, filter.onCheckedChange, 500);
+
   return (
     <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
       {filter.label}
       <Switch
-        checked={filter.checked}
-        onCheckedChange={(e) => filter.onCheckedChange(e)}
+        checked={checked}
+        onCheckedChange={setChecked}
       />
     </DropdownMenuItem>
   );
-}
+});
 
 function TableFilterGroup({
   label,

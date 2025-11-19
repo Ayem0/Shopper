@@ -1,3 +1,5 @@
+"use client"
+
 import { Table } from '@tanstack/react-table';
 import {
   ChevronLeft,
@@ -35,8 +37,7 @@ export function DataTablePagination<TData>({
     <div
       className={cn(
         'flex items-center justify-between w-full',
-        className,
-        table.getPageCount() <= 0 && 'hidden'
+        className
       )}
     >
       {hasSelection && (
