@@ -1,12 +1,6 @@
 'use client';
 
 import {
-  flexRender,
-  RowData,
-  Table as TanstackTable,
-} from '@tanstack/react-table';
-
-import {
   Skeleton,
   Spinner,
   Table,
@@ -16,6 +10,11 @@ import {
   TableHeader,
   TableRow,
 } from '@shopify-clone/ui';
+import {
+  flexRender,
+  RowData,
+  Table as TanstackTable,
+} from '@tanstack/react-table';
 import { motion } from 'motion/react';
 
 declare module '@tanstack/react-table' {

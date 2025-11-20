@@ -60,7 +60,7 @@ type TableFilterProps = {
   filters: TableFilterItem[];
 };
 
-export const TableFilter = memo(function TableFilter({
+export const DataTableFilter = memo(function DataTableFilter({
   filters,
 }: TableFilterProps) {
   return (
@@ -174,7 +174,7 @@ const TableFilterSwitch = memo(function TableFilterSwitch({
   );
 });
 
-function TableFilterGroup({
+const TableFilterGroup = memo(function TableFilterGroup({
   label,
   children,
 }: {
@@ -189,4 +189,4 @@ function TableFilterGroup({
       </DropdownMenuPortal>
     </DropdownMenuSub>
   );
-}
+});

@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Button,
   DropdownMenu,
@@ -8,19 +10,20 @@ import {
 } from '@shopify-clone/ui';
 import { Table } from '@tanstack/react-table';
 import { ArrowDownUp, LucideIcon } from 'lucide-react';
+import { memo } from 'react';
 
-export interface SortOptions {
+export interface TableSortOptions {
   label: string;
   icon?: LucideIcon;
   value: string;
 }
 
 type TableSortProps<TData> = {
-  options: SortOptions[];
+  options: TableSortOptions[];
   table: Table<TData>;
 };
 
-export function TableSort<TData>({ options, table }: TableSortProps<TData>) {
+function TableSort<TData>({ options, table }: TableSortProps<TData>) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -55,3 +58,4 @@ export function TableSort<TData>({ options, table }: TableSortProps<TData>) {
     </DropdownMenu>
   );
 }
+export const DataTableSort = memo(TableSort) as typeof TableSort;

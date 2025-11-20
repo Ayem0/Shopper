@@ -1,3 +1,4 @@
+import { useDebounce } from '@/hooks/use-debounce';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import {
   ColumnDef,
@@ -40,21 +41,24 @@ export function useDataTable<TFilters, TData>({
   onPaginationChange,
   onSortingChange,
 }: UseDataTableProps<TFilters, TData>) {
+  const debouncedPagination = useDebounce(pagination, 500);
+  const debouncedSorting = useDebounce(sorting, 500);
+
   const stableKey = useMemo(
     () => [
       queryKey,
       {
         filters,
-        pagination,
-        sorting,
+        debouncedPagination,
+        debouncedSorting,
       },
     ],
-    [queryKey, filters, pagination, sorting]
+    [queryKey, filters, debouncedPagination, debouncedSorting]
   );
 
   const query = useQuery({
     queryKey: stableKey,
-    queryFn: ({ signal }) => fetchFn(filters, pagination, sorting, signal),
+    queryFn: ({ signal }) => fetchFn(filters, debouncedPagination, debouncedSorting, signal),
     refetchOnWindowFocus: false,
     placeholderData: keepPreviousData,
   });

@@ -1,14 +1,15 @@
 'use client';
 
+import { DataTable } from '@/components/table/data-table';
+import { DataTableFilter } from '@/components/table/data-table-filter';
+import { DataTablePagination } from '@/components/table/data-table-pagination';
+import { DataTableSort } from '@/components/table/data-table-sort';
 import { Button } from '@shopify-clone/ui';
 import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { Plus, Search } from 'lucide-react';
+import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import { useReducer } from 'react';
-import { FilterGroup, FilterItem } from '../filters/filter-group';
-import { DataTable } from '../table/data-table';
-import { DataTablePagination } from '../table/table-pagination';
 import { productColumns, ProductData } from './product-columns';
 
 export function ProductTable() {
@@ -32,34 +33,34 @@ export function ProductTable() {
     categories: [],
     sorting: 1,
   });
-  const filterItems: FilterItem[] = [
-    {
-      filterType: 'input',
-      type: 'search',
-      defaultValue: filters.searchTerm,
-      id: 'product-search-input',
-      onChange: (value) =>
-        dispatch({ type: 'setSearchTerm', newSearchTerm: value }),
-      placehodler: 'Search',
-      icon: Search,
-    },
-    {
-      filterType: 'select',
-      defaultValue: { label: 'All', value: 'all' },
-      id: 'product-status-select',
-      onChange: (value) =>
-        dispatch({
-          type: 'setStatus',
-          newStatus: value as 'all' | 'draft' | 'active' | 'inactive',
-        }),
-      values: [
-        { label: 'All', value: 'all' },
-        { label: 'Draft', value: 'draft' },
-        { label: 'Active', value: 'active' },
-        { label: 'Inactive', value: 'inactive' },
-      ],
-    },
-  ];
+  // const filterItems: FilterItem[] = [
+  //   {
+  //     filterType: 'input',
+  //     type: 'search',
+  //     defaultValue: filters.searchTerm,
+  //     id: 'product-search-input',
+  //     onChange: (value) =>
+  //       dispatch({ type: 'setSearchTerm', newSearchTerm: value }),
+  //     placehodler: 'Search',
+  //     icon: Search,
+  //   },
+  //   {
+  //     filterType: 'select',
+  //     defaultValue: { label: 'All', value: 'all' },
+  //     id: 'product-status-select',
+  //     onChange: (value) =>
+  //       dispatch({
+  //         type: 'setStatus',
+  //         newStatus: value as 'all' | 'draft' | 'active' | 'inactive',
+  //       }),
+  //     values: [
+  //       { label: 'All', value: 'all' },
+  //       { label: 'Draft', value: 'draft' },
+  //       { label: 'Active', value: 'active' },
+  //       { label: 'Inactive', value: 'inactive' },
+  //     ],
+  //   },
+  // ];
   const table = useReactTable({
     columns: productColumns,
     data: [
@@ -368,7 +369,8 @@ export function ProductTable() {
     <div className="flex w-full flex-col gap-2 mx-4 overflow-hidden">
       <div className="flex w-full justify-between">
         <div className="flex flex-col md:flex-row gap-2">
-          <FilterGroup filters={filterItems} />
+          <DataTableFilter filters={[]} />
+          <DataTableSort options={[]} table={table} />
         </div>
         <Button asChild>
           <Link href={`/store/${shopId}/products/create`}>
@@ -377,15 +379,8 @@ export function ProductTable() {
           </Link>
         </Button>
       </div>
-      <DataTable
-        table={table}
-        isFetching={isFetching}
-        isPending={isPending}
-        onRowClick={(id) => router.push(`/store/${shopId}/products/${id}`)}
-      />
-
+      <DataTable table={table} />
       <DataTablePagination
-        disabled={isFetching}
         hasSelection={false}
         pageSizes={[10, 25, 50]}
         table={table}

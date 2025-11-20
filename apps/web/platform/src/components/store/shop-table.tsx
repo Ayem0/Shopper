@@ -1,31 +1,25 @@
 'use client';
 
 import { ApiError } from '@/components/errors/api-error';
+import { shopColumns } from '@/components/store/shops-columns';
+import { DataTable } from '@/components/table/data-table';
+import { TableFilterItem } from '@/components/table/data-table-filter';
+import { DataTableHeader } from '@/components/table/data-table-header';
+import { DataTablePagination } from '@/components/table/data-table-pagination';
+import { TableSortOptions } from '@/components/table/data-table-sort';
 import { useDataTable } from '@/hooks/use-data-table';
 import { getShops } from '@/lib/queries/get-shops-query';
-import { storeSearchParamsParsers, storeSearchParamsUrlKeys } from '@/lib/search-params/store-search-params';
-import { ShopSortBy, ShopType } from '@shopify-clone/proto-ts';
-import { Button } from '@shopify-clone/ui';
-import { PaginationState, SortingState } from '@tanstack/react-table';
 import {
-  ArrowDown01,
-  ArrowDownZa,
-  ArrowUp10,
-  ArrowUpAz,
-  Plus,
-  Search,
-} from 'lucide-react';
-import Link from 'next/link';
+  storeSearchParamsParsers,
+  storeSearchParamsUrlKeys,
+} from '@/lib/search-params/store-search-params';
+import { ShopSortBy, ShopType } from '@shopify-clone/proto-ts';
+import { PaginationState, SortingState } from '@tanstack/react-table';
+import { ArrowDown01, ArrowDownZa, ArrowUp10, ArrowUpAz } from 'lucide-react';
 import { useQueryState } from 'nuqs';
 import { useMemo } from 'react';
-import { DataTable } from '../table/data-table';
-import { DebouncedInput } from '../table/debounced-input';
-import { TableFilter, TableFilterItem } from '../table/table-filter';
-import { DataTablePagination } from '../table/table-pagination';
-import { SortOptions, TableSort } from '../table/table-sort';
-import { shopColumns } from './shops-columns';
 
-const shopSortByOptions: SortOptions[] = [
+const shopSortByOptions: TableSortOptions[] = [
   {
     label: 'Name',
     icon: ArrowUpAz,
@@ -57,27 +51,54 @@ const shopTypes: {
 ] as const;
 
 export function ShopTable() {
-  const [page, setPage] = useQueryState(storeSearchParamsUrlKeys.pageIndex, storeSearchParamsParsers.pageIndex);
-  const [size, setSize] = useQueryState(storeSearchParamsUrlKeys.pageSize, storeSearchParamsParsers.pageSize);
-  const [sort, setSort] = useQueryState(storeSearchParamsUrlKeys.sort, storeSearchParamsParsers.sort);
-  const [desc, setDesc] = useQueryState(storeSearchParamsUrlKeys.desc, storeSearchParamsParsers.desc);
-  const [search, setSearch] = useQueryState(storeSearchParamsUrlKeys.search, storeSearchParamsParsers.search);
-  const [active, setActive] = useQueryState(storeSearchParamsUrlKeys.active, storeSearchParamsParsers.active);
-  const [types, setTypes] = useQueryState(storeSearchParamsUrlKeys.types, storeSearchParamsParsers.types);
+  const [page, setPage] = useQueryState(
+    storeSearchParamsUrlKeys.pageIndex,
+    storeSearchParamsParsers.pageIndex
+  );
+  const [size, setSize] = useQueryState(
+    storeSearchParamsUrlKeys.pageSize,
+    storeSearchParamsParsers.pageSize
+  );
+  const [sort, setSort] = useQueryState(
+    storeSearchParamsUrlKeys.sort,
+    storeSearchParamsParsers.sort
+  );
+  const [desc, setDesc] = useQueryState(
+    storeSearchParamsUrlKeys.desc,
+    storeSearchParamsParsers.desc
+  );
+  const [search, setSearch] = useQueryState(
+    storeSearchParamsUrlKeys.search,
+    storeSearchParamsParsers.search
+  );
+  const [active, setActive] = useQueryState(
+    storeSearchParamsUrlKeys.active,
+    storeSearchParamsParsers.active
+  );
+  const [types, setTypes] = useQueryState(
+    storeSearchParamsUrlKeys.types,
+    storeSearchParamsParsers.types
+  );
 
-  const pagination: PaginationState = useMemo(() => ({
-    pageIndex: page,
-    pageSize: size,
-  }), [page, size]);
-  
-  const sorting: SortingState = useMemo(() => [
-    {
-      id: sort.toString() ?? ShopSortBy.SHOP_SORT_BY_UPDATED_AT.toString(),
-      desc: desc,
-    },
-  ], [sort, desc]);
+  const pagination: PaginationState = useMemo(
+    () => ({
+      pageIndex: page,
+      pageSize: size,
+    }),
+    [page, size]
+  );
 
-  const { table, isError, isFetching, refetch } = useDataTable({
+  const sorting: SortingState = useMemo(
+    () => [
+      {
+        id: sort.toString() ?? ShopSortBy.SHOP_SORT_BY_UPDATED_AT.toString(),
+        desc: desc,
+      },
+    ],
+    [sort, desc]
+  );
+
+  const { table, isError, refetch } = useDataTable({
     queryKey: 'shops',
     columns: shopColumns,
     filters: {
@@ -112,7 +133,7 @@ export function ShopTable() {
     },
   });
 
-  const tableFilters: TableFilterItem[] = useMemo(
+  const filters: TableFilterItem[] = useMemo(
     () => [
       {
         type: 'switch',
@@ -143,39 +164,20 @@ export function ShopTable() {
 
   return (
     <div className="flex w-full flex-col px-4 gap-2 over">
-      <div className="flex w-full justify-between gap-2">
-        <div className="flex flex-col sm:flex-row gap-2">
-          <div className="relative">
-            <DebouncedInput
-              className="pl-9"
-              id="shop-search"
-              type="search"
-              placeholder="Search"
-              value={search}
-              onChange={(value) => setSearch(String(value))}
-            />
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2" />
-          </div>
-          <div className="gap-2 flex">
-            <TableFilter filters={tableFilters} />
-            <TableSort options={shopSortByOptions} table={table} />
-          </div>
-        </div>
-        <Button asChild>
-          <Link href={'/dashboard/create'}>
-            <Plus />
-            Create
-          </Link>
-        </Button>
-      </div>
+      <DataTableHeader
+        filters={filters}
+        search={{ value: search, onChange: setSearch }}
+        sortOptions={shopSortByOptions}
+        table={table}
+        createButton={'/dashboard/create'}
+      />
 
       {isError ? (
-        <ApiError message='Something went wrong' onClick={() => refetch()} />
+        <ApiError message="Something went wrong" onClick={() => refetch()} />
       ) : (
         <DataTable table={table} />
       )}
       <DataTablePagination
-        disabled={isFetching}
         hasSelection={true}
         pageSizes={[10, 25, 50]}
         table={table}

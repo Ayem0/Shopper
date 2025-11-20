@@ -1,3 +1,5 @@
+"use client";
+
 import { useDebounceCallback } from '@/hooks/use-debounce-callback';
 import { Input } from '@shopify-clone/ui';
 import { useState } from 'react';
