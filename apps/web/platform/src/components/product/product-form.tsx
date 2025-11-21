@@ -2,6 +2,7 @@
 
 import { SelectValue } from '@radix-ui/react-select';
 import {
+  Button,
   Field,
   FieldDescription,
   FieldError,
@@ -16,15 +17,13 @@ import {
   Textarea,
 } from '@shopify-clone/ui';
 import { useForm } from '@tanstack/react-form';
-import { useState } from 'react';
+import { Plus, Trash } from 'lucide-react';
 import * as z from 'zod';
 
 const variantSchema = z.object({
   name: z.string().min(1).max(255),
   values: z.array(z.string().min(1).max(255)).min(1),
 });
-
-type Variant = z.infer<typeof variantSchema>;
 
 const schema = z.object({
   name: z.string().min(1).max(255),
@@ -38,7 +37,6 @@ const schema = z.object({
 type ProductFormSchema = z.infer<typeof schema>;
 
 export function ProductForm() {
-  const [variants, setVariants] = useState([] as Variant[]);
   const defaultValues = {
     name: '',
     categories: [],
@@ -234,6 +232,76 @@ export function ProductForm() {
                       {isInvalid && (
                         <FieldError errors={field.state.meta.errors} />
                       )}
+                    </Field>
+                  );
+                }}
+              </form.Field>
+            </FieldGroup>
+          </div>
+          <div className="col-span-2">
+            <FieldGroup>
+              <form.Field name="variants" mode="array">
+                {(field) => {
+                  const isInvalid =
+                    field.state.meta.isTouched && !field.state.meta.isValid;
+                  return (
+                    <Field data-invalid={isInvalid}>
+                      <FieldLabel htmlFor={field.name}>Variants</FieldLabel>
+                      {field.state.value.map((variant, i) => (
+                        <form.Field key={i} name={`variants[${i}].name`}>
+                          {(subField) => {
+                            const isInvalid =
+                              subField.state.meta.isTouched &&
+                              !subField.state.meta.isValid;
+                            return (
+                              <Field
+                                data-invalid={isInvalid}
+                                className="rounded-md border p-2"
+                              >
+                                <FieldLabel htmlFor={subField.name}>
+                                  Name
+                                </FieldLabel>
+                                <div className="flex gap-2">
+                                  <Input
+                                    name={subField.name}
+                                    value={subField.state.value}
+                                    onChange={(e) =>
+                                      subField.handleChange(e.target.value)
+                                    }
+                                  />
+                                  <Button
+                                    type="button"
+                                    variant="outline"
+                                    className="hover:text-red-500"
+                                    onClick={() => field.removeValue(i)}
+                                  >
+                                    <Trash />
+                                  </Button>
+                                </div>
+
+                                {isInvalid && (
+                                  <FieldError
+                                    errors={subField.state.meta.errors}
+                                  />
+                                )}
+                              </Field>
+                            );
+                          }}
+                        </form.Field>
+                      ))}
+                      {isInvalid && (
+                        <FieldError errors={field.state.meta.errors} />
+                      )}
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() =>
+                          field.pushValue({ name: '', values: [] })
+                        }
+                      >
+                        <Plus />
+                        Add variant
+                      </Button>
                     </Field>
                   );
                 }}

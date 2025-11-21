@@ -18,7 +18,7 @@ const shopTypeToLabel: Record<ShopType, string> = {
   [ShopType.UNRECOGNIZED]: 'Unknow',
 };
 
-export const shopColumns: ColumnDef<ShopData>[] = [
+export const storeTableColumns: ColumnDef<ShopData>[] = [
   {
     accessorKey: 'status',
     header: 'Status',

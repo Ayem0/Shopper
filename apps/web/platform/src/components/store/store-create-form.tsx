@@ -1,6 +1,6 @@
 'use client';
 
-import { createShop } from '@/lib/queries/create-shop-query';
+import { createShop } from '@/lib/queries/shop/create-shop-query';
 import { CreateShopRequest, ShopType } from '@shopify-clone/proto-ts';
 import {
   Button,
@@ -32,7 +32,8 @@ const schema = z.object({
   name: z.string().min(1, 'Name is required').max(255),
   type: z.enum(ShopType, 'Type is required').exclude(['UNRECOGNIZED']),
 });
-export function ShopCreateForm() {
+
+export function StoreCreateForm() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const createShopMutation = useMutation({

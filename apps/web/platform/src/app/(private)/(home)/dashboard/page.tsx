@@ -1,20 +1,19 @@
-import { ShopTable } from '@/components/store/shop-table';
-import { getQueryClient } from '@/lib/queries/get-query-client';
-import { getShops } from '@/lib/queries/get-shops-query';
+import { StoreTable } from '@/components/store/store-table';
+import { getQueryClient } from '@/lib/queries/shop/get-query-client';
+import { getShops } from '@/lib/queries/shop/get-shops-query';
 import { storeSearchParamsCache } from '@/lib/search-params/store-search-params';
 import { GetShopsRequest } from '@shopify-clone/proto-ts';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { SearchParams } from 'nuqs/server';
 
 type PageProps = {
-  searchParams: Promise<SearchParams> // Next.js 15+: async searchParams prop
-}
+  searchParams: Promise<SearchParams>;
+};
 
-export default async function DashboardPage({
-  searchParams,
-}: PageProps) {
+export default async function DashboardPage({ searchParams }: PageProps) {
   const queryClient = getQueryClient();
-  const { search, active, pageIndex, pageSize, sort, desc, types } = await storeSearchParamsCache.parse(searchParams)
+  const { search, active, pageIndex, pageSize, sort, desc, types } =
+    await storeSearchParamsCache.parse(searchParams);
 
   const req: GetShopsRequest = {
     activeOnly: active,
@@ -44,7 +43,7 @@ export default async function DashboardPage({
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className="flex size-full">
-        <ShopTable/>
+        <StoreTable />
       </div>
     </HydrationBoundary>
   );

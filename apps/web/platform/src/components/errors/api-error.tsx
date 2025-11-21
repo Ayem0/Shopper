@@ -1,16 +1,20 @@
-"use client";
+'use client';
 
-import { Button } from "@shopify-clone/ui";
+import { Button } from '@shopify-clone/ui';
 
 interface ApiErrorProps {
-    message: string;
-    onClick?: () => void
+  message: string;
+  onClick?: () => void;
 }
 export function ApiError({ message, onClick }: ApiErrorProps) {
-    return (
-        <div className="w-full">
-            <p className="text-red-500">{message}</p>
-            {onClick && <Button onClick={onClick} variant="destructive">Try again</Button>}
-        </div>
-    );
+  return (
+    <div className="w-full items-center flex flex-col justify-center">
+      <p className="text-red-500">{message}</p>
+      {onClick && (
+        <Button onClick={onClick} variant="destructive">
+          Try again
+        </Button>
+      )}
+    </div>
+  );
 }

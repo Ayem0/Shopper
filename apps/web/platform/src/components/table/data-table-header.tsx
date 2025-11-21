@@ -9,7 +9,7 @@ import {
   TableSortOptions,
 } from '@/components/table/data-table-sort';
 import { DebouncedInput } from '@/components/table/debounced-input';
-import { Button } from '@shopify-clone/ui';
+import { buttonVariants } from '@shopify-clone/ui';
 import { Table } from '@tanstack/react-table';
 import { Plus, Search } from 'lucide-react';
 import Link from 'next/link';
@@ -56,12 +56,10 @@ function TableHeader<TData>({
         </div>
       </div>
       {createButton && (
-        <Button asChild>
-          <Link href={createButton}>
-            <Plus />
-            Create
-          </Link>
-        </Button>
+        <Link href={createButton} className={buttonVariants()}>
+          <Plus />
+          Create
+        </Link>
       )}
     </div>
   );

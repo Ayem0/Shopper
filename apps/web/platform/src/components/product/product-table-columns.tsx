@@ -25,7 +25,7 @@ const statusToLabel: Record<'draft' | 'active' | 'inactive', string> = {
   inactive: 'Inactive',
 };
 
-export const productColumns: ColumnDef<ProductData>[] = [
+export const productTableColumns: ColumnDef<ProductData>[] = [
   {
     accessorKey: 'name',
     header: 'Product',

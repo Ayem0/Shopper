@@ -26,13 +26,14 @@ type TableFilterBase = {
   label: string;
 };
 
-export type TableFilterCheckbox = {
+export type TableFilterCheckbox<T = unknown> = {
   type: 'checkbox';
   options: {
     label: string;
-    onCheckedChange: (e: boolean) => void;
-    checked: boolean;
+    value: T;
   }[];
+  defaultValues: T[];
+  onChange: (values: T[]) => void;
 } & TableFilterBase;
 
 export type TableFilterSwitch = {
@@ -97,10 +98,7 @@ const TableFilterRadio = memo(function TableFilterRadio({
 
   return (
     <TableFilterGroup label={filter.label}>
-      <DropdownMenuRadioGroup
-        value={value}
-        onValueChange={(v) => setValue(v)}
-      >
+      <DropdownMenuRadioGroup value={value} onValueChange={(v) => setValue(v)}>
         {filter.options.map((o) => (
           <DropdownMenuRadioItem key={o.label} value={o.value}>
             {o.label}
@@ -116,43 +114,31 @@ const TableFilterCheckbox = memo(function TableFilterCheckbox({
 }: {
   filter: TableFilterCheckbox;
 }) {
+  const [values, setValues] = useState(filter.defaultValues);
+
+  useDebounceCallback(values, filter.onChange, 500);
+
   return (
     <TableFilterGroup label={filter.label}>
       {filter.options.map((o) => (
-        <DebouncedDropdownCheckboxItem
+        <DropdownMenuCheckboxItem
+          onSelect={(e) => e.preventDefault()}
           key={o.label}
-          label={o.label}
-          checked={o.checked}
-          onCheckedChange={o.onCheckedChange}
-        />
+          checked={values.includes(o.value)}
+          onCheckedChange={(checked) => {
+            if (checked) {
+              setValues([...values, o.value]);
+            } else {
+              setValues(values.filter((v) => v !== o.value));
+            }
+          }}
+        >
+          {o.label}
+        </DropdownMenuCheckboxItem>
       ))}
     </TableFilterGroup>
   );
 });
-
-function DebouncedDropdownCheckboxItem({
-  label,
-  checked: initialChecked,
-  onCheckedChange,
-}: {
-  label: string;
-  checked: boolean;
-  onCheckedChange: (checked: boolean) => void;
-}) {
-  const [checked, setChecked] = useState(initialChecked);
-
-  useDebounceCallback(checked, onCheckedChange, 500);
-
-  return (
-    <DropdownMenuCheckboxItem
-      checked={checked}
-      onSelect={(e) => e.preventDefault()}
-      onCheckedChange={setChecked}
-    >
-      {label}
-    </DropdownMenuCheckboxItem>
-  );
-}
 
 const TableFilterSwitch = memo(function TableFilterSwitch({
   filter,
@@ -166,10 +152,7 @@ const TableFilterSwitch = memo(function TableFilterSwitch({
   return (
     <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
       {filter.label}
-      <Switch
-        checked={checked}
-        onCheckedChange={setChecked}
-      />
+      <Switch checked={checked} onCheckedChange={setChecked} />
     </DropdownMenuItem>
   );
 });

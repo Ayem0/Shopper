@@ -1,14 +1,14 @@
 'use client';
 
 import { ApiError } from '@/components/errors/api-error';
-import { shopColumns } from '@/components/store/shops-columns';
+import { storeTableColumns } from '@/components/store/store-table-columns';
 import { DataTable } from '@/components/table/data-table';
 import { TableFilterItem } from '@/components/table/data-table-filter';
 import { DataTableHeader } from '@/components/table/data-table-header';
 import { DataTablePagination } from '@/components/table/data-table-pagination';
 import { TableSortOptions } from '@/components/table/data-table-sort';
 import { useDataTable } from '@/hooks/use-data-table';
-import { getShops } from '@/lib/queries/get-shops-query';
+import { getShops } from '@/lib/queries/shop/get-shops-query';
 import {
   storeSearchParamsParsers,
   storeSearchParamsUrlKeys,
@@ -50,7 +50,7 @@ const shopTypes: {
   { label: 'Other', value: ShopType.SHOP_TYPE_UNSPECIFIED },
 ] as const;
 
-export function ShopTable() {
+export function StoreTable() {
   const [page, setPage] = useQueryState(
     storeSearchParamsUrlKeys.pageIndex,
     storeSearchParamsParsers.pageIndex
@@ -100,16 +100,16 @@ export function ShopTable() {
 
   const { table, isError, refetch } = useDataTable({
     queryKey: 'shops',
-    columns: shopColumns,
+    columns: storeTableColumns,
     filters: {
       active,
       search,
       types,
     },
     pagination,
-    onPaginationChange: (updater) => {
-      setPage(updater.pageIndex);
-      setSize(updater.pageSize);
+    onPaginationChange: (pagination) => {
+      setPage(pagination.pageIndex);
+      setSize(pagination.pageSize);
     },
     sorting,
     onSortingChange: (sorting) => {
@@ -144,19 +144,9 @@ export function ShopTable() {
       {
         type: 'checkbox',
         label: 'Types',
-        options: shopTypes.map((st) => ({
-          checked: types.includes(st.value),
-          label: st.label,
-          onCheckedChange: (checked) => {
-            if (checked) {
-              if (!types.includes(st.value)) {
-                setTypes([...types, st.value]);
-              }
-            } else {
-              setTypes(types.filter((t) => t !== st.value));
-            }
-          },
-        })),
+        options: shopTypes,
+        defaultValues: types,
+        onChange: (values) => setTypes(values as ShopType[]),
       },
     ],
     [active, setActive, types, setTypes]
@@ -171,7 +161,6 @@ export function ShopTable() {
         table={table}
         createButton={'/dashboard/create'}
       />
-
       {isError ? (
         <ApiError message="Something went wrong" onClick={() => refetch()} />
       ) : (

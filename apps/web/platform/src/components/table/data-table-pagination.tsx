@@ -37,7 +37,7 @@ function TablePagination<TData>({
       className={cn(
         'flex items-center justify-between w-full',
         className,
-        isPending && 'hidden'
+        isPending || ((table.options.pageCount ?? 0) <= 0 && 'hidden')
       )}
     >
       {hasSelection && (

@@ -1,6 +1,6 @@
 'use client';
 
-import { getQueryClient } from '@/lib/queries/get-query-client';
+import { getQueryClient } from '@/lib/queries/shop/get-query-client';
 import { Toaster } from '@shopify-clone/ui';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -22,9 +22,9 @@ export function PrivateProviders({ children }: { children: React.ReactNode }) {
       >
         <QueryClientProvider client={queryClient}>
           <NuqsAdapter>
-          {children}
-          <ReactQueryDevtools />
-          <Toaster position="bottom-right" />
+            {children}
+            <ReactQueryDevtools />
+            <Toaster position="bottom-right" />
           </NuqsAdapter>
         </QueryClientProvider>
       </ThemeProvider>

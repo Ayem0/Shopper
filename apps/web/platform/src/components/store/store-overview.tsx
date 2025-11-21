@@ -1,7 +1,7 @@
 'use client';
 import { Card, CardContent, CardTitle } from '@shopify-clone/ui';
 
-export function ShopOverview() {
+export function StoreOverview() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 px-4 gap-4">
       <Card className="p-4">
