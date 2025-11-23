@@ -8,25 +8,25 @@ import { useEffect } from 'react';
 import { cn } from '../utils/utils';
 import { Command, CommandGroup, CommandItem, CommandList } from './command';
 
-export interface Option<T> {
+export interface Option {
   label: string;
-  value: T;
+  value: string;
   disable?: boolean;
   /** fixed option that can't be removed. */
   fixed?: boolean;
   /** Group the options by providing key. */
-  [key: string]: string | boolean | undefined | T;
+  [key: string]: string | boolean | undefined;
 }
-interface GroupOption<T> {
-  [key: string]: Option<T>[];
+interface GroupOption {
+  [key: string]: Option[];
 }
 
-interface MultipleSelectorProps<T> {
+interface MultipleSelectorProps {
   id: string;
-  value?: Option<T>[];
-  defaultOptions?: Option<T>[];
+  value?: Option[];
+  defaultOptions?: Option[];
   /** manually controlled options */
-  options?: Option<T>[];
+  options?: Option[];
   placeholder?: string;
   /** Loading component. */
   loadingIndicator?: React.ReactNode;
@@ -40,14 +40,14 @@ interface MultipleSelectorProps<T> {
    **/
   triggerSearchOnFocus?: boolean;
   /** async search */
-  onSearch?: (value: string) => Promise<Option<T>[]>;
+  onSearch?: (value: string) => Promise<Option[]>;
   /**
    * sync search. This search will not showing loadingIndicator.
    * The rest props are the same as async search.
    * i.e.: creatable, groupBy, delay.
    **/
-  onSearchSync?: (value: string) => Option<T>[];
-  onChange?: (options: Option<T>[]) => void;
+  onSearchSync?: (value: string) => Option[];
+  onChange?: (options: Option[]) => void;
   /** Limit the maximum number of selected options. */
   maxSelected?: number;
   /** When the number of selected options exceeds the limit, the onMaxSelected will be called. */
@@ -80,15 +80,15 @@ interface MultipleSelectorProps<T> {
   'aria-invalid'?: boolean;
 }
 
-export interface MultipleSelectorRef<T> {
-  selectedValue: Option<T>[];
+export interface MultipleSelectorRef {
+  selectedValue: Option[];
   input: HTMLInputElement;
   focus: () => void;
   reset: () => void;
 }
 
-export function useDebounce<T>(value: T, delay?: number): T {
-  const [debouncedValue, setDebouncedValue] = React.useState<T>(value);
+export function useDebounce(value: string, delay?: number): string {
+  const [debouncedValue, setDebouncedValue] = React.useState(value);
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedValue(value), delay || 500);
@@ -101,7 +101,7 @@ export function useDebounce<T>(value: T, delay?: number): T {
   return debouncedValue;
 }
 
-function transToGroupOption<T>(options: Option<T>[], groupBy?: string) {
+function transToGroupOption(options: Option[], groupBy?: string) {
   if (options.length === 0) {
     return {};
   }
@@ -111,7 +111,7 @@ function transToGroupOption<T>(options: Option<T>[], groupBy?: string) {
     };
   }
 
-  const groupOption: GroupOption<T> = {};
+  const groupOption: GroupOption = {};
   options.forEach((option) => {
     const key = (option[groupBy] as string) || '';
     if (!groupOption[key]) {
@@ -122,11 +122,8 @@ function transToGroupOption<T>(options: Option<T>[], groupBy?: string) {
   return groupOption;
 }
 
-function removePickedOption<T>(
-  groupOption: GroupOption<T>,
-  picked: Option<T>[]
-) {
-  const cloneOption = JSON.parse(JSON.stringify(groupOption)) as GroupOption<T>;
+function removePickedOption(groupOption: GroupOption, picked: Option[]) {
+  const cloneOption = JSON.parse(JSON.stringify(groupOption)) as GroupOption;
 
   for (const [key, value] of Object.entries(cloneOption)) {
     cloneOption[key] = value.filter(
@@ -136,16 +133,16 @@ function removePickedOption<T>(
   return cloneOption;
 }
 
-// function isOptionsExist<T>(groupOption: GroupOption<T>, targetOption: Option<T>[]) {
-//   for (const [, value] of Object.entries(groupOption)) {
-//     if (
-//       value.some((option) => targetOption.find((p) => p.value === option.value))
-//     ) {
-//       return true
-//     }
-//   }
-//   return false
-// }
+function isOptionsExist(groupOption: GroupOption, targetOption: Option[]) {
+  for (const [, value] of Object.entries(groupOption)) {
+    if (
+      value.some((option) => targetOption.find((p) => p.value === option.value))
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
 
 const CommandEmpty = ({
   className,
@@ -166,7 +163,7 @@ const CommandEmpty = ({
 
 CommandEmpty.displayName = 'CommandEmpty';
 
-function MultipleSelector<T>({
+function MultipleSelector({
   id,
   value,
   onChange,
@@ -192,15 +189,15 @@ function MultipleSelector<T>({
   inputProps,
   hideClearAllButton = false,
   'aria-invalid': ariaInvalid = false,
-}: MultipleSelectorProps<T>) {
+}: MultipleSelectorProps) {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
   const [onScrollbar, setOnScrollbar] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const dropdownRef = React.useRef<HTMLDivElement>(null); // Added this
 
-  const [selected, setSelected] = React.useState<Option<T>[]>(value || []);
-  const [options, setOptions] = React.useState<GroupOption<T>>(
+  const [selected, setSelected] = React.useState<Option[]>(value || []);
+  const [options, setOptions] = React.useState<GroupOption>(
     transToGroupOption(arrayDefaultOptions, groupBy)
   );
   const [inputValue, setInputValue] = React.useState('');
@@ -219,7 +216,7 @@ function MultipleSelector<T>({
   };
 
   const handleUnselect = React.useCallback(
-    (option: Option<T>) => {
+    (option: Option) => {
       const newOptions = selected.filter((s) => s.value !== option.value);
       setSelected(newOptions);
       onChange?.(newOptions);
@@ -329,50 +326,50 @@ function MultipleSelector<T>({
     void exec();
   }, [debouncedSearchTerm, groupBy, open, triggerSearchOnFocus]);
 
-  // const CreatableItem = () => {
-  //   if (!creatable) return undefined
-  //   if (
-  //     isOptionsExist(options, [{ value: inputValue, label: inputValue }]) ||
-  //     selected.find((s) => s.value === inputValue)
-  //   ) {
-  //     return undefined
-  //   }
+  const CreatableItem = () => {
+    if (!creatable) return undefined;
+    if (
+      isOptionsExist(options, [{ value: inputValue, label: inputValue }]) ||
+      selected.find((s) => s.value === inputValue)
+    ) {
+      return undefined;
+    }
 
-  //   const Item = (
-  //     <CommandItem
-  //       value={inputValue}
-  //       className="cursor-pointer"
-  //       onMouseDown={(e) => {
-  //         e.preventDefault()
-  //         e.stopPropagation()
-  //       }}
-  //       onSelect={(value: string) => {
-  //         if (selected.length >= maxSelected) {
-  //           onMaxSelected?.(selected.length)
-  //           return
-  //         }
-  //         setInputValue("")
-  //         const newOptions = [...selected, { value, label: value }]
-  //         setSelected(newOptions)
-  //         onChange?.(newOptions)
-  //       }}
-  //     >
-  //       {`Create "${inputValue}"`}
-  //     </CommandItem>
-  //   )
+    const Item = (
+      <CommandItem
+        value={inputValue}
+        className="cursor-pointer"
+        onMouseDown={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+        onSelect={(value: string) => {
+          if (selected.length >= maxSelected) {
+            onMaxSelected?.(selected.length);
+            return;
+          }
+          setInputValue('');
+          const newOptions = [...selected, { value, label: value }];
+          setSelected(newOptions);
+          onChange?.(newOptions);
+        }}
+      >
+        {`Create "${inputValue}"`}
+      </CommandItem>
+    );
 
-  //   // For normal creatable
-  //   if (!onSearch && inputValue.length > 0) {
-  //     return Item
-  //   }
+    // For normal creatable
+    if (!onSearch && inputValue.length > 0) {
+      return Item;
+    }
 
-  //   // For async search creatable. avoid showing creatable item before loading at first.
-  //   if (onSearch && debouncedSearchTerm.length > 0 && !isLoading) {
-  //     return Item
-  //   }
+    // For async search creatable. avoid showing creatable item before loading at first.
+    if (onSearch && debouncedSearchTerm.length > 0 && !isLoading) {
+      return Item;
+    }
 
-  //   return undefined
-  // }
+    return undefined;
+  };
 
   const EmptyItem = React.useCallback(() => {
     if (!emptyIndicator) return undefined;
@@ -389,7 +386,7 @@ function MultipleSelector<T>({
     return <CommandEmpty>{emptyIndicator}</CommandEmpty>;
   }, [creatable, emptyIndicator, onSearch, options]);
 
-  const selectables = React.useMemo<GroupOption<T>>(
+  const selectables = React.useMemo<GroupOption>(
     () => removePickedOption(options, selected),
     [options, selected]
   );
@@ -458,6 +455,7 @@ function MultipleSelector<T>({
               >
                 {option.label}
                 <button
+                  type="button"
                   className="absolute -inset-y-px -end-px flex size-7 items-center justify-center rounded-e-md border border-transparent p-0 text-muted-foreground/80 outline-hidden transition-[color,box-shadow] outline-none hover:text-foreground focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') {
@@ -565,7 +563,7 @@ function MultipleSelector<T>({
               ) : (
                 <>
                   {EmptyItem()}
-                  {/* {CreatableItem()} */}
+                  {CreatableItem()}
                   {!selectFirstItem && (
                     <CommandItem value="-" className="hidden" />
                   )}
