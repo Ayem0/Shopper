@@ -1,11 +1,11 @@
-using ShopifyClone.Cs.ProtoCs.Common.Types;
-using ShopifyClone.Cs.ProtoCs.Shop.Types;
+using ShopifyClone.ProtoCs.Common.Types;
+using ShopifyClone.ProtoCs.Shop.Types;
 
 namespace Models;
 
 public class Shop
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
     public string Name { get; set; } = string.Empty;
     public bool IsActive { get; set; } = false;
     public ShopType Type { get; set; } = ShopType.Unspecified;

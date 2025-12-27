@@ -1,5 +1,15 @@
+using Data;
 using Microsoft.Extensions.DependencyInjection;
-
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using ShopifyClone.Cs.Shared.src.Infra.Config;
+using Services.ProductCategoryService;
+using ShopifyClone.Cs.Shared.src.Infra.Auth;
+using Microsoft.Extensions.Logging;
+using ShopifyClone.Cs.Shared.src.Infra.EFCore;
+using product_service.Infra;
+using Services.ProductService;
+using product_service.Utils;
 namespace product_service;
 
 [Amazon.Lambda.Annotations.LambdaStartup]
@@ -15,22 +25,26 @@ public class Startup
     /// </summary>
     public void ConfigureServices(IServiceCollection services)
     {
-        // Here we'll add an instance of our calculator service that will be used by each function
-
-        //// Example of creating the IConfiguration object and
-        //// adding it to the dependency injection container.
-        //var builder = new ConfigurationBuilder()
-        //                    .AddJsonFile("appsettings.json", true);
-
-        //// Add AWS Systems Manager as a potential provider for the configuration. This is 
-        //// available with the Amazon.Extensions.Configuration.SystemsManager NuGet package.
-        //builder.AddSystemsManager("/app/settings");
-
-        //var configuration = builder.Build();
-        //services.AddSingleton<IConfiguration>(configuration);
-
-        //// Example of using the AWSSDK.Extensions.NETCore.Setup NuGet package to add
-        //// the Amazon S3 service client to the dependency injection container.
-        //services.AddAWSService<Amazon.S3.IAmazonS3>();
+        services.AddDbContextPool<ProductDbContext>((sp, options) =>
+        {
+            options
+                // .UseModel(ProductDbContextModel.Instance)
+                .UseNpgsql("Host=product-service-db;Port=5432;Database=product-db;Username=root;Password=root", opt => opt.SetPostgresVersion(17, 0)
+            );
+        });
+        services.AddLogging(builder =>
+        {
+            builder.AddLambdaLogger();
+            builder.SetMinimumLevel(LogLevel.Debug);
+        });
+        var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json", true);
+        var configuration = builder.Build();
+        services.Configure<AuthzServiceConfig>(configuration.GetSection("AuthzService"));
+        services.AddScoped<AuthzClient>();
+        services.AddScoped<IProductCategoryService, ProductCategoryService>();
+        services.AddScoped<IProductService, ProductService>();
+        services.AddSingleton<IEFCoreQueryAdapter, EFCoreQueryAdapter>();
+        services.AddHttpClient();
+        services.AddAutoMapper(cfg => cfg.AddProfile(new AutoMapperProfile()));
     }
 }

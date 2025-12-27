@@ -1,68 +1,108 @@
 'use client';
-
-import {
-  DataTableFilter,
-  TableFilterItem,
-} from '@/components/table/data-table-filter';
-import {
-  DataTableSort,
-  TableSortOptions,
-} from '@/components/table/data-table-sort';
+import { DataTableSort } from '@/components/table/data-table-sort';
 import { DebouncedInput } from '@/components/table/debounced-input';
+import { BoundTableFilter } from '@/lib/data-table/data-table-filter';
+import { TableSortOption } from '@/lib/data-table/data-table-sort';
 import { buttonVariants } from '@shopify-clone/ui';
 import { Table } from '@tanstack/react-table';
 import { Plus, Search } from 'lucide-react';
 import Link from 'next/link';
-import { memo } from 'react';
+import { DataTableFilter } from './data-table-filter';
 
-interface TableHeaderProps<TData> {
-  filters: TableFilterItem[];
-  search?: {
-    value: string;
-    onChange: (value: string) => void;
-  };
-  createButton?: string;
-  sortOptions: TableSortOptions[];
+type TableHeaderProps<TData, TSort extends number, TExtra> = {
+  filters: readonly BoundTableFilter<TExtra>[];
+  createButton: string;
+  sortOptions: TableSortOption<TSort>[];
   table: Table<TData>;
-}
+  search: string;
+  setSearch: (search: string) => void;
+};
 
-function TableHeader<TData>({
+export function DataTableHeader<TData, TSort extends number, TExtra>({
   filters,
-  search,
   createButton,
   sortOptions,
   table,
-}: TableHeaderProps<TData>) {
+  search,
+  setSearch,
+}: TableHeaderProps<TData, TSort, TExtra>) {
   return (
     <div className="flex w-full justify-between gap-2">
       <div className="flex flex-col sm:flex-row gap-2">
-        {search && (
-          <div className="relative">
-            <DebouncedInput
-              className="pl-9"
-              id="shop-search"
-              type="search"
-              placeholder="Search"
-              value={search.value}
-              onChange={(value) => search.onChange(String(value))}
-            />
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2" />
-          </div>
-        )}
-
+        <div className="relative">
+          <DebouncedInput
+            className="pl-9"
+            id="table-search"
+            type="search"
+            placeholder="Search"
+            value={search}
+            onChange={(value) => setSearch(String(value))}
+          />
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2" />
+        </div>
         <div className="gap-2 flex">
           <DataTableFilter filters={filters} />
           <DataTableSort options={sortOptions} table={table} />
         </div>
       </div>
-      {createButton && (
-        <Link href={createButton} className={buttonVariants()}>
-          <Plus />
-          Create
-        </Link>
-      )}
+      <Link href={createButton} className={buttonVariants()}>
+        <Plus />
+        Create
+      </Link>
     </div>
   );
 }
 
-export const DataTableHeader = memo(TableHeader) as typeof TableHeader;
+// export const DataTableHeader = memo(TableHeader) as typeof TableHeader;
+
+// import { DataTableFilter } from './data-table-filter copy 2';
+
+// interface TableHeaderProps<TData, TSort> {
+//   filters: readonly TableFilter<TableBaseState<TSort>>[];
+//   state: TableBaseState<TSort>;
+//   setState: (state: Partial<TableBaseState<TSort>>) => void;
+//   createButton: string;
+//   sortOptions: TableSortOption<TSort>[];
+//   table: Table<TData>;
+// }
+
+// function TableHeader<TData, TSort>({
+//   filters,
+//   createButton,
+//   sortOptions,
+//   table,
+//   state,
+//   setState,
+// }: TableHeaderProps<TData, TSort>) {
+//   return (
+//     <div className="flex w-full justify-between gap-2">
+//       <div className="flex flex-col sm:flex-row gap-2">
+//         <div className="relative">
+//           <DebouncedInput
+//             className="pl-9"
+//             id="table-search"
+//             type="search"
+//             placeholder="Search"
+//             value={state.search}
+//             onChange={(value) => setState({ search: String(value) })}
+//           />
+//           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2" />
+//         </div>
+//         <div className="gap-2 flex">
+//           <DataTableFilter
+//             filters={filters}
+//             state={state}
+//             setState={setState}
+//           />
+//           <DataTableSort options={sortOptions} table={table} />
+//         </div>
+//       </div>
+//       <Link href={createButton} className={buttonVariants()}>
+//         <Plus />
+//         Create
+//       </Link>
+//     </div>
+//   );
+// }
+
+// export const DataTableHeader = memo(TableHeader) as typeof TableHeader;

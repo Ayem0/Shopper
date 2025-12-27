@@ -5,6 +5,7 @@ inputs:
   - directory: .
     exclude_paths:
       - shop/shop_events.proto
+      - product/product_events.proto
 
 plugins:
   - remote: buf.build/community/stephenh-ts-proto:v2.6.1
@@ -13,7 +14,7 @@ plugins:
       - outputServices=false
       - useExactTypes=true
       - esModuleInterop=true
-      - importSuffix=.js
+      # - importSuffix=
       - exportCommonSymbols=false
       - useOptionals=true
       # - outputSchema=true

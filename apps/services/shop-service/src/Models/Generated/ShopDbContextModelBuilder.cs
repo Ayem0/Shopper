@@ -12,7 +12,7 @@ namespace Models.Generated
     public partial class ShopDbContextModel
     {
         private ShopDbContextModel()
-            : base(skipDetectChanges: false, modelId: new Guid("58de5bc3-904f-40f3-96e7-2194be8bcab9"), entityTypeCount: 3)
+            : base(skipDetectChanges: false, modelId: new Guid("6ccae000-381a-4226-9f49-d746d0a9e424"), entityTypeCount: 3)
         {
         }
 

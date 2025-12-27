@@ -11,7 +11,7 @@ import { useMemo } from 'react';
 
 type UseDataTableProps<TFilters, TData> = {
   columns: ColumnDef<TData>[];
-  queryKey: string;
+  queryKey: string[];
   filters: TFilters;
   pagination: PaginationState;
   onPaginationChange: (pagination: PaginationState) => void;
@@ -45,20 +45,14 @@ export function useDataTable<TFilters, TData>({
   const debouncedSorting = useDebounce(sorting, 500);
 
   const stableKey = useMemo(
-    () => [
-      queryKey,
-      {
-        filters,
-        debouncedPagination,
-        debouncedSorting,
-      },
-    ],
+    () => [...queryKey, filters, debouncedPagination, debouncedSorting],
     [queryKey, filters, debouncedPagination, debouncedSorting]
   );
 
   const query = useQuery({
     queryKey: stableKey,
-    queryFn: ({ signal }) => fetchFn(filters, debouncedPagination, debouncedSorting, signal),
+    queryFn: ({ signal }) =>
+      fetchFn(filters, debouncedPagination, debouncedSorting, signal),
     refetchOnWindowFocus: false,
     placeholderData: keepPreviousData,
   });

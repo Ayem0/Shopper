@@ -2,11 +2,10 @@ using Amazon.Lambda.Core;
 using Amazon.Lambda.Annotations;
 using Amazon.Lambda.Annotations.APIGateway;
 using Services;
-using ShopifyClone.Cs.ProtoCs.Shop.Types;
-using ShopifyClone.Services.ShopService.src.Config;
+using ShopifyClone.ProtoCs.Shop.Types;
+using Config;
 
 [assembly: LambdaSerializer(typeof(CustomLambdaJsonSerializer))]
-// [assembly: LambdaSerializer(typeof(Amazon.Lambda.Serialization.SystemTextJson.DefaultLambdaJsonSerializer))]
 
 namespace shop_service;
 
@@ -19,18 +18,17 @@ public class ApiEndpoints
     }
 
     [LambdaFunction()]
-    [HttpApi(LambdaHttpMethod.Post, "/")]
+    [HttpApi(LambdaHttpMethod.Post, "/shops")]
     public async Task<CreateShopResponse> CreateShop([FromBody] CreateShopRequest req, ILambdaContext context)
     {
         // TODO fake userId to remove when auth is working
         var userId = new Guid("5549c55e-a7f7-4c30-935a-22eeeef2264f");
-        var res = await _shopService.CreateAsync(req, userId);
-        return res;
+        return await _shopService.CreateAsync(req, userId);
     }
 
     // [Authorize]
     [LambdaFunction()]
-    [HttpApi(LambdaHttpMethod.Get, "/")]
+    [HttpApi(LambdaHttpMethod.Get, "/shops")]
     public async Task<GetShopsResponse> GetShops(
         ILambdaContext context,
         [FromQuery] IEnumerable<int>? types,
@@ -45,9 +43,22 @@ public class ApiEndpoints
         var req = CreateGetShopsRequest(types, searchTerm, sortBy, pageIndex, pageSize, activeOnly, sortDescending);
         // TODO fake userId to remove when auth is working
         var userId = new Guid("5549c55e-a7f7-4c30-935a-22eeeef2264f");
-        var res = await _shopService.GetShops(req, userId);
-        return res;
+        return await _shopService.GetShops(req, userId);
     }
+
+    [LambdaFunction()]
+    [HttpApi(LambdaHttpMethod.Get, "/shops/{shopId}/member/{userId}")]
+    public async Task<GetShopMemberResponse> GetShopMember(string shopId, string userId, ILambdaContext context)
+    {
+        var req = new GetShopMemberRequest
+        {
+            ShopId = shopId,
+            UserId = userId,
+        };
+        return await _shopService.GetShopMember(req);
+    }
+
+
 
     private static GetShopsRequest CreateGetShopsRequest(
         IEnumerable<int>? types,

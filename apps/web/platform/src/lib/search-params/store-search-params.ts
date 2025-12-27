@@ -1,13 +1,10 @@
+import { ShopSortBy, ShopType } from '@shopify-clone/proto-ts';
 import {
   createParser,
   createSearchParamsCache,
   parseAsBoolean,
   parseAsString,
 } from 'nuqs/server';
-import {
-  ShopSortBy,
-  ShopType,
-} from '../../../../../../libs/ts/proto-ts/src/gen/shop/shop_types';
 import {
   paginationParsers,
   paginationUrlKeys,
@@ -28,14 +25,14 @@ const parseAsShopTypeArray = createParser({
         res.push(parsed);
       }
     }
-    return res.length > 0 ? res : null;
+    return res;
   },
   serialize: (value) => (value.length > 0 ? value.join(',') : null) as string,
 });
 
 const validShopSortBy = Object.values(ShopSortBy).filter(
-  (v) => typeof v === 'number' && v >= 0
-) as ShopSortBy[];
+  (v) => typeof v === 'number' && v > 0
+) as number[];
 
 const parseAsShopSortBy = createParser({
   parse: (value) => {

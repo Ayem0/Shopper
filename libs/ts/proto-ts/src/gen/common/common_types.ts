@@ -5,6 +5,7 @@
 // source: common/common_types.proto
 
 /* eslint-disable */
+import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 
 export enum SubscriptionType {
   SUBSCRIPTION_TYPE_STANDARD = 0,
@@ -133,4 +134,275 @@ export function creationStatusToJSON(object: CreationStatus): string {
     default:
       return "UNRECOGNIZED";
   }
+}
+
+export enum ActiveStatus {
+  ACTIVE_STATUS_UNSPECIFIED = 0,
+  ACTIVE_STATUS_ACTIVE = 1,
+  ACTIVE_STATUS_INACTIVE = 2,
+  UNRECOGNIZED = -1,
+}
+
+export function activeStatusFromJSON(object: any): ActiveStatus {
+  switch (object) {
+    case 0:
+    case "ACTIVE_STATUS_UNSPECIFIED":
+      return ActiveStatus.ACTIVE_STATUS_UNSPECIFIED;
+    case 1:
+    case "ACTIVE_STATUS_ACTIVE":
+      return ActiveStatus.ACTIVE_STATUS_ACTIVE;
+    case 2:
+    case "ACTIVE_STATUS_INACTIVE":
+      return ActiveStatus.ACTIVE_STATUS_INACTIVE;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return ActiveStatus.UNRECOGNIZED;
+  }
+}
+
+export function activeStatusToJSON(object: ActiveStatus): string {
+  switch (object) {
+    case ActiveStatus.ACTIVE_STATUS_UNSPECIFIED:
+      return "ACTIVE_STATUS_UNSPECIFIED";
+    case ActiveStatus.ACTIVE_STATUS_ACTIVE:
+      return "ACTIVE_STATUS_ACTIVE";
+    case ActiveStatus.ACTIVE_STATUS_INACTIVE:
+      return "ACTIVE_STATUS_INACTIVE";
+    case ActiveStatus.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
+
+export interface PaginationResponse {
+  totalResults: number;
+  pageSize: number;
+  pageIndex: number;
+  maxPageIndex: number;
+}
+
+export interface PaginationRequest {
+  pageSize: number;
+  pageIndex: number;
+}
+
+function createBasePaginationResponse(): PaginationResponse {
+  return { totalResults: 0, pageSize: 0, pageIndex: 0, maxPageIndex: 0 };
+}
+
+export const PaginationResponse: MessageFns<PaginationResponse> = {
+  encode(message: PaginationResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.totalResults !== 0) {
+      writer.uint32(8).int64(message.totalResults);
+    }
+    if (message.pageSize !== 0) {
+      writer.uint32(16).int32(message.pageSize);
+    }
+    if (message.pageIndex !== 0) {
+      writer.uint32(24).int32(message.pageIndex);
+    }
+    if (message.maxPageIndex !== 0) {
+      writer.uint32(32).int32(message.maxPageIndex);
+    }
+    return writer;
+  },
+
+  decode(input: BinaryReader | Uint8Array, length?: number): PaginationResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBasePaginationResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 8) {
+            break;
+          }
+
+          message.totalResults = longToNumber(reader.int64());
+          continue;
+        }
+        case 2: {
+          if (tag !== 16) {
+            break;
+          }
+
+          message.pageSize = reader.int32();
+          continue;
+        }
+        case 3: {
+          if (tag !== 24) {
+            break;
+          }
+
+          message.pageIndex = reader.int32();
+          continue;
+        }
+        case 4: {
+          if (tag !== 32) {
+            break;
+          }
+
+          message.maxPageIndex = reader.int32();
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): PaginationResponse {
+    return {
+      totalResults: isSet(object.totalResults) ? globalThis.Number(object.totalResults) : 0,
+      pageSize: isSet(object.pageSize) ? globalThis.Number(object.pageSize) : 0,
+      pageIndex: isSet(object.pageIndex) ? globalThis.Number(object.pageIndex) : 0,
+      maxPageIndex: isSet(object.maxPageIndex) ? globalThis.Number(object.maxPageIndex) : 0,
+    };
+  },
+
+  toJSON(message: PaginationResponse): unknown {
+    const obj: any = {};
+    if (message.totalResults !== 0) {
+      obj.totalResults = Math.round(message.totalResults);
+    }
+    if (message.pageSize !== 0) {
+      obj.pageSize = Math.round(message.pageSize);
+    }
+    if (message.pageIndex !== 0) {
+      obj.pageIndex = Math.round(message.pageIndex);
+    }
+    if (message.maxPageIndex !== 0) {
+      obj.maxPageIndex = Math.round(message.maxPageIndex);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<PaginationResponse>, I>>(base?: I): PaginationResponse {
+    return PaginationResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<PaginationResponse>, I>>(object: I): PaginationResponse {
+    const message = createBasePaginationResponse();
+    message.totalResults = object.totalResults ?? 0;
+    message.pageSize = object.pageSize ?? 0;
+    message.pageIndex = object.pageIndex ?? 0;
+    message.maxPageIndex = object.maxPageIndex ?? 0;
+    return message;
+  },
+};
+
+function createBasePaginationRequest(): PaginationRequest {
+  return { pageSize: 0, pageIndex: 0 };
+}
+
+export const PaginationRequest: MessageFns<PaginationRequest> = {
+  encode(message: PaginationRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.pageSize !== 0) {
+      writer.uint32(8).int32(message.pageSize);
+    }
+    if (message.pageIndex !== 0) {
+      writer.uint32(16).int32(message.pageIndex);
+    }
+    return writer;
+  },
+
+  decode(input: BinaryReader | Uint8Array, length?: number): PaginationRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBasePaginationRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 8) {
+            break;
+          }
+
+          message.pageSize = reader.int32();
+          continue;
+        }
+        case 2: {
+          if (tag !== 16) {
+            break;
+          }
+
+          message.pageIndex = reader.int32();
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): PaginationRequest {
+    return {
+      pageSize: isSet(object.pageSize) ? globalThis.Number(object.pageSize) : 0,
+      pageIndex: isSet(object.pageIndex) ? globalThis.Number(object.pageIndex) : 0,
+    };
+  },
+
+  toJSON(message: PaginationRequest): unknown {
+    const obj: any = {};
+    if (message.pageSize !== 0) {
+      obj.pageSize = Math.round(message.pageSize);
+    }
+    if (message.pageIndex !== 0) {
+      obj.pageIndex = Math.round(message.pageIndex);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<PaginationRequest>, I>>(base?: I): PaginationRequest {
+    return PaginationRequest.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<PaginationRequest>, I>>(object: I): PaginationRequest {
+    const message = createBasePaginationRequest();
+    message.pageSize = object.pageSize ?? 0;
+    message.pageIndex = object.pageIndex ?? 0;
+    return message;
+  },
+};
+
+type Builtin = Date | Function | Uint8Array | string | number | boolean | undefined;
+
+type DeepPartial<T> = T extends Builtin ? T
+  : T extends globalThis.Array<infer U> ? globalThis.Array<DeepPartial<U>>
+  : T extends ReadonlyArray<infer U> ? ReadonlyArray<DeepPartial<U>>
+  : T extends {} ? { [K in keyof T]?: DeepPartial<T[K]> }
+  : Partial<T>;
+
+type KeysOfUnion<T> = T extends T ? keyof T : never;
+type Exact<P, I extends P> = P extends Builtin ? P
+  : P & { [K in keyof P]: Exact<P[K], I[K]> } & { [K in Exclude<keyof I, KeysOfUnion<P>>]: never };
+
+function longToNumber(int64: { toString(): string }): number {
+  const num = globalThis.Number(int64.toString());
+  if (num > globalThis.Number.MAX_SAFE_INTEGER) {
+    throw new globalThis.Error("Value is larger than Number.MAX_SAFE_INTEGER");
+  }
+  if (num < globalThis.Number.MIN_SAFE_INTEGER) {
+    throw new globalThis.Error("Value is smaller than Number.MIN_SAFE_INTEGER");
+  }
+  return num;
+}
+
+function isSet(value: any): boolean {
+  return value !== null && value !== undefined;
+}
+
+interface MessageFns<T> {
+  encode(message: T, writer?: BinaryWriter): BinaryWriter;
+  decode(input: BinaryReader | Uint8Array, length?: number): T;
+  fromJSON(object: any): T;
+  toJSON(message: T): unknown;
+  create<I extends Exact<DeepPartial<T>, I>>(base?: I): T;
+  fromPartial<I extends Exact<DeepPartial<T>, I>>(object: I): T;
 }

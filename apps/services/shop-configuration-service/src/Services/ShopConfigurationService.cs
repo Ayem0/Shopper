@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Logging;
-using ShopifyClone.Cs.ProtoCs.Shop.Events;
+using ShopifyClone.ProtoCs.Shop.Events;
 
-namespace shop_configuration_service.src.Services;
+namespace shop_configuration_service.Services;
 
 public class ShopConfigurationService : IShopConfigurationService
 {
@@ -11,11 +11,17 @@ public class ShopConfigurationService : IShopConfigurationService
         _logger = logger;
     }
 
-    public Task ConsumeShopCreated(ShopCreated evt)
+    public async Task ConsumeShopEvent(ShopEvent evt)
+        => await (evt.OneofTypeCase switch
+        {
+            ShopEvent.OneofTypeOneofCase.Created => ConsumeShopCreated(evt.Created),
+            _ => Task.CompletedTask,
+        });
+
+    private Task ConsumeShopCreated(ShopCreated evt)
     {
         try
         {
-            Console.WriteLine($"Received ShopCreated event: {evt.ShopId} / {evt.ShopType}");
             _logger.LogInformation("Received event with id : {id}, type : {type} ", evt.ShopId, evt.ShopType);
             return Task.CompletedTask;
         }

@@ -18,7 +18,7 @@ Resources:
       Runtime: dotnet8
       CodeUri: shopserviceApiEndpointsCreateShopGenerated
       MemorySize: 512
-      Timeout: 30
+      Timeout: 120
       Policies:
       - AWSLambdaBasicExecutionRole
       PackageType: Zip
@@ -27,7 +27,7 @@ Resources:
         RootPost:
           Type: HttpApi
           Properties:
-            Path: /
+            Path: /shops
             Method: POST
   shopserviceApiEndpointsGetShopsGenerated:
     Type: AWS::Serverless::Function
@@ -44,7 +44,7 @@ Resources:
       Runtime: dotnet8
       CodeUri: shopserviceApiEndpointsGetShopsGenerated
       MemorySize: 512
-      Timeout: 30
+      Timeout: 120
       Policies:
       - AWSLambdaBasicExecutionRole
       PackageType: Zip
@@ -53,7 +53,33 @@ Resources:
         RootGet:
           Type: HttpApi
           Properties:
-            Path: /
+            Path: /shops
+            Method: GET
+  shopserviceApiEndpointsGetShopMemberGenerated:
+    Type: AWS::Serverless::Function
+    Metadata:
+      SamResourceId: shopserviceApiEndpointsGetShopMemberGenerated
+      SyncedEventProperties:
+        RootGet:
+        - Path
+        - Method
+      SyncedEvents:
+      - RootGet
+      Tool: Amazon.Lambda.Annotations
+    Properties:
+      Runtime: dotnet8
+      CodeUri: shopserviceApiEndpointsGetShopMemberGenerated
+      MemorySize: 512
+      Timeout: 120
+      Policies:
+      - AWSLambdaBasicExecutionRole
+      PackageType: Zip
+      Handler: shop-service::shop_service.ApiEndpoints_GetShopMember_Generated::GetShopMember
+      Events:
+        RootGet:
+          Type: HttpApi
+          Properties:
+            Path: /shops/{shopId}/member/{userId}
             Method: GET
 Outputs:
   ApiURL:

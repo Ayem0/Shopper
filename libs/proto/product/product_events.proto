@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package product;
+
+option csharp_namespace = "ShopifyClone.ProtoCs.Product.Events";
+
+message ProductEvent {
+  oneof oneof_type {
+    ProductCreated created = 1;
+  }
+}
+
+message ProductCreated {
+  string product_id = 1;
+  string shop_id = 2;
+}
+
+
+message ProductCategoryEvent {
+  oneof oneof_type {
+    ProductCategoryCreated created = 1;
+  }
+}
+
+message ProductCategoryCreated {
+  string product_category_id = 1;
+  string shop_id = 2;
+}

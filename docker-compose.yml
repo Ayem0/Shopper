@@ -1,15 +1,15 @@
 services:
-  ## BACKEND
   localstack:
-    container_name: "localstack_main"
+    container_name: "localstack"
     image: localstack/localstack
     ports:
       - "127.0.0.1:4566:4566" # LocalStack Gateway
       - "127.0.0.1:4510-4559:4510-4559" # external services port range
     environment:
       # LocalStack configuration: https://docs.localstack.cloud/references/configuration/
-      - SERVICES=apigateway,route53,s3,lambda,cloudwatch,logs,iam,cloudformation
+      - SERVICES=apigateway,route53,s3,lambda,cloudwatch,logs,iam,cloudformation,dynamodb
       - DEBUG=${DEBUG:-0}
+      - DYNAMODB_SHARE_DB=1
     volumes:
       - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
       - "/var/run/docker.sock:/var/run/docker.sock"
@@ -20,7 +20,7 @@ services:
     container_name: keycloak_idp
     environment:
       KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://keycloack-database:5432/keycloack-database # Connect to the postgres service by name
+      KC_DB_URL: jdbc:postgresql://keycloak-db:5432/keycloak-db # Connect to the postgres service by name
       KC_DB_USERNAME: root
       KC_DB_PASSWORD: "root" # Matches postgres password
       KC_BOOTSTRAP_ADMIN_USERNAME: admin
@@ -39,10 +39,11 @@ services:
     ports:
       - "8080:8080" # Expose Keycloak UI
     depends_on:
-      - keycloack-database
+      keycloak-db:
+        condition: service_healthy
     networks:
       - my-shop-network
-  keycloack-database:
+  keycloak-db:
     image: postgres:16.9-bullseye
     restart: always
     # set shared memory limit when using docker compose
@@ -55,22 +56,26 @@ services:
     #      size: 134217728 # 128*2^20 bytes = 128Mb
     environment:
       POSTGRES_USER: "root"
-      POSTGRES_DB: "keycloack-database"
+      POSTGRES_DB: "keycloak-db"
       POSTGRES_PASSWORD: "root"
     ports:
-      - 5433:5432
+      - 5432:5432
     networks:
       - my-shop-network
-
-  shop-service-database:
-    image: quay.io/debezium/postgres:17-alpine # Use Debezium's PostgreSQL image [1]
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "root", "-d", "keycloak-db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+  shop-service-db:
+    image: quay.io/debezium/postgres:17-alpine
     restart: always
     shm_size: 128mb
     environment:
-      POSTGRES_USER: "root" # Changed to 'postgres' for Debezium compatibility
-      POSTGRES_DB: "shop-database" # Changed to 'shopdb' for Debezium compatibility
-      POSTGRES_PASSWORD: "root" # Changed to 'postgres' for Debezium compatibility
-      # Essential PostgreSQL settings for logical replication [1]
+      POSTGRES_USER: "root"
+      POSTGRES_DB: "shop-db"
+      POSTGRES_PASSWORD: "root"
       POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
       wal_level: logical
       max_wal_senders: 10
@@ -80,12 +85,34 @@ services:
     networks:
       - my-shop-network
     healthcheck:
-      test: ["CMD", "pg_isready", "-U", "root", "-d", "shop-database"]
+      test: ["CMD", "pg_isready", "-U", "root", "-d", "shop-db"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 15s
-  debzium:
+  product-service-db:
+    image: quay.io/debezium/postgres:17-alpine
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: "root"
+      POSTGRES_DB: "product-db"
+      POSTGRES_PASSWORD: "root"
+      POSTGRES_INITDB_ARGS: "--auth-host=scram-sha-256"
+      wal_level: logical
+      max_wal_senders: 10
+      max_replication_slots: 10
+    ports:
+      - "5433:5432"
+    networks:
+      - my-shop-network
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "root", "-d", "product-db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+  debezium:
     build:
       context: .
       dockerfile: ./infra/debezium/DockerFile
@@ -96,7 +123,9 @@ services:
     depends_on:
       kafka:
         condition: service_healthy
-      shop-service-database:
+      product-service-db:
+        condition: service_healthy
+      shop-service-db:
         condition: service_healthy
     environment:
       BOOTSTRAP_SERVERS: kafka:9092
@@ -410,8 +439,6 @@ volumes:
   filebeatdata01:
     driver: local
   logstashdata01:
-    driver: local
-  shopservicedatabase:
     driver: local
   # logs:
   #   driver: local

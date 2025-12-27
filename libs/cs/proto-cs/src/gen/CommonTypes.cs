@@ -9,7 +9,7 @@ using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
 using scg = global::System.Collections.Generic;
-namespace ShopifyClone.Cs.ProtoCs.Common.Types {
+namespace ShopifyClone.ProtoCs.Common.Types {
 
   /// <summary>Holder for reflection information generated from common/common_types.proto</summary>
   public static partial class CommonTypesReflection {
@@ -24,21 +24,31 @@ namespace ShopifyClone.Cs.ProtoCs.Common.Types {
     static CommonTypesReflection() {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
-            "Chljb21tb24vY29tbW9uX3R5cGVzLnByb3RvEgZjb21tb24qbgoQU3Vic2Ny",
-            "aXB0aW9uVHlwZRIeChpTVUJTQ1JJUFRJT05fVFlQRV9TVEFOREFSRBAAEhoK",
-            "FlNVQlNDUklQVElPTl9UWVBFX1RFQU0QARIeChpTVUJTQ1JJUFRJT05fVFlQ",
-            "RV9CVVNJTkVTUxACKqEBChJTdWJzY3JpcHRpb25TdGF0dXMSIAocU1VCU0NS",
-            "SVBUSU9OX1NUQVRVU19JTkFDVElWRRAAEicKI1NVQlNDUklQVElPTl9TVEFU",
-            "VVNfUEVORElOR19QQVlNRU5UEAESHgoaU1VCU0NSSVBUSU9OX1NUQVRVU19B",
-            "Q1RJVkUQAhIgChxTVUJTQ1JJUFRJT05fU1RBVFVTX0NBTkNFTEVEEAMqjQEK",
-            "DkNyZWF0aW9uU3RhdHVzEh8KG0NSRUFUSU9OX1NUQVRVU19OT1RfU1RBUlRF",
-            "RBAAEh8KG0NSRUFUSU9OX1NUQVRVU19JTl9QUk9HUkVTUxABEh0KGUNSRUFU",
-            "SU9OX1NUQVRVU19TVUNDRUVERUQQAhIaChZDUkVBVElPTl9TVEFUVVNfRkFJ",
-            "TEVEEANCJ6oCJFNob3BpZnlDbG9uZS5Dcy5Qcm90b0NzLkNvbW1vbi5UeXBl",
-            "c2IGcHJvdG8z"));
+            "Chljb21tb24vY29tbW9uX3R5cGVzLnByb3RvEgZjb21tb24imwEKElBhZ2lu",
+            "YXRpb25SZXNwb25zZRIjCg10b3RhbF9yZXN1bHRzGAEgASgDUgx0b3RhbFJl",
+            "c3VsdHMSGwoJcGFnZV9zaXplGAIgASgFUghwYWdlU2l6ZRIdCgpwYWdlX2lu",
+            "ZGV4GAMgASgFUglwYWdlSW5kZXgSJAoObWF4X3BhZ2VfaW5kZXgYBCABKAVS",
+            "DG1heFBhZ2VJbmRleCJPChFQYWdpbmF0aW9uUmVxdWVzdBIbCglwYWdlX3Np",
+            "emUYASABKAVSCHBhZ2VTaXplEh0KCnBhZ2VfaW5kZXgYAiABKAVSCXBhZ2VJ",
+            "bmRleCpuChBTdWJzY3JpcHRpb25UeXBlEh4KGlNVQlNDUklQVElPTl9UWVBF",
+            "X1NUQU5EQVJEEAASGgoWU1VCU0NSSVBUSU9OX1RZUEVfVEVBTRABEh4KGlNV",
+            "QlNDUklQVElPTl9UWVBFX0JVU0lORVNTEAIqoQEKElN1YnNjcmlwdGlvblN0",
+            "YXR1cxIgChxTVUJTQ1JJUFRJT05fU1RBVFVTX0lOQUNUSVZFEAASJwojU1VC",
+            "U0NSSVBUSU9OX1NUQVRVU19QRU5ESU5HX1BBWU1FTlQQARIeChpTVUJTQ1JJ",
+            "UFRJT05fU1RBVFVTX0FDVElWRRACEiAKHFNVQlNDUklQVElPTl9TVEFUVVNf",
+            "Q0FOQ0VMRUQQAyqNAQoOQ3JlYXRpb25TdGF0dXMSHwobQ1JFQVRJT05fU1RB",
+            "VFVTX05PVF9TVEFSVEVEEAASHwobQ1JFQVRJT05fU1RBVFVTX0lOX1BST0dS",
+            "RVNTEAESHQoZQ1JFQVRJT05fU1RBVFVTX1NVQ0NFRURFRBACEhoKFkNSRUFU",
+            "SU9OX1NUQVRVU19GQUlMRUQQAypjCgxBY3RpdmVTdGF0dXMSHQoZQUNUSVZF",
+            "X1NUQVRVU19VTlNQRUNJRklFRBAAEhgKFEFDVElWRV9TVEFUVVNfQUNUSVZF",
+            "EAESGgoWQUNUSVZFX1NUQVRVU19JTkFDVElWRRACQiSqAiFTaG9waWZ5Q2xv",
+            "bmUuUHJvdG9Dcy5Db21tb24uVHlwZXNiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
-          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::ShopifyClone.Cs.ProtoCs.Common.Types.SubscriptionType), typeof(global::ShopifyClone.Cs.ProtoCs.Common.Types.SubscriptionStatus), typeof(global::ShopifyClone.Cs.ProtoCs.Common.Types.CreationStatus), }, null, null));
+          new pbr::GeneratedClrTypeInfo(new[] {typeof(global::ShopifyClone.ProtoCs.Common.Types.SubscriptionType), typeof(global::ShopifyClone.ProtoCs.Common.Types.SubscriptionStatus), typeof(global::ShopifyClone.ProtoCs.Common.Types.CreationStatus), typeof(global::ShopifyClone.ProtoCs.Common.Types.ActiveStatus), }, null, new pbr::GeneratedClrTypeInfo[] {
+            new pbr::GeneratedClrTypeInfo(typeof(global::ShopifyClone.ProtoCs.Common.Types.PaginationResponse), global::ShopifyClone.ProtoCs.Common.Types.PaginationResponse.Parser, new[]{ "TotalResults", "PageSize", "PageIndex", "MaxPageIndex" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ShopifyClone.ProtoCs.Common.Types.PaginationRequest), global::ShopifyClone.ProtoCs.Common.Types.PaginationRequest.Parser, new[]{ "PageSize", "PageIndex" }, null, null, null, null)
+          }));
     }
     #endregion
 
@@ -62,6 +72,559 @@ namespace ShopifyClone.Cs.ProtoCs.Common.Types {
     [pbr::OriginalName("CREATION_STATUS_IN_PROGRESS")] InProgress = 1,
     [pbr::OriginalName("CREATION_STATUS_SUCCEEDED")] Succeeded = 2,
     [pbr::OriginalName("CREATION_STATUS_FAILED")] Failed = 3,
+  }
+
+  public enum ActiveStatus {
+    [pbr::OriginalName("ACTIVE_STATUS_UNSPECIFIED")] Unspecified = 0,
+    [pbr::OriginalName("ACTIVE_STATUS_ACTIVE")] Active = 1,
+    [pbr::OriginalName("ACTIVE_STATUS_INACTIVE")] Inactive = 2,
+  }
+
+  #endregion
+
+  #region Messages
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
+  public sealed partial class PaginationResponse : pb::IMessage<PaginationResponse>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<PaginationResponse> _parser = new pb::MessageParser<PaginationResponse>(() => new PaginationResponse());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<PaginationResponse> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::ShopifyClone.ProtoCs.Common.Types.CommonTypesReflection.Descriptor.MessageTypes[0]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public PaginationResponse() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public PaginationResponse(PaginationResponse other) : this() {
+      totalResults_ = other.totalResults_;
+      pageSize_ = other.pageSize_;
+      pageIndex_ = other.pageIndex_;
+      maxPageIndex_ = other.maxPageIndex_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public PaginationResponse Clone() {
+      return new PaginationResponse(this);
+    }
+
+    /// <summary>Field number for the "total_results" field.</summary>
+    public const int TotalResultsFieldNumber = 1;
+    private long totalResults_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public long TotalResults {
+      get { return totalResults_; }
+      set {
+        totalResults_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "page_size" field.</summary>
+    public const int PageSizeFieldNumber = 2;
+    private int pageSize_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int PageSize {
+      get { return pageSize_; }
+      set {
+        pageSize_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "page_index" field.</summary>
+    public const int PageIndexFieldNumber = 3;
+    private int pageIndex_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int PageIndex {
+      get { return pageIndex_; }
+      set {
+        pageIndex_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "max_page_index" field.</summary>
+    public const int MaxPageIndexFieldNumber = 4;
+    private int maxPageIndex_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int MaxPageIndex {
+      get { return maxPageIndex_; }
+      set {
+        maxPageIndex_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as PaginationResponse);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(PaginationResponse other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (TotalResults != other.TotalResults) return false;
+      if (PageSize != other.PageSize) return false;
+      if (PageIndex != other.PageIndex) return false;
+      if (MaxPageIndex != other.MaxPageIndex) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (TotalResults != 0L) hash ^= TotalResults.GetHashCode();
+      if (PageSize != 0) hash ^= PageSize.GetHashCode();
+      if (PageIndex != 0) hash ^= PageIndex.GetHashCode();
+      if (MaxPageIndex != 0) hash ^= MaxPageIndex.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (TotalResults != 0L) {
+        output.WriteRawTag(8);
+        output.WriteInt64(TotalResults);
+      }
+      if (PageSize != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(PageSize);
+      }
+      if (PageIndex != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(PageIndex);
+      }
+      if (MaxPageIndex != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(MaxPageIndex);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (TotalResults != 0L) {
+        output.WriteRawTag(8);
+        output.WriteInt64(TotalResults);
+      }
+      if (PageSize != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(PageSize);
+      }
+      if (PageIndex != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(PageIndex);
+      }
+      if (MaxPageIndex != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(MaxPageIndex);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (TotalResults != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(TotalResults);
+      }
+      if (PageSize != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(PageSize);
+      }
+      if (PageIndex != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(PageIndex);
+      }
+      if (MaxPageIndex != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(MaxPageIndex);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(PaginationResponse other) {
+      if (other == null) {
+        return;
+      }
+      if (other.TotalResults != 0L) {
+        TotalResults = other.TotalResults;
+      }
+      if (other.PageSize != 0) {
+        PageSize = other.PageSize;
+      }
+      if (other.PageIndex != 0) {
+        PageIndex = other.PageIndex;
+      }
+      if (other.MaxPageIndex != 0) {
+        MaxPageIndex = other.MaxPageIndex;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            TotalResults = input.ReadInt64();
+            break;
+          }
+          case 16: {
+            PageSize = input.ReadInt32();
+            break;
+          }
+          case 24: {
+            PageIndex = input.ReadInt32();
+            break;
+          }
+          case 32: {
+            MaxPageIndex = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 8: {
+            TotalResults = input.ReadInt64();
+            break;
+          }
+          case 16: {
+            PageSize = input.ReadInt32();
+            break;
+          }
+          case 24: {
+            PageIndex = input.ReadInt32();
+            break;
+          }
+          case 32: {
+            MaxPageIndex = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  [global::System.Diagnostics.DebuggerDisplayAttribute("{ToString(),nq}")]
+  public sealed partial class PaginationRequest : pb::IMessage<PaginationRequest>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<PaginationRequest> _parser = new pb::MessageParser<PaginationRequest>(() => new PaginationRequest());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<PaginationRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::ShopifyClone.ProtoCs.Common.Types.CommonTypesReflection.Descriptor.MessageTypes[1]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public PaginationRequest() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public PaginationRequest(PaginationRequest other) : this() {
+      pageSize_ = other.pageSize_;
+      pageIndex_ = other.pageIndex_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public PaginationRequest Clone() {
+      return new PaginationRequest(this);
+    }
+
+    /// <summary>Field number for the "page_size" field.</summary>
+    public const int PageSizeFieldNumber = 1;
+    private int pageSize_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int PageSize {
+      get { return pageSize_; }
+      set {
+        pageSize_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "page_index" field.</summary>
+    public const int PageIndexFieldNumber = 2;
+    private int pageIndex_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int PageIndex {
+      get { return pageIndex_; }
+      set {
+        pageIndex_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as PaginationRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(PaginationRequest other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (PageSize != other.PageSize) return false;
+      if (PageIndex != other.PageIndex) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (PageSize != 0) hash ^= PageSize.GetHashCode();
+      if (PageIndex != 0) hash ^= PageIndex.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (PageSize != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(PageSize);
+      }
+      if (PageIndex != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(PageIndex);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (PageSize != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(PageSize);
+      }
+      if (PageIndex != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(PageIndex);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (PageSize != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(PageSize);
+      }
+      if (PageIndex != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(PageIndex);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(PaginationRequest other) {
+      if (other == null) {
+        return;
+      }
+      if (other.PageSize != 0) {
+        PageSize = other.PageSize;
+      }
+      if (other.PageIndex != 0) {
+        PageIndex = other.PageIndex;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            PageSize = input.ReadInt32();
+            break;
+          }
+          case 16: {
+            PageIndex = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+      if ((tag & 7) == 4) {
+        // Abort on any end group tag.
+        return;
+      }
+      switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 8: {
+            PageSize = input.ReadInt32();
+            break;
+          }
+          case 16: {
+            PageIndex = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
   }
 
   #endregion

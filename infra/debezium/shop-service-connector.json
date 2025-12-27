@@ -4,11 +4,11 @@
     "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
     "tasks.max": "1",
 
-    "database.hostname": "shop-service-database",
+    "database.hostname": "shop-service-db",
     "database.port": "5432",
     "database.user": "root",
     "database.password": "root",
-    "database.dbname": "shop-database",
+    "database.dbname": "shop-db",
     "database.server.name": "shop-db-connector",
     "topic.prefix": "shop-db-connector",
 

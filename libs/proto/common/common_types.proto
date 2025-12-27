@@ -2,9 +2,7 @@ syntax = "proto3";
 
 package common;
 
-option csharp_namespace = "ShopifyClone.Cs.ProtoCs.Common.Types";
-
-
+option csharp_namespace = "ShopifyClone.ProtoCs.Common.Types";
 
 enum SubscriptionType
 {
@@ -29,3 +27,20 @@ enum CreationStatus
     CREATION_STATUS_FAILED = 3;
 }
 
+message PaginationResponse {
+    int64 total_results = 1;
+    int32 page_size = 2;
+    int32 page_index = 3;
+    int32 max_page_index = 4;
+}
+
+message PaginationRequest {
+    int32 page_size = 1;
+    int32 page_index = 2;
+}
+
+enum ActiveStatus {
+    ACTIVE_STATUS_UNSPECIFIED = 0;
+    ACTIVE_STATUS_ACTIVE = 1;
+    ACTIVE_STATUS_INACTIVE = 2;
+}

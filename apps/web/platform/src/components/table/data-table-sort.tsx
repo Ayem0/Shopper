@@ -1,5 +1,6 @@
-"use client";
+'use client';
 
+import { TableSortOption } from '@/lib/data-table/data-table-sort';
 import {
   Button,
   DropdownMenu,
@@ -9,21 +10,17 @@ import {
   DropdownMenuTrigger,
 } from '@shopify-clone/ui';
 import { Table } from '@tanstack/react-table';
-import { ArrowDownUp, LucideIcon } from 'lucide-react';
-import { memo } from 'react';
+import { ArrowDownUp } from 'lucide-react';
 
-export interface TableSortOptions {
-  label: string;
-  icon?: LucideIcon;
-  value: string;
-}
-
-type TableSortProps<TData> = {
-  options: TableSortOptions[];
+type TableSortProps<TData, TSort> = {
+  options: TableSortOption<TSort>[];
   table: Table<TData>;
 };
 
-function TableSort<TData>({ options, table }: TableSortProps<TData>) {
+export function DataTableSort<TData, TSort>({
+  options,
+  table,
+}: TableSortProps<TData, TSort>) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -46,7 +43,7 @@ function TableSort<TData>({ options, table }: TableSortProps<TData>) {
           {options.map((o, i) => (
             <DropdownMenuRadioItem
               key={`${o.label}-${i}`}
-              value={o.value}
+              value={`${o.value}:${o.desc}`}
               className="justify-between"
             >
               {o.label}
@@ -58,4 +55,3 @@ function TableSort<TData>({ options, table }: TableSortProps<TData>) {
     </DropdownMenu>
   );
 }
-export const DataTableSort = memo(TableSort) as typeof TableSort;

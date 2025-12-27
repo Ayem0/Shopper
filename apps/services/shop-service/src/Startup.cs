@@ -22,7 +22,7 @@ public class Startup
         {
             options
                 .UseModel(ShopDbContextModel.Instance)
-                .UseNpgsql("Host=shop-service-database;Port=5432;Database=shop-database;Username=root;Password=root", opt => opt.SetPostgresVersion(17, 0)
+                .UseNpgsql("Host=shop-service-db;Port=5432;Database=shop-db;Username=root;Password=root", opt => opt.SetPostgresVersion(17, 0)
             );
         });
         services.AddScoped<IShopService, ShopService>();

@@ -70,6 +70,16 @@ RootPost = ["Path", "Method"]
 
 
 
+
+
+
+
+
+
+
+
+
+
 [function_build_definitions.b578ce36-0c8f-48ba-bb6d-cf76d3a429a2]
 codeuri = "C:\\LIFE\\PROJECTS\\shopify-clone\\apps\\services\\shop-service\\src"
 runtime = "dotnet8"
@@ -77,7 +87,7 @@ architecture = "x86_64"
 handler = "shop-service::shop_service.ApiEndpoints_GetShops_Generated::GetShops"
 manifest_hash = ""
 packagetype = "Zip"
-functions = ["shopserviceApiEndpointsGetShopsGenerated"]
+functions = ["shopserviceApiEndpointsGetShopsGenerated", "shopserviceApiEndpointsGetShopMemberGenerated"]
 
 [function_build_definitions.b578ce36-0c8f-48ba-bb6d-cf76d3a429a2.metadata]
 Tool = "Amazon.Lambda.Annotations"
@@ -85,6 +95,16 @@ SyncedEvents = ["RootGet"]
 
 [function_build_definitions.b578ce36-0c8f-48ba-bb6d-cf76d3a429a2.metadata.SyncedEventProperties]
 RootGet = ["Path", "Method"]
+
+
+
+
+
+
+
+
+
+
 
 
 

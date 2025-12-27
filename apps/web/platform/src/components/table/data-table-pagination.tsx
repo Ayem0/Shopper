@@ -16,28 +16,26 @@ import {
   ChevronsLeft,
   ChevronsRight,
 } from 'lucide-react';
-import { memo } from 'react';
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
-  pageSizes: number[];
+  pageSizes: readonly number[];
   hasSelection: boolean;
   className?: string;
 }
 
-function TablePagination<TData>({
+export function DataTablePagination<TData>({
   table,
   pageSizes,
   hasSelection,
   className,
 }: DataTablePaginationProps<TData>) {
-  const isPending = table.options.meta?.isPending;
   return (
     <div
       className={cn(
         'flex items-center justify-between w-full',
         className,
-        isPending || ((table.options.pageCount ?? 0) <= 0 && 'hidden')
+        (table.options.pageCount ?? 0) <= 0 && 'hidden'
       )}
     >
       {hasSelection && (
@@ -120,6 +118,6 @@ function TablePagination<TData>({
   );
 }
 
-export const DataTablePagination = memo(
-  TablePagination
-) as typeof TablePagination;
+// export const DataTablePagination = memo(
+//   TablePagination
+// ) as typeof TablePagination;

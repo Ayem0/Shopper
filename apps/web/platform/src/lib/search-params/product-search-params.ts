@@ -4,6 +4,7 @@ import {
   parseAsBoolean,
   parseAsString,
 } from 'nuqs/server';
+import { parseAsActiveStatusArray } from './active-status-search-params';
 import {
   paginationParsers,
   paginationUrlKeys,
@@ -16,7 +17,7 @@ export enum ProductSortBy {
 }
 
 const validProductSortBy = Object.values(ProductSortBy).filter(
-  (v) => typeof v === 'number' && v >= 0
+  (v) => typeof v === 'number' && v > 0
 ) as ProductSortBy[];
 
 const parseAsProductSortBy = createParser({
@@ -32,6 +33,7 @@ const parseAsProductSortBy = createParser({
 
 export const productSearchParamsParsers = {
   ...paginationParsers,
+  status: parseAsActiveStatusArray.withDefault([]),
   sort: parseAsProductSortBy.withDefault(
     ProductSortBy.PRODUCT_SORT_BY_UPDATED_AT
   ),
@@ -44,6 +46,7 @@ export const productSearchParamsUrlKeys: Record<
   string
 > = {
   ...paginationUrlKeys,
+  status: 'status',
   sort: 'sort',
   desc: 'desc',
   search: 's',

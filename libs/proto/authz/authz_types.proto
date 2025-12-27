@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package authz;
+
+import "shop/shop_types.proto";
+
+option csharp_namespace = "ShopifyClone.ProtoCs.Authz.Types";
+
+message AuthorizeResponse {
+    bool is_allowed = 1;
+}
+
+message AuthorizeRequest {
+    string shop_id = 1;
+    string user_id = 2;
+    optional shop.ShopUserType shop_user_type = 3;
+}

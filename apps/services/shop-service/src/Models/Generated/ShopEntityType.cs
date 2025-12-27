@@ -4,8 +4,8 @@ using System.Reflection;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using ShopifyClone.Cs.ProtoCs.Common.Types;
-using ShopifyClone.Cs.ProtoCs.Shop.Types;
+using ShopifyClone.ProtoCs.Common.Types;
+using ShopifyClone.ProtoCs.Shop.Types;
 
 #pragma warning disable 219, 612, 618
 #nullable disable

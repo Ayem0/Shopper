@@ -2,6 +2,16 @@
 
 import { useDebounceCallback } from '@/hooks/use-debounce-callback';
 import {
+  ArrayItem,
+  ArrayKeys,
+  BooleanKeys,
+  BoundCheckboxFilter,
+  BoundRadioFilter,
+  BoundSwitchFilter,
+  BoundTableFilter,
+  StringKeys,
+} from '@/lib/data-table/data-table-filter';
+import {
   Button,
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -17,53 +27,13 @@ import {
   Switch,
 } from '@shopify-clone/ui';
 import { ListFilter } from 'lucide-react';
-import { memo, useState } from 'react';
+import { useState } from 'react';
 
-export type TableFilterType = 'checkbox' | 'switch' | 'radio';
-
-type TableFilterBase = {
-  type: TableFilterType;
-  label: string;
+type TableFilterProps<TExtra> = {
+  filters: readonly BoundTableFilter<TExtra>[];
 };
 
-export type TableFilterCheckbox<T = unknown> = {
-  type: 'checkbox';
-  options: {
-    label: string;
-    value: T;
-  }[];
-  defaultValues: T[];
-  onChange: (values: T[]) => void;
-} & TableFilterBase;
-
-export type TableFilterSwitch = {
-  type: 'switch';
-  checked: boolean;
-  onCheckedChange: (e: boolean) => void;
-} & TableFilterBase;
-
-export type TableFilterRadio = {
-  type: 'radio';
-  value: string;
-  onValueChange: (value: string) => void;
-  options: {
-    label: string;
-    value: string;
-  }[];
-} & TableFilterBase;
-
-export type TableFilterItem =
-  | TableFilterCheckbox
-  | TableFilterSwitch
-  | TableFilterRadio;
-
-type TableFilterProps = {
-  filters: TableFilterItem[];
-};
-
-export const DataTableFilter = memo(function DataTableFilter({
-  filters,
-}: TableFilterProps) {
+export function DataTableFilter<TExtra>({ filters }: TableFilterProps<TExtra>) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -72,65 +42,55 @@ export const DataTableFilter = memo(function DataTableFilter({
           Filter
         </Button>
       </DropdownMenuTrigger>
+
       <DropdownMenuContent>
         {filters.map((filter) => {
-          if (filter.type === 'checkbox') {
-            return <TableFilterCheckbox filter={filter} key={filter.label} />;
-          } else if (filter.type === 'switch') {
-            return <TableFilterSwitch filter={filter} key={filter.label} />;
-          } else if (filter.type === 'radio') {
-            return <TableFilterRadio filter={filter} key={filter.label} />;
-          } else return null;
+          switch (filter.type) {
+            case 'checkbox':
+              return (
+                <CheckboxFilterComponent filter={filter} key={filter.key} />
+              );
+
+            case 'switch':
+              return <SwitchFilterComponent filter={filter} key={filter.key} />;
+
+            case 'radio':
+              return <RadioFilterComponent filter={filter} key={filter.key} />;
+          }
         })}
       </DropdownMenuContent>
     </DropdownMenu>
   );
-});
+}
 
-const TableFilterRadio = memo(function TableFilterRadio({
+function CheckboxFilterComponent<TState, K extends ArrayKeys<TState>>({
   filter,
 }: {
-  filter: TableFilterRadio;
+  filter: BoundCheckboxFilter<TState, K>;
 }) {
-  const [value, setValue] = useState(filter.value);
+  const [values, setValues] = useState(filter.value as ArrayItem<TState[K]>[]);
 
-  useDebounceCallback(value, filter.onValueChange, 500);
-
-  return (
-    <TableFilterGroup label={filter.label}>
-      <DropdownMenuRadioGroup value={value} onValueChange={(v) => setValue(v)}>
-        {filter.options.map((o) => (
-          <DropdownMenuRadioItem key={o.label} value={o.value}>
-            {o.label}
-          </DropdownMenuRadioItem>
-        ))}
-      </DropdownMenuRadioGroup>
-    </TableFilterGroup>
+  useDebounceCallback(
+    values,
+    () => {
+      filter.setValue(values as TState[K]);
+    },
+    500
   );
-});
-
-const TableFilterCheckbox = memo(function TableFilterCheckbox({
-  filter,
-}: {
-  filter: TableFilterCheckbox;
-}) {
-  const [values, setValues] = useState(filter.defaultValues);
-
-  useDebounceCallback(values, filter.onChange, 500);
 
   return (
     <TableFilterGroup label={filter.label}>
       {filter.options.map((o) => (
         <DropdownMenuCheckboxItem
-          onSelect={(e) => e.preventDefault()}
           key={o.label}
           checked={values.includes(o.value)}
+          onSelect={(e) => e.preventDefault()}
           onCheckedChange={(checked) => {
-            if (checked) {
-              setValues([...values, o.value]);
-            } else {
-              setValues(values.filter((v) => v !== o.value));
-            }
+            setValues(
+              checked
+                ? [...values, o.value]
+                : values.filter((v) => v !== o.value)
+            );
           }}
         >
           {o.label}
@@ -138,16 +98,22 @@ const TableFilterCheckbox = memo(function TableFilterCheckbox({
       ))}
     </TableFilterGroup>
   );
-});
+}
 
-const TableFilterSwitch = memo(function TableFilterSwitch({
+function SwitchFilterComponent<TState, K extends BooleanKeys<TState>>({
   filter,
 }: {
-  filter: TableFilterSwitch;
+  filter: BoundSwitchFilter<TState, K>;
 }) {
-  const [checked, setChecked] = useState(filter.checked);
+  const [checked, setChecked] = useState(filter.value as boolean);
 
-  useDebounceCallback(checked, filter.onCheckedChange, 500);
+  useDebounceCallback(
+    checked,
+    () => {
+      filter.setValue(checked as TState[K]);
+    },
+    500
+  );
 
   return (
     <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
@@ -155,9 +121,37 @@ const TableFilterSwitch = memo(function TableFilterSwitch({
       <Switch checked={checked} onCheckedChange={setChecked} />
     </DropdownMenuItem>
   );
-});
+}
 
-const TableFilterGroup = memo(function TableFilterGroup({
+function RadioFilterComponent<TState, K extends StringKeys<TState>>({
+  filter,
+}: {
+  filter: BoundRadioFilter<TState, K>;
+}) {
+  const [value, setValue] = useState(filter.value as string);
+
+  useDebounceCallback(
+    value,
+    () => {
+      filter.setValue(value as TState[K]);
+    },
+    500
+  );
+
+  return (
+    <TableFilterGroup label={filter.label}>
+      <DropdownMenuRadioGroup value={value} onValueChange={(v) => setValue(v)}>
+        {filter.options.map((o) => (
+          <DropdownMenuRadioItem key={o.label} value={o.value as string}>
+            {o.label}
+          </DropdownMenuRadioItem>
+        ))}
+      </DropdownMenuRadioGroup>
+    </TableFilterGroup>
+  );
+}
+
+function TableFilterGroup({
   label,
   children,
 }: {
@@ -172,4 +166,4 @@ const TableFilterGroup = memo(function TableFilterGroup({
       </DropdownMenuPortal>
     </DropdownMenuSub>
   );
-});
+}

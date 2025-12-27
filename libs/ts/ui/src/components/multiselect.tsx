@@ -408,9 +408,9 @@ function MultipleSelector({
 
   return (
     <Command
+      {...commandProps}
       id={id}
       ref={dropdownRef}
-      {...commandProps}
       onKeyDown={(e) => {
         handleKeyDown(e);
         commandProps?.onKeyDown?.(e);
@@ -476,8 +476,8 @@ function MultipleSelector({
           })}
           {/* Avoid having the "Search" Icon */}
           <CommandPrimitive.Input
-            aria-invalid={ariaInvalid}
             {...inputProps}
+            aria-invalid={ariaInvalid}
             ref={inputRef}
             value={inputValue}
             disabled={disabled}

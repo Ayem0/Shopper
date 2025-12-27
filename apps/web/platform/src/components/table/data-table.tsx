@@ -1,104 +1,131 @@
 'use client';
 
 import {
-  Skeleton,
-  Spinner,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@shopify-clone/ui';
-import {
-  flexRender,
-  RowData,
-  Table as TanstackTable,
-} from '@tanstack/react-table';
-import { motion } from 'motion/react';
+  Base,
+  DataTableConfig,
+  NoBaseOverlap,
+} from '@/lib/data-table/data-table';
+import { bindFilters } from '@/lib/data-table/data-table-filter';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
+import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
+import { SetValues, useQueryStates, UseQueryStatesKeysMap, Values } from 'nuqs';
+import { ApiError } from '../errors/api-error';
+import { DataTableHeader } from './data-table-header';
+import { DataTablePagination } from './data-table-pagination';
+import { DataTableUI } from './data-table-ui';
 
-declare module '@tanstack/react-table' {
-  export interface TableMeta<TData extends RowData> {
-    isPending?: boolean;
-    isFetching?: boolean;
-  }
-}
-interface DataTableProps<TData> {
-  table: TanstackTable<TData>;
-}
+export function DataTable<
+  TSort extends number,
+  TExtra extends NoBaseOverlap<object>,
+  TRow extends { id: string },
+  TParser extends UseQueryStatesKeysMap<Base<TSort> & TExtra>
+>({ config }: { config: DataTableConfig<TSort, TExtra, TRow, TParser> }) {
+  const [state, rawState, setState] = useTypedQueryStates<
+    TSort,
+    TExtra,
+    TParser
+  >(config.state, {
+    urlKeys: config.urlKeys,
+  });
 
-export function DataTable<TData>({
-  table,
-}: DataTableProps<TData & { id: string }>) {
-  const isFetching = table.options.meta?.isFetching;
-  const isPending = table.options.meta?.isPending;
+  const filters = bindFilters(config.filters, rawState, setState);
+
+  const query = useQuery({
+    queryKey: [...config.queryKey, state],
+    queryFn: ({ signal }) => config.fetchFn(rawState, signal),
+    placeholderData: keepPreviousData,
+    refetchOnWindowFocus: false,
+  });
+
+  const table = useReactTable({
+    data: query.data?.items ?? [],
+    columns: config.columns,
+    manualFiltering: true,
+    manualSorting: true,
+    manualPagination: true,
+    getCoreRowModel: getCoreRowModel(),
+    pageCount: (query.data?.maxPageIndex ?? -1) + 1,
+    state: {
+      pagination: {
+        pageIndex: state.pageIndex,
+        pageSize: state.pageSize,
+      },
+      sorting: [
+        {
+          id: String(state.sort),
+          desc: state.desc,
+        },
+      ],
+    },
+    onPaginationChange: (updater) => {
+      const next =
+        typeof updater === 'function'
+          ? updater({ pageIndex: state.pageIndex, pageSize: state.pageSize })
+          : updater;
+
+      setState((prev) => ({
+        ...prev,
+        ...next,
+      }));
+    },
+    onSortingChange: (updater) => {
+      const next =
+        typeof updater === 'function'
+          ? updater([{ id: String(state.sort), desc: state.desc }])
+          : updater;
+
+      setState((prev) => ({
+        ...prev,
+        sort: Number(next[0].id) as TSort,
+        desc: next[0].desc,
+      }));
+    },
+    meta: {
+      isPending: query.isPending,
+      isFetching: query.isFetching,
+    },
+  });
+
   return (
-    <div className="relative w-full overflow-auto rounded-md border">
-      <Table>
-        <TableHeader className="sticky top-0 bg-background">
-          {table.getHeaderGroups().map((headerGroup) => (
-            <TableRow key={headerGroup.id} className="!border-b-0">
-              {headerGroup.headers.map((header) => {
-                return (
-                  <TableHead key={header.id} className="border-b">
-                    {header.isPlaceholder
-                      ? null
-                      : flexRender(
-                          header.column.columnDef.header,
-                          header.getContext()
-                        )}
-                  </TableHead>
-                );
-              })}
-            </TableRow>
-          ))}
-        </TableHeader>
-        <TableBody>
-          {isPending ? (
-            Array.from({ length: 5 }).map((_, index) => (
-              <tr key={`skeleton-${index}`}>
-                {table.getAllColumns().map((column) => (
-                  <TableCell key={column.id} className="h-[49px]">
-                    <Skeleton className="size-full" />
-                  </TableCell>
-                ))}
-              </tr>
-            ))
-          ) : table.getRowModel().rows?.length ? (
-            table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && 'selected'}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
-            ))
-          ) : (
-            <tr>
-              <TableCell
-                colSpan={table.options.columns.length}
-                className="h-24 text-center"
-              >
-                No results.
-              </TableCell>
-            </tr>
-          )}
-        </TableBody>
-      </Table>
-      {isFetching && !isPending && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="absolute inset-0 flex items-center justify-center rounded-xl bg-background/50"
-        >
-          <Spinner className="size-12" />
-        </motion.div>
+    <div className="flex w-full flex-col px-4 gap-2 over">
+      <DataTableHeader
+        filters={filters}
+        search={state.search}
+        setSearch={(value) =>
+          setState((prev) => ({ ...prev, search: String(value) }))
+        }
+        table={table}
+        createButton={config.createButton}
+        sortOptions={config.sortOptions}
+      />
+      {query.isError ? (
+        <ApiError
+          message="Something went wrong"
+          onClick={() => query.refetch()}
+        />
+      ) : (
+        <>
+          <DataTableUI table={table} />
+          <DataTablePagination
+            hasSelection={config.hasSelection}
+            pageSizes={config.pageSizes}
+            table={table}
+            className="pb-2"
+          />
+        </>
       )}
     </div>
   );
+}
+
+function useTypedQueryStates<
+  TSort extends number,
+  TExtra extends NoBaseOverlap<object>,
+  TParser extends UseQueryStatesKeysMap<Base<TSort> & TExtra>
+>(
+  parsers: TParser,
+  options?: Parameters<typeof useQueryStates>[1]
+): [Base<TSort> & TExtra, Values<TParser>, SetValues<TParser>] {
+  const [state, setState] = useQueryStates(parsers, options);
+  return [state as Base<TSort> & TExtra, state, setState];
 }

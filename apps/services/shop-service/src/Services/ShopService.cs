@@ -1,9 +1,8 @@
-using System.Text.Json;
 using Google.Protobuf;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using ShopifyClone.Cs.ProtoCs.Shop.Events;
-using ShopifyClone.Cs.ProtoCs.Shop.Types;
+using ShopifyClone.ProtoCs.Shop.Events;
+using ShopifyClone.ProtoCs.Shop.Types;
 using ShopifyClone.Cs.Shared.src.Core.Models;
 using Data;
 using DTO;
@@ -14,7 +13,7 @@ namespace Services;
 public class ShopService : IShopService
 {
     private readonly ShopDbContext _dbContext;
-    private static readonly string _topic = nameof(ShopEvent);
+    private const string _topic = nameof(ShopEvent);
     private readonly ILogger<ShopService> _logger;
     public ShopService(
         ShopDbContext dbContext,
@@ -39,13 +38,11 @@ public class ShopService : IShopService
         {
             var shop = new Shop()
             {
-                Id = Guid.NewGuid(),
                 Name = req.Name,
                 Type = req.Type,
             };
             var shopOwner = new ShopUser()
             {
-                Id = Guid.NewGuid(),
                 Shop = shop,
                 ShopUserType = ShopUserType.Owner,
                 UserId = userId,
@@ -60,7 +57,6 @@ public class ShopService : IShopService
             };
             var msg = new OutboxMessage()
             {
-                Id = Guid.NewGuid(),
                 EventType = nameof(ShopCreated),
                 AggregateId = shop.Id.ToString(),
                 AggregateType = _topic,
@@ -81,6 +77,42 @@ public class ShopService : IShopService
         {
             _logger.LogError(ex, "Error creating shop : {message}, {data}", ex.Message, ex.Data);
             await transaction.RollbackAsync();
+            throw;
+        }
+    }
+
+    public async Task<GetShopMemberResponse> GetShopMember(GetShopMemberRequest req)
+    {
+        _logger.LogInformation("GETTING SHOP MEMBER REQ - shopId: '{s}', userId: '{u}'", req.ShopId, req.UserId);
+        var userId = new Guid(req.UserId);
+        var shopId = new Guid(req.ShopId);
+        try
+        {
+            var res = await _dbContext.ShopUser
+                .AsNoTracking()
+                .Where(su => su.UserId == userId && su.ShopId == shopId)
+                .Select(su => new { su.ShopId, su.UserId, su.ShopUserType })
+                .FirstOrDefaultAsync();
+            _logger.LogInformation("DATA FOUND: {data}", res);
+            if (res == null)
+                return new GetShopMemberResponse
+                {
+                    ShopMember = null
+                };
+            _logger.LogInformation("ROW FOUND");
+            return new GetShopMemberResponse
+            {
+                ShopMember = new ShopMemberData
+                {
+                    ShopId = res.ShopId.ToString(),
+                    UserId = res.UserId.ToString(),
+                    ShopUserType = res.ShopUserType,
+                }
+            };
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error getting shop member for shopId '{sid}', userId: '{uId}' : {message}, {data}", shopId, userId, ex.Message, ex.Data);
             throw;
         }
     }
@@ -128,7 +160,7 @@ public class ShopService : IShopService
                 TotalResults = totalResults,
                 MaxPageIndex = maxPageIndex
             };
-            res.Shops.AddRange([.. shops.Select(s =>
+            res.Items.AddRange([.. shops.Select(s =>
             {
                 var obj = new ShopData
                 {

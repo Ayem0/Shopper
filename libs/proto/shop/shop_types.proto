@@ -1,8 +1,9 @@
 syntax = "proto3";
 
 package shop;
+import "common/common_types.proto";
 
-option csharp_namespace = "ShopifyClone.Cs.ProtoCs.Shop.Types";
+option csharp_namespace = "ShopifyClone.ProtoCs.Shop.Types";
 
 // Create Shop
 message CreateShopRequest {
@@ -26,7 +27,7 @@ message GetShopsRequest {
 }
 
 message GetShopsResponse {
-    repeated ShopData shops = 1;
+    repeated ShopData items = 1;
     int64 total_results = 2;
     int32 page_size = 3;
     int32 page_index = 4;
@@ -42,6 +43,22 @@ message ShopData {
     optional string updated_at = 5;
 }
 
+// Shop member
+
+message GetShopMemberRequest {
+    string shop_id = 1;
+    string user_id = 2;
+}
+
+message GetShopMemberResponse {
+    optional ShopMemberData shop_member = 1;
+}
+
+message ShopMemberData {
+    string shop_id = 1;
+    string user_id = 2;
+    ShopUserType shop_user_type = 3;
+}
 // Enums
 enum ShopType
 {

@@ -1,11 +1,10 @@
 using System;
+using ShopifyClone.ProtoCs.Product.Types;
 
 namespace Services.ProductService;
 
 public interface IProductService
 {
-    public object CreateAsync();
-    public object UpdateAsync(Guid id);
-    public object DeleteAsync(Guid id);
-    public object GetByShopAsync(Guid shopId);
+    public Task<CreateProductResponse> CreateProductAsync(CreateProductRequest req, Guid shopId);
+    public Task<GetProductsResponse> GetProductsAsync(GetProductsRequest req, Guid shopId);
 }

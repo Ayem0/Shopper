@@ -14,7 +14,6 @@ export async function getShops(
   });
   if (req.activeOnly) searchParams.append('activeOnly', 'true');
   if (req.searchTerm) searchParams.append('searchTerm', req.searchTerm);
-  console.log(searchParams.toString());
   const res = await fetch(`/api/shop?${searchParams.toString()}`, {
     method: 'GET',
     signal: signal,

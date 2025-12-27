@@ -1,6 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using shop_configuration_service.src.Services;
+using shop_configuration_service.Services;
 
 namespace shop_configuration_service;
 

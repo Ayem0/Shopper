@@ -1,5 +1,4 @@
-import { createParser, parseAsIndex } from "nuqs/server";
-
+import { createParser, parseAsIndex } from 'nuqs/server';
 
 const parseAsPagination = createParser({
   parse: (value) => {
@@ -11,15 +10,14 @@ const parseAsPagination = createParser({
     return null;
   },
   serialize: (value) => String(value),
-})
+});
 
 export const paginationParsers = {
   pageIndex: parseAsIndex.withDefault(0),
-  pageSize: parseAsPagination.withDefault(10)
-}
+  pageSize: parseAsPagination.withDefault(10),
+};
 
 export const paginationUrlKeys = {
   pageIndex: 'page',
-  pageSize: 'size'
-}
-
+  pageSize: 'size',
+};

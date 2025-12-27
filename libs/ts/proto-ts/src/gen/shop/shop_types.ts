@@ -129,7 +129,7 @@ export interface GetShopsRequest {
 }
 
 export interface GetShopsResponse {
-  shops: ShopData[];
+  items: ShopData[];
   totalResults: number;
   pageSize: number;
   pageIndex: number;
@@ -143,6 +143,21 @@ export interface ShopData {
   type: ShopType;
   isActive: boolean;
   updatedAt?: string | undefined;
+}
+
+export interface GetShopMemberRequest {
+  shopId: string;
+  userId: string;
+}
+
+export interface GetShopMemberResponse {
+  shopMember?: ShopMemberData | undefined;
+}
+
+export interface ShopMemberData {
+  shopId: string;
+  userId: string;
+  shopUserType: ShopUserType;
 }
 
 function createBaseCreateShopRequest(): CreateShopRequest {
@@ -448,12 +463,12 @@ export const GetShopsRequest: MessageFns<GetShopsRequest> = {
 };
 
 function createBaseGetShopsResponse(): GetShopsResponse {
-  return { shops: [], totalResults: 0, pageSize: 0, pageIndex: 0, maxPageIndex: 0 };
+  return { items: [], totalResults: 0, pageSize: 0, pageIndex: 0, maxPageIndex: 0 };
 }
 
 export const GetShopsResponse: MessageFns<GetShopsResponse> = {
   encode(message: GetShopsResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
-    for (const v of message.shops) {
+    for (const v of message.items) {
       ShopData.encode(v!, writer.uint32(10).fork()).join();
     }
     if (message.totalResults !== 0) {
@@ -483,7 +498,7 @@ export const GetShopsResponse: MessageFns<GetShopsResponse> = {
             break;
           }
 
-          message.shops.push(ShopData.decode(reader, reader.uint32()));
+          message.items.push(ShopData.decode(reader, reader.uint32()));
           continue;
         }
         case 2: {
@@ -529,7 +544,7 @@ export const GetShopsResponse: MessageFns<GetShopsResponse> = {
 
   fromJSON(object: any): GetShopsResponse {
     return {
-      shops: globalThis.Array.isArray(object?.shops) ? object.shops.map((e: any) => ShopData.fromJSON(e)) : [],
+      items: globalThis.Array.isArray(object?.items) ? object.items.map((e: any) => ShopData.fromJSON(e)) : [],
       totalResults: isSet(object.totalResults) ? globalThis.Number(object.totalResults) : 0,
       pageSize: isSet(object.pageSize) ? globalThis.Number(object.pageSize) : 0,
       pageIndex: isSet(object.pageIndex) ? globalThis.Number(object.pageIndex) : 0,
@@ -539,8 +554,8 @@ export const GetShopsResponse: MessageFns<GetShopsResponse> = {
 
   toJSON(message: GetShopsResponse): unknown {
     const obj: any = {};
-    if (message.shops?.length) {
-      obj.shops = message.shops.map((e) => ShopData.toJSON(e));
+    if (message.items?.length) {
+      obj.items = message.items.map((e) => ShopData.toJSON(e));
     }
     if (message.totalResults !== 0) {
       obj.totalResults = Math.round(message.totalResults);
@@ -562,7 +577,7 @@ export const GetShopsResponse: MessageFns<GetShopsResponse> = {
   },
   fromPartial<I extends Exact<DeepPartial<GetShopsResponse>, I>>(object: I): GetShopsResponse {
     const message = createBaseGetShopsResponse();
-    message.shops = object.shops?.map((e) => ShopData.fromPartial(e)) || [];
+    message.items = object.items?.map((e) => ShopData.fromPartial(e)) || [];
     message.totalResults = object.totalResults ?? 0;
     message.pageSize = object.pageSize ?? 0;
     message.pageIndex = object.pageIndex ?? 0;
@@ -691,6 +706,234 @@ export const ShopData: MessageFns<ShopData> = {
     message.type = object.type ?? 0;
     message.isActive = object.isActive ?? false;
     message.updatedAt = object.updatedAt ?? undefined;
+    return message;
+  },
+};
+
+function createBaseGetShopMemberRequest(): GetShopMemberRequest {
+  return { shopId: "", userId: "" };
+}
+
+export const GetShopMemberRequest: MessageFns<GetShopMemberRequest> = {
+  encode(message: GetShopMemberRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.shopId !== "") {
+      writer.uint32(10).string(message.shopId);
+    }
+    if (message.userId !== "") {
+      writer.uint32(18).string(message.userId);
+    }
+    return writer;
+  },
+
+  decode(input: BinaryReader | Uint8Array, length?: number): GetShopMemberRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGetShopMemberRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 10) {
+            break;
+          }
+
+          message.shopId = reader.string();
+          continue;
+        }
+        case 2: {
+          if (tag !== 18) {
+            break;
+          }
+
+          message.userId = reader.string();
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GetShopMemberRequest {
+    return {
+      shopId: isSet(object.shopId) ? globalThis.String(object.shopId) : "",
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+    };
+  },
+
+  toJSON(message: GetShopMemberRequest): unknown {
+    const obj: any = {};
+    if (message.shopId !== "") {
+      obj.shopId = message.shopId;
+    }
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<GetShopMemberRequest>, I>>(base?: I): GetShopMemberRequest {
+    return GetShopMemberRequest.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<GetShopMemberRequest>, I>>(object: I): GetShopMemberRequest {
+    const message = createBaseGetShopMemberRequest();
+    message.shopId = object.shopId ?? "";
+    message.userId = object.userId ?? "";
+    return message;
+  },
+};
+
+function createBaseGetShopMemberResponse(): GetShopMemberResponse {
+  return { shopMember: undefined };
+}
+
+export const GetShopMemberResponse: MessageFns<GetShopMemberResponse> = {
+  encode(message: GetShopMemberResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.shopMember !== undefined) {
+      ShopMemberData.encode(message.shopMember, writer.uint32(10).fork()).join();
+    }
+    return writer;
+  },
+
+  decode(input: BinaryReader | Uint8Array, length?: number): GetShopMemberResponse {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGetShopMemberResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 10) {
+            break;
+          }
+
+          message.shopMember = ShopMemberData.decode(reader, reader.uint32());
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GetShopMemberResponse {
+    return { shopMember: isSet(object.shopMember) ? ShopMemberData.fromJSON(object.shopMember) : undefined };
+  },
+
+  toJSON(message: GetShopMemberResponse): unknown {
+    const obj: any = {};
+    if (message.shopMember !== undefined) {
+      obj.shopMember = ShopMemberData.toJSON(message.shopMember);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<GetShopMemberResponse>, I>>(base?: I): GetShopMemberResponse {
+    return GetShopMemberResponse.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<GetShopMemberResponse>, I>>(object: I): GetShopMemberResponse {
+    const message = createBaseGetShopMemberResponse();
+    message.shopMember = (object.shopMember !== undefined && object.shopMember !== null)
+      ? ShopMemberData.fromPartial(object.shopMember)
+      : undefined;
+    return message;
+  },
+};
+
+function createBaseShopMemberData(): ShopMemberData {
+  return { shopId: "", userId: "", shopUserType: 0 };
+}
+
+export const ShopMemberData: MessageFns<ShopMemberData> = {
+  encode(message: ShopMemberData, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.shopId !== "") {
+      writer.uint32(10).string(message.shopId);
+    }
+    if (message.userId !== "") {
+      writer.uint32(18).string(message.userId);
+    }
+    if (message.shopUserType !== 0) {
+      writer.uint32(24).int32(message.shopUserType);
+    }
+    return writer;
+  },
+
+  decode(input: BinaryReader | Uint8Array, length?: number): ShopMemberData {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseShopMemberData();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 10) {
+            break;
+          }
+
+          message.shopId = reader.string();
+          continue;
+        }
+        case 2: {
+          if (tag !== 18) {
+            break;
+          }
+
+          message.userId = reader.string();
+          continue;
+        }
+        case 3: {
+          if (tag !== 24) {
+            break;
+          }
+
+          message.shopUserType = reader.int32() as any;
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ShopMemberData {
+    return {
+      shopId: isSet(object.shopId) ? globalThis.String(object.shopId) : "",
+      userId: isSet(object.userId) ? globalThis.String(object.userId) : "",
+      shopUserType: isSet(object.shopUserType) ? shopUserTypeFromJSON(object.shopUserType) : 0,
+    };
+  },
+
+  toJSON(message: ShopMemberData): unknown {
+    const obj: any = {};
+    if (message.shopId !== "") {
+      obj.shopId = message.shopId;
+    }
+    if (message.userId !== "") {
+      obj.userId = message.userId;
+    }
+    if (message.shopUserType !== 0) {
+      obj.shopUserType = shopUserTypeToJSON(message.shopUserType);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ShopMemberData>, I>>(base?: I): ShopMemberData {
+    return ShopMemberData.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<ShopMemberData>, I>>(object: I): ShopMemberData {
+    const message = createBaseShopMemberData();
+    message.shopId = object.shopId ?? "";
+    message.userId = object.userId ?? "";
+    message.shopUserType = object.shopUserType ?? 0;
     return message;
   },
 };

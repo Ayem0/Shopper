@@ -8,15 +8,16 @@
 
   <ItemGroup>
     <Folder Include="src\Core\Models\" />
-    <Folder Include="src\Infra\Auth\" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Confluent.Kafka" Version="2.11.1" />
-    <PackageReference Include="Confluent.SchemaRegistry" Version="2.11.1" />
-    <PackageReference Include="Confluent.SchemaRegistry.Serdes.Protobuf" Version="2.11.1" />
-    <PackageReference Include="Google.Protobuf" Version="3.32.1" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.9" />
+    <PackageReference Include="Amazon.Lambda.Serialization.SystemTextJson" Version="2.4.4" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\proto-cs\ShopifyClone.Cs.ProtoCs.csproj" />
   </ItemGroup>
 
 </Project>

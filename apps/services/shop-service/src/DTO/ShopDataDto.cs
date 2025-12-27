@@ -1,5 +1,5 @@
 using System;
-using ShopifyClone.Cs.ProtoCs.Shop.Types;
+using ShopifyClone.ProtoCs.Shop.Types;
 
 namespace DTO;
 

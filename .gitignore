@@ -51,6 +51,11 @@ vitest.config.*.timestamp*
 
 # Exclude .aws-sam directories inside 'src' within any service app
 /apps/services/**/src/.aws-sam/
+/apps/services/**/src/**/.aws-sam/
 
 # Exclude bin directories inside 'src' within any service app
 /apps/services/**/src/bin/
+/apps/services/**/src/**/bin/
+# .NET
+**/bin/
+/artifacts/

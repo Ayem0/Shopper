@@ -1,7 +1,7 @@
 using Amazon.Lambda.Core;
 using Amazon.Lambda.Annotations;
-using shop_configuration_service.src.Services;
-using ShopifyClone.Cs.ProtoCs.Shop.Events;
+using shop_configuration_service.Services;
+using ShopifyClone.ProtoCs.Shop.Events;
 using AWS.Lambda.Powertools.Kafka.Protobuf;
 
 [assembly: LambdaSerializer(typeof(PowertoolsKafkaProtobufSerializer))]
@@ -19,16 +19,9 @@ public class KafkaConsumers
     [LambdaFunction()]
     public async Task ConsumeShopEvents(ConsumerRecords<string, ShopEvent> records)
     {
-        Console.WriteLine($"RECEIVED : {records.Count()} RECORDS");
         foreach (var record in records)
         {
-            Console.WriteLine($"record {record.Topic}");
-            var evt = record.Value;
-            await (evt.OneofTypeCase switch
-            {
-                ShopEvent.OneofTypeOneofCase.Created => _shopConfigurationService.ConsumeShopCreated(evt.Created),
-                _ => Task.CompletedTask,
-            });
+            await _shopConfigurationService.ConsumeShopEvent(record.Value);
         }
     }
 }

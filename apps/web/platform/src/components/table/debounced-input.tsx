@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
 import { useDebounceCallback } from '@/hooks/use-debounce-callback';
 import { Input } from '@shopify-clone/ui';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface DebouncedInputProps
   extends Omit<React.ComponentProps<typeof Input>, 'onChange'> {
@@ -20,6 +20,10 @@ export function DebouncedInput({
   const [value, setValue] = useState(initialValue);
 
   useDebounceCallback(value, onChange, debounce);
+
+  useEffect(() => {
+    setValue(initialValue);
+  }, [initialValue]);
 
   return (
     <Input

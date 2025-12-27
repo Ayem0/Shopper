@@ -11,7 +11,7 @@ public class ShopDbContextFactory : IDesignTimeDbContextFactory<ShopDbContext>
 
         // Use the same connection string you'd normally inject from environment
         optionsBuilder.UseNpgsql(
-            "Host=localhost;Port=5434;Database=shop-database;Username=root;Password=root"
+            "Host=localhost;Port=5434;Database=shop-db;Username=root;Password=root"
         );
 
         return new ShopDbContext(optionsBuilder.Options);

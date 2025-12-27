@@ -1,12 +1,12 @@
-using ShopifyClone.Cs.ProtoCs.Shop.Types;
+using ShopifyClone.ProtoCs.Shop.Types;
 
 namespace Models;
 
 public class ShopUser
 {
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
     public Guid UserId { get; set; }
-    public ShopUserType ShopUserType { get; set; } = ShopUserType.Owner;
+    public required ShopUserType ShopUserType { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }
 

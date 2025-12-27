@@ -29,10 +29,12 @@ export default async function DashboardPage({ searchParams }: PageProps) {
     queryKey: [
       'shops',
       {
-        pagination: { pageIndex, pageSize },
-        sorting: [{ id: sort.toString(), desc }],
-        searchTerm: search,
-        activeOnly: active,
+        pageIndex,
+        pageSize,
+        sort,
+        desc,
+        search,
+        active,
         types,
       },
     ],

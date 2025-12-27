@@ -16,6 +16,10 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "es2022",
-    "customConditions": ["development"],
+    "customConditions": ["@shopify-clone/source"],
+    "paths": {
+      "@shopify-clone/ui": ["libs/ts/ui/src/index.ts"],
+      "@shopify-clone/proto-ts": ["libs/ts/proto-ts/src/index.ts"]
+    }
   }
 }

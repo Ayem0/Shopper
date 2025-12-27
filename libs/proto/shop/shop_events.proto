@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package shop;
 
-option csharp_namespace = "ShopifyClone.Cs.ProtoCs.Shop.Events";
+option csharp_namespace = "ShopifyClone.ProtoCs.Shop.Events";
 
 import "shop/shop_types.proto";
 
@@ -15,4 +15,29 @@ message ShopEvent {
 message ShopCreated {
   string shop_id = 1;
   shop.ShopType shop_type = 2;
+}
+
+message ShopMemberEvent {
+  oneof oneof_type {
+    ShopMemberAdded added = 1;
+    ShopMemberUpdated updated = 2;
+    ShopMemberDeleted deleted = 3;
+  }
+}
+
+message ShopMemberAdded {
+  string shop_id = 1;
+  string user_id = 2;
+  shop.ShopUserType shop_user_type = 3;
+}
+
+message ShopMemberUpdated {
+  string shop_id = 1;
+  string user_id = 2;
+  shop.ShopUserType shop_user_type = 3;
+}
+
+message ShopMemberDeleted {
+  string shop_id = 1;
+  string user_id = 2;
 }

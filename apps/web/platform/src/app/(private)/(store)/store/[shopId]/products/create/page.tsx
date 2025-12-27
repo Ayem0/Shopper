@@ -6,7 +6,6 @@ export default function CreateProductPage() {
     <>
       <div className="flex flex-col w-full px-4 xl:px-12">
         <Card className="p-4 md:p-6">
-          <span className="text-3xl">New Product</span>
           <ProductForm />
         </Card>
       </div>
