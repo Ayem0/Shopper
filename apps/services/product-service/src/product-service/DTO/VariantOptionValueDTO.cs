@@ -8,4 +8,5 @@ public class VariantOptionValueDTO
     public Guid ShopId { get; set; }
     public required string Value { get; set; }
     public required string OptionName { get; set; }
+    public Guid OptionId { get; set; }
 }

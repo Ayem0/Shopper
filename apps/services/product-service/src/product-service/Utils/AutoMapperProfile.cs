@@ -44,12 +44,30 @@ public class AutoMapperProfile : Profile
             .ForMember(dest => dest.Id, opt => opt.MapFrom(s => s.Id.ToString()))
             .ForMember(dest => dest.ShopId, opt => opt.MapFrom(s => s.ShopId.ToString()))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(s => s.Status))
-            .ForMember(dest => dest.Name, opt => opt.MapFrom(s => s.Name));
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(s => s.Name))
+            .ForMember(dest => dest.VariantOptionValues, opt =>
+                {
+                    opt.MapFrom(s => s.VariantOptionValues);
+                    opt.UseDestinationValue();
+                }
+            );
 
         CreateMap<ProductDTO, ProductData>()
            .ForMember(dest => dest.Id, opt => opt.MapFrom(s => s.Id.ToString()))
            .ForMember(dest => dest.ShopId, opt => opt.MapFrom(s => s.ShopId.ToString()))
            .ForMember(dest => dest.Descr, opt => opt.Ignore())
+           .ForMember(dest => dest.Categories, opt =>
+                {
+                    opt.MapFrom(s => s.Categories);
+                    opt.UseDestinationValue();
+                }
+            )
+            .ForMember(dest => dest.Variants, opt =>
+                {
+                    opt.MapFrom(s => s.ProductVariants);
+                    opt.UseDestinationValue();
+                }
+            )
            .AfterMap((src, dest) =>
            {
                if (src.Descr == null)

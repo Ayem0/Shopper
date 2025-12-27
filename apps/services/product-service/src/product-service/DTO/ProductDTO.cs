@@ -9,6 +9,7 @@ public class ProductDTO
     public Guid ShopId { get; set; }
     public ActiveStatus Status { get; set; }
     public required string Name { get; set; }
+    public string? Descr { get; set; }
     public DateTime? UpdatedAt { get; set; }
     public List<ProductCategoryDTO>? Categories { get; set; }
     public List<ProductVariantDTO>? ProductVariants { get; set; }
