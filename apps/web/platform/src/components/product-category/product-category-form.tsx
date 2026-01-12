@@ -98,12 +98,18 @@ export function ProductCategoryForm() {
           <FieldGroup>
             <form.AppField name="name">
               {(field) => (
-                <field.Input label="Name" placeholder="Name" type="text" />
+                <field.Input
+                  field={field}
+                  label="Name"
+                  placeholder="Name"
+                  type="text"
+                />
               )}
             </form.AppField>
             <form.AppField name="status">
               {(field) => (
                 <field.Select
+                  field={field}
                   label="Status"
                   placeholder="Status"
                   mapValue={(value) => Number(value)}
@@ -114,6 +120,7 @@ export function ProductCategoryForm() {
             <form.AppField name="parentCategoryId">
               {(field) => (
                 <field.Combobox
+                  field={field}
                   label="Parent Category"
                   placeholder="Parent Category"
                   isFetching={isFetching}

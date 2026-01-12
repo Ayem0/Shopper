@@ -1,3 +1,4 @@
+import { ProductSortBy } from '@shopify-clone/proto-ts';
 import {
   createParser,
   createSearchParamsCache,
@@ -10,14 +11,8 @@ import {
   paginationUrlKeys,
 } from './pagination-search-params';
 
-export enum ProductSortBy {
-  PRODUCT_SORT_BY_NAME = 0,
-  PRODUCT_SORT_BY_UPDATED_AT = 1,
-  UNRECOGNIZED = -1,
-}
-
 const validProductSortBy = Object.values(ProductSortBy).filter(
-  (v) => typeof v === 'number' && v > 0
+  (v) => typeof v === 'number' && v >= 0
 ) as ProductSortBy[];
 
 const parseAsProductSortBy = createParser({

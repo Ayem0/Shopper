@@ -3,6 +3,7 @@
 import { storeTableColumns } from '@/components/store/store-table-columns';
 import { DataTable } from '@/components/table/data-table';
 import { createTableConfig } from '@/lib/data-table/data-table';
+import { createNuqsTableState } from '@/lib/data-table/data-table-nuqs-adapter';
 import { TableSortOption } from '@/lib/data-table/data-table-sort';
 import { getShops } from '@/lib/queries/shop/get-shops-query';
 import {
@@ -44,8 +45,10 @@ export function StoreTable() {
     <DataTable
       config={createTableConfig({
         columns: storeTableColumns,
-        state: storeSearchParamsParsers,
-        urlKeys: storeSearchParamsUrlKeys,
+        stateAdapter: createNuqsTableState(
+          storeSearchParamsParsers,
+          storeSearchParamsUrlKeys
+        ),
         hasSelection: false,
         createButton: '/dashboard/create',
         pageSizes: [10, 25, 50],

@@ -14,7 +14,7 @@ import {
 import { UIEvent, useState } from 'react';
 import { BaseField, FieldProps } from './base-field';
 
-interface ComboboxFieldProps extends FieldProps {
+interface ComboboxFieldProps extends FieldProps<string | undefined> {
   placeholder: string;
   options?: { label: string; value: string }[];
   isFetching: boolean;

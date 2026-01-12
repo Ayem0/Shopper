@@ -1,21 +1,7 @@
-import { ProductData } from '@/components/product/product-table-columns';
-import { ProductSortBy } from '@/lib/search-params/product-search-params';
-
-interface GetProductsRequest {
-  sortBy: ProductSortBy;
-  pageSize: number;
-  pageIndex: number;
-  sortDescending: boolean;
-  searchTerm: string;
-}
-
-export interface GetProductsResponse {
-  products: ProductData[];
-  totalResults: number;
-  pageSize: number;
-  pageIndex: number;
-  maxPageIndex: number;
-}
+import {
+  GetProductsRequest,
+  GetProductsResponse,
+} from '@shopify-clone/proto-ts';
 
 export async function getProducts(
   req: GetProductsRequest,
@@ -25,8 +11,11 @@ export async function getProducts(
   searchParams.append('sortBy', req.sortBy.toString());
   searchParams.append('pageSize', req.pageSize.toString());
   searchParams.append('pageIndex', req.pageIndex.toString());
-  searchParams.append('sortDescending', req.sortDescending.toString());
-  if (req.searchTerm) searchParams.append('searchTerm', req.searchTerm);
+  searchParams.append('desc', req.desc.toString());
+  searchParams.append('shopId', req.shopId);
+  if (req.status.length > 0)
+    searchParams.append('status', req.status.toString());
+  if (req.search) searchParams.append('search', req.search);
   const res = await fetch(`/api/product?${searchParams.toString()}`, {
     method: 'GET',
     signal: signal,

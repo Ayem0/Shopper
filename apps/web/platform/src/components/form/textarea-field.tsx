@@ -1,7 +1,7 @@
 import { Textarea } from '@shopify-clone/ui';
 import { BaseField, FieldProps } from './base-field';
 
-interface TextareaFieldProps extends FieldProps {
+interface TextareaFieldProps extends FieldProps<string | undefined> {
   placeholder: string;
   maxLength?: number;
 }
@@ -19,7 +19,7 @@ export function TextareaField({
           maxLength={maxLength}
           id={field.name}
           name={field.name}
-          value={field.state.value as string}
+          value={field.state.value}
           onBlur={field.handleBlur}
           onChange={(e) => field.handleChange(e.target.value)}
           aria-invalid={isInvalid}

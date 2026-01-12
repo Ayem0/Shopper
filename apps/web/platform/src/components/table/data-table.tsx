@@ -1,14 +1,17 @@
 'use client';
 
-import {
-  Base,
-  DataTableConfig,
-  NoBaseOverlap,
-} from '@/lib/data-table/data-table';
+import { DataTableConfig, NoBaseOverlap } from '@/lib/data-table/data-table';
 import { bindFilters } from '@/lib/data-table/data-table-filter';
 import { keepPreviousData, useQuery } from '@tanstack/react-query';
-import { getCoreRowModel, useReactTable } from '@tanstack/react-table';
-import { SetValues, useQueryStates, UseQueryStatesKeysMap, Values } from 'nuqs';
+import {
+  ExpandedState,
+  getCoreRowModel,
+  getExpandedRowModel,
+  getGroupedRowModel,
+  useReactTable,
+  VisibilityState,
+} from '@tanstack/react-table';
+import { useState } from 'react';
 import { ApiError } from '../errors/api-error';
 import { DataTableHeader } from './data-table-header';
 import { DataTablePagination } from './data-table-pagination';
@@ -17,25 +20,25 @@ import { DataTableUI } from './data-table-ui';
 export function DataTable<
   TSort extends number,
   TExtra extends NoBaseOverlap<object>,
-  TRow extends { id: string },
-  TParser extends UseQueryStatesKeysMap<Base<TSort> & TExtra>
->({ config }: { config: DataTableConfig<TSort, TExtra, TRow, TParser> }) {
-  const [state, rawState, setState] = useTypedQueryStates<
-    TSort,
-    TExtra,
-    TParser
-  >(config.state, {
-    urlKeys: config.urlKeys,
-  });
+  TRow extends { id: string }
+>({ config }: { config: DataTableConfig<TSort, TExtra, TRow> }) {
+  const [state, setState] = config.stateAdapter.useState();
 
-  const filters = bindFilters(config.filters, rawState, setState);
+  const filters = bindFilters(config.filters, state, setState);
 
   const query = useQuery({
     queryKey: [...config.queryKey, state],
-    queryFn: ({ signal }) => config.fetchFn(rawState, signal),
+    queryFn: ({ signal }) => config.fetchFn(state, signal),
     placeholderData: keepPreviousData,
     refetchOnWindowFocus: false,
   });
+
+  const [expanded, setExpanded] = useState<ExpandedState>({});
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(
+    Object.fromEntries(
+      config.alwaysHiddenColumns?.map((key) => [key, false]) ?? []
+    )
+  );
 
   const table = useReactTable({
     data: query.data?.items ?? [],
@@ -43,9 +46,21 @@ export function DataTable<
     manualFiltering: true,
     manualSorting: true,
     manualPagination: true,
+    getGroupedRowModel: getGroupedRowModel(),
     getCoreRowModel: getCoreRowModel(),
+    getExpandedRowModel: getExpandedRowModel(),
+    getRowCanExpand: config.expendable?.getRowCanExpand
+      ? (row) => config.expendable!.getRowCanExpand(row)
+      : undefined,
+    getIsRowExpanded: (row) =>
+      typeof expanded === 'boolean' ? expanded : expanded[row.original.id],
+    onExpandedChange: (updater) =>
+      setExpanded(typeof updater === 'function' ? updater(expanded) : updater),
     pageCount: (query.data?.maxPageIndex ?? -1) + 1,
     state: {
+      columnVisibility: columnVisibility,
+      grouping: config.groupable?.groupingState,
+      expanded: expanded,
       pagination: {
         pageIndex: state.pageIndex,
         pageSize: state.pageSize,
@@ -57,6 +72,7 @@ export function DataTable<
         },
       ],
     },
+    autoResetExpanded: false,
     onPaginationChange: (updater) => {
       const next =
         typeof updater === 'function'
@@ -105,7 +121,10 @@ export function DataTable<
         />
       ) : (
         <>
-          <DataTableUI table={table} />
+          <DataTableUI
+            table={table}
+            expandedContent={config.expendable?.expandedContent}
+          />
           <DataTablePagination
             hasSelection={config.hasSelection}
             pageSizes={config.pageSizes}
@@ -116,16 +135,4 @@ export function DataTable<
       )}
     </div>
   );
-}
-
-function useTypedQueryStates<
-  TSort extends number,
-  TExtra extends NoBaseOverlap<object>,
-  TParser extends UseQueryStatesKeysMap<Base<TSort> & TExtra>
->(
-  parsers: TParser,
-  options?: Parameters<typeof useQueryStates>[1]
-): [Base<TSort> & TExtra, Values<TParser>, SetValues<TParser>] {
-  const [state, setState] = useQueryStates(parsers, options);
-  return [state as Base<TSort> & TExtra, state, setState];
 }

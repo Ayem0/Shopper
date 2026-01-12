@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package theme;
+import "common/common_types.proto";
+
+option csharp_namespace = "ShopifyClone.ProtoCs.Theme.Types";
+
+
+message UpdateThemeRequest {
+    string shop_id = 1;
+    string styles = 2;
+}
+
+message UpdateThemeResponse {
+    string styles = 1;
+}

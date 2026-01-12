@@ -8,6 +8,45 @@
 import { BinaryReader, BinaryWriter } from "@bufbuild/protobuf/wire";
 import { ActiveStatus, activeStatusFromJSON, activeStatusToJSON } from "../common/common_types";
 
+export enum ProductSortBy {
+  PRODUCT_SORT_BY_UNSPECIFIED = 0,
+  PRODUCT_SORT_BY_NAME = 1,
+  PRODUCT_SORT_BY_UPDATED_AT = 2,
+  UNRECOGNIZED = -1,
+}
+
+export function productSortByFromJSON(object: any): ProductSortBy {
+  switch (object) {
+    case 0:
+    case "PRODUCT_SORT_BY_UNSPECIFIED":
+      return ProductSortBy.PRODUCT_SORT_BY_UNSPECIFIED;
+    case 1:
+    case "PRODUCT_SORT_BY_NAME":
+      return ProductSortBy.PRODUCT_SORT_BY_NAME;
+    case 2:
+    case "PRODUCT_SORT_BY_UPDATED_AT":
+      return ProductSortBy.PRODUCT_SORT_BY_UPDATED_AT;
+    case -1:
+    case "UNRECOGNIZED":
+    default:
+      return ProductSortBy.UNRECOGNIZED;
+  }
+}
+
+export function productSortByToJSON(object: ProductSortBy): string {
+  switch (object) {
+    case ProductSortBy.PRODUCT_SORT_BY_UNSPECIFIED:
+      return "PRODUCT_SORT_BY_UNSPECIFIED";
+    case ProductSortBy.PRODUCT_SORT_BY_NAME:
+      return "PRODUCT_SORT_BY_NAME";
+    case ProductSortBy.PRODUCT_SORT_BY_UPDATED_AT:
+      return "PRODUCT_SORT_BY_UPDATED_AT";
+    case ProductSortBy.UNRECOGNIZED:
+    default:
+      return "UNRECOGNIZED";
+  }
+}
+
 export enum ProductCategorySortBy {
   PRODUCT_CATEGORY_SORT_BY_UNSPECIFIED = 0,
   PRODUCT_CATEGORY_SORT_BY_NAME = 1,
@@ -52,41 +91,71 @@ export interface ProductData {
   name: string;
   descr?: string | undefined;
   categories: ProductCategoryData[];
-  variants: ProductVariant[];
   status: ActiveStatus;
   shopId: string;
 }
 
-export interface ProductVariant {
+export interface ProductVariantData {
+  id: string;
+  shopId: string;
   name: string;
-  optionValues: string[];
+  status: ActiveStatus;
+  variantOptionValues: VariantOptionValueData[];
+  product?: ProductData | undefined;
+}
+
+export interface VariantOptionValueData {
+  id: string;
+  shopId: string;
+  name: string;
+  value: string;
+  optionValueId: string;
+}
+
+export interface VariantOption {
+  name: string;
+  values: string[];
 }
 
 export interface CreateProductRequest {
   name: string;
   descr?: string | undefined;
   categoryIds: string[];
-  variants: ProductVariant[];
+  variantOptions: VariantOption[];
   status: ActiveStatus;
+  shopId: string;
 }
 
 export interface CreateProductResponse {
   productId: string;
 }
 
+export interface GetProductsRequest {
+  search: string;
+  sortBy: ProductSortBy;
+  desc: boolean;
+  pageSize: number;
+  pageIndex: number;
+  status: ActiveStatus[];
+  shopId: string;
+}
+
 export interface GetProductsResponse {
-  items: ProductData[];
+  items: ProductVariantData[];
   totalResults: number;
   pageSize: number;
   pageIndex: number;
   maxPageIndex: number;
 }
 
+/** Category */
 export interface ProductCategoryData {
   id: string;
   name: string;
   status: ActiveStatus;
   parentCategory?: ProductCategoryData | undefined;
+  parentCategoryId?: string | undefined;
+  updatedAt?: string | undefined;
   shopId: string;
 }
 
@@ -120,7 +189,7 @@ export interface GetProductCategoriesResponse {
 }
 
 function createBaseProductData(): ProductData {
-  return { id: "", name: "", descr: undefined, categories: [], variants: [], status: 0, shopId: "" };
+  return { id: "", name: "", descr: undefined, categories: [], status: 0, shopId: "" };
 }
 
 export const ProductData: MessageFns<ProductData> = {
@@ -137,14 +206,11 @@ export const ProductData: MessageFns<ProductData> = {
     for (const v of message.categories) {
       ProductCategoryData.encode(v!, writer.uint32(34).fork()).join();
     }
-    for (const v of message.variants) {
-      ProductVariant.encode(v!, writer.uint32(42).fork()).join();
-    }
     if (message.status !== 0) {
-      writer.uint32(48).int32(message.status);
+      writer.uint32(40).int32(message.status);
     }
     if (message.shopId !== "") {
-      writer.uint32(58).string(message.shopId);
+      writer.uint32(50).string(message.shopId);
     }
     return writer;
   },
@@ -189,23 +255,15 @@ export const ProductData: MessageFns<ProductData> = {
           continue;
         }
         case 5: {
-          if (tag !== 42) {
-            break;
-          }
-
-          message.variants.push(ProductVariant.decode(reader, reader.uint32()));
-          continue;
-        }
-        case 6: {
-          if (tag !== 48) {
+          if (tag !== 40) {
             break;
           }
 
           message.status = reader.int32() as any;
           continue;
         }
-        case 7: {
-          if (tag !== 58) {
+        case 6: {
+          if (tag !== 50) {
             break;
           }
 
@@ -229,9 +287,6 @@ export const ProductData: MessageFns<ProductData> = {
       categories: globalThis.Array.isArray(object?.categories)
         ? object.categories.map((e: any) => ProductCategoryData.fromJSON(e))
         : [],
-      variants: globalThis.Array.isArray(object?.variants)
-        ? object.variants.map((e: any) => ProductVariant.fromJSON(e))
-        : [],
       status: isSet(object.status) ? activeStatusFromJSON(object.status) : 0,
       shopId: isSet(object.shopId) ? globalThis.String(object.shopId) : "",
     };
@@ -251,9 +306,6 @@ export const ProductData: MessageFns<ProductData> = {
     if (message.categories?.length) {
       obj.categories = message.categories.map((e) => ProductCategoryData.toJSON(e));
     }
-    if (message.variants?.length) {
-      obj.variants = message.variants.map((e) => ProductVariant.toJSON(e));
-    }
     if (message.status !== 0) {
       obj.status = activeStatusToJSON(message.status);
     }
@@ -272,32 +324,299 @@ export const ProductData: MessageFns<ProductData> = {
     message.name = object.name ?? "";
     message.descr = object.descr ?? undefined;
     message.categories = object.categories?.map((e) => ProductCategoryData.fromPartial(e)) || [];
-    message.variants = object.variants?.map((e) => ProductVariant.fromPartial(e)) || [];
     message.status = object.status ?? 0;
     message.shopId = object.shopId ?? "";
     return message;
   },
 };
 
-function createBaseProductVariant(): ProductVariant {
-  return { name: "", optionValues: [] };
+function createBaseProductVariantData(): ProductVariantData {
+  return { id: "", shopId: "", name: "", status: 0, variantOptionValues: [], product: undefined };
 }
 
-export const ProductVariant: MessageFns<ProductVariant> = {
-  encode(message: ProductVariant, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+export const ProductVariantData: MessageFns<ProductVariantData> = {
+  encode(message: ProductVariantData, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.id !== "") {
+      writer.uint32(10).string(message.id);
+    }
+    if (message.shopId !== "") {
+      writer.uint32(18).string(message.shopId);
+    }
+    if (message.name !== "") {
+      writer.uint32(26).string(message.name);
+    }
+    if (message.status !== 0) {
+      writer.uint32(32).int32(message.status);
+    }
+    for (const v of message.variantOptionValues) {
+      VariantOptionValueData.encode(v!, writer.uint32(42).fork()).join();
+    }
+    if (message.product !== undefined) {
+      ProductData.encode(message.product, writer.uint32(50).fork()).join();
+    }
+    return writer;
+  },
+
+  decode(input: BinaryReader | Uint8Array, length?: number): ProductVariantData {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseProductVariantData();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 10) {
+            break;
+          }
+
+          message.id = reader.string();
+          continue;
+        }
+        case 2: {
+          if (tag !== 18) {
+            break;
+          }
+
+          message.shopId = reader.string();
+          continue;
+        }
+        case 3: {
+          if (tag !== 26) {
+            break;
+          }
+
+          message.name = reader.string();
+          continue;
+        }
+        case 4: {
+          if (tag !== 32) {
+            break;
+          }
+
+          message.status = reader.int32() as any;
+          continue;
+        }
+        case 5: {
+          if (tag !== 42) {
+            break;
+          }
+
+          message.variantOptionValues.push(VariantOptionValueData.decode(reader, reader.uint32()));
+          continue;
+        }
+        case 6: {
+          if (tag !== 50) {
+            break;
+          }
+
+          message.product = ProductData.decode(reader, reader.uint32());
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ProductVariantData {
+    return {
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+      shopId: isSet(object.shopId) ? globalThis.String(object.shopId) : "",
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      status: isSet(object.status) ? activeStatusFromJSON(object.status) : 0,
+      variantOptionValues: globalThis.Array.isArray(object?.variantOptionValues)
+        ? object.variantOptionValues.map((e: any) => VariantOptionValueData.fromJSON(e))
+        : [],
+      product: isSet(object.product) ? ProductData.fromJSON(object.product) : undefined,
+    };
+  },
+
+  toJSON(message: ProductVariantData): unknown {
+    const obj: any = {};
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.shopId !== "") {
+      obj.shopId = message.shopId;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.status !== 0) {
+      obj.status = activeStatusToJSON(message.status);
+    }
+    if (message.variantOptionValues?.length) {
+      obj.variantOptionValues = message.variantOptionValues.map((e) => VariantOptionValueData.toJSON(e));
+    }
+    if (message.product !== undefined) {
+      obj.product = ProductData.toJSON(message.product);
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<ProductVariantData>, I>>(base?: I): ProductVariantData {
+    return ProductVariantData.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<ProductVariantData>, I>>(object: I): ProductVariantData {
+    const message = createBaseProductVariantData();
+    message.id = object.id ?? "";
+    message.shopId = object.shopId ?? "";
+    message.name = object.name ?? "";
+    message.status = object.status ?? 0;
+    message.variantOptionValues = object.variantOptionValues?.map((e) => VariantOptionValueData.fromPartial(e)) || [];
+    message.product = (object.product !== undefined && object.product !== null)
+      ? ProductData.fromPartial(object.product)
+      : undefined;
+    return message;
+  },
+};
+
+function createBaseVariantOptionValueData(): VariantOptionValueData {
+  return { id: "", shopId: "", name: "", value: "", optionValueId: "" };
+}
+
+export const VariantOptionValueData: MessageFns<VariantOptionValueData> = {
+  encode(message: VariantOptionValueData, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.id !== "") {
+      writer.uint32(10).string(message.id);
+    }
+    if (message.shopId !== "") {
+      writer.uint32(18).string(message.shopId);
+    }
+    if (message.name !== "") {
+      writer.uint32(26).string(message.name);
+    }
+    if (message.value !== "") {
+      writer.uint32(34).string(message.value);
+    }
+    if (message.optionValueId !== "") {
+      writer.uint32(42).string(message.optionValueId);
+    }
+    return writer;
+  },
+
+  decode(input: BinaryReader | Uint8Array, length?: number): VariantOptionValueData {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseVariantOptionValueData();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 10) {
+            break;
+          }
+
+          message.id = reader.string();
+          continue;
+        }
+        case 2: {
+          if (tag !== 18) {
+            break;
+          }
+
+          message.shopId = reader.string();
+          continue;
+        }
+        case 3: {
+          if (tag !== 26) {
+            break;
+          }
+
+          message.name = reader.string();
+          continue;
+        }
+        case 4: {
+          if (tag !== 34) {
+            break;
+          }
+
+          message.value = reader.string();
+          continue;
+        }
+        case 5: {
+          if (tag !== 42) {
+            break;
+          }
+
+          message.optionValueId = reader.string();
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): VariantOptionValueData {
+    return {
+      id: isSet(object.id) ? globalThis.String(object.id) : "",
+      shopId: isSet(object.shopId) ? globalThis.String(object.shopId) : "",
+      name: isSet(object.name) ? globalThis.String(object.name) : "",
+      value: isSet(object.value) ? globalThis.String(object.value) : "",
+      optionValueId: isSet(object.optionValueId) ? globalThis.String(object.optionValueId) : "",
+    };
+  },
+
+  toJSON(message: VariantOptionValueData): unknown {
+    const obj: any = {};
+    if (message.id !== "") {
+      obj.id = message.id;
+    }
+    if (message.shopId !== "") {
+      obj.shopId = message.shopId;
+    }
+    if (message.name !== "") {
+      obj.name = message.name;
+    }
+    if (message.value !== "") {
+      obj.value = message.value;
+    }
+    if (message.optionValueId !== "") {
+      obj.optionValueId = message.optionValueId;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<VariantOptionValueData>, I>>(base?: I): VariantOptionValueData {
+    return VariantOptionValueData.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<VariantOptionValueData>, I>>(object: I): VariantOptionValueData {
+    const message = createBaseVariantOptionValueData();
+    message.id = object.id ?? "";
+    message.shopId = object.shopId ?? "";
+    message.name = object.name ?? "";
+    message.value = object.value ?? "";
+    message.optionValueId = object.optionValueId ?? "";
+    return message;
+  },
+};
+
+function createBaseVariantOption(): VariantOption {
+  return { name: "", values: [] };
+}
+
+export const VariantOption: MessageFns<VariantOption> = {
+  encode(message: VariantOption, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     if (message.name !== "") {
       writer.uint32(10).string(message.name);
     }
-    for (const v of message.optionValues) {
+    for (const v of message.values) {
       writer.uint32(18).string(v!);
     }
     return writer;
   },
 
-  decode(input: BinaryReader | Uint8Array, length?: number): ProductVariant {
+  decode(input: BinaryReader | Uint8Array, length?: number): VariantOption {
     const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseProductVariant();
+    const message = createBaseVariantOption();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -314,7 +633,7 @@ export const ProductVariant: MessageFns<ProductVariant> = {
             break;
           }
 
-          message.optionValues.push(reader.string());
+          message.values.push(reader.string());
           continue;
         }
       }
@@ -326,39 +645,37 @@ export const ProductVariant: MessageFns<ProductVariant> = {
     return message;
   },
 
-  fromJSON(object: any): ProductVariant {
+  fromJSON(object: any): VariantOption {
     return {
       name: isSet(object.name) ? globalThis.String(object.name) : "",
-      optionValues: globalThis.Array.isArray(object?.optionValues)
-        ? object.optionValues.map((e: any) => globalThis.String(e))
-        : [],
+      values: globalThis.Array.isArray(object?.values) ? object.values.map((e: any) => globalThis.String(e)) : [],
     };
   },
 
-  toJSON(message: ProductVariant): unknown {
+  toJSON(message: VariantOption): unknown {
     const obj: any = {};
     if (message.name !== "") {
       obj.name = message.name;
     }
-    if (message.optionValues?.length) {
-      obj.optionValues = message.optionValues;
+    if (message.values?.length) {
+      obj.values = message.values;
     }
     return obj;
   },
 
-  create<I extends Exact<DeepPartial<ProductVariant>, I>>(base?: I): ProductVariant {
-    return ProductVariant.fromPartial(base ?? ({} as any));
+  create<I extends Exact<DeepPartial<VariantOption>, I>>(base?: I): VariantOption {
+    return VariantOption.fromPartial(base ?? ({} as any));
   },
-  fromPartial<I extends Exact<DeepPartial<ProductVariant>, I>>(object: I): ProductVariant {
-    const message = createBaseProductVariant();
+  fromPartial<I extends Exact<DeepPartial<VariantOption>, I>>(object: I): VariantOption {
+    const message = createBaseVariantOption();
     message.name = object.name ?? "";
-    message.optionValues = object.optionValues?.map((e) => e) || [];
+    message.values = object.values?.map((e) => e) || [];
     return message;
   },
 };
 
 function createBaseCreateProductRequest(): CreateProductRequest {
-  return { name: "", descr: undefined, categoryIds: [], variants: [], status: 0 };
+  return { name: "", descr: undefined, categoryIds: [], variantOptions: [], status: 0, shopId: "" };
 }
 
 export const CreateProductRequest: MessageFns<CreateProductRequest> = {
@@ -372,11 +689,14 @@ export const CreateProductRequest: MessageFns<CreateProductRequest> = {
     for (const v of message.categoryIds) {
       writer.uint32(26).string(v!);
     }
-    for (const v of message.variants) {
-      ProductVariant.encode(v!, writer.uint32(34).fork()).join();
+    for (const v of message.variantOptions) {
+      VariantOption.encode(v!, writer.uint32(34).fork()).join();
     }
     if (message.status !== 0) {
       writer.uint32(40).int32(message.status);
+    }
+    if (message.shopId !== "") {
+      writer.uint32(50).string(message.shopId);
     }
     return writer;
   },
@@ -417,7 +737,7 @@ export const CreateProductRequest: MessageFns<CreateProductRequest> = {
             break;
           }
 
-          message.variants.push(ProductVariant.decode(reader, reader.uint32()));
+          message.variantOptions.push(VariantOption.decode(reader, reader.uint32()));
           continue;
         }
         case 5: {
@@ -426,6 +746,14 @@ export const CreateProductRequest: MessageFns<CreateProductRequest> = {
           }
 
           message.status = reader.int32() as any;
+          continue;
+        }
+        case 6: {
+          if (tag !== 50) {
+            break;
+          }
+
+          message.shopId = reader.string();
           continue;
         }
       }
@@ -444,10 +772,11 @@ export const CreateProductRequest: MessageFns<CreateProductRequest> = {
       categoryIds: globalThis.Array.isArray(object?.categoryIds)
         ? object.categoryIds.map((e: any) => globalThis.String(e))
         : [],
-      variants: globalThis.Array.isArray(object?.variants)
-        ? object.variants.map((e: any) => ProductVariant.fromJSON(e))
+      variantOptions: globalThis.Array.isArray(object?.variantOptions)
+        ? object.variantOptions.map((e: any) => VariantOption.fromJSON(e))
         : [],
       status: isSet(object.status) ? activeStatusFromJSON(object.status) : 0,
+      shopId: isSet(object.shopId) ? globalThis.String(object.shopId) : "",
     };
   },
 
@@ -462,11 +791,14 @@ export const CreateProductRequest: MessageFns<CreateProductRequest> = {
     if (message.categoryIds?.length) {
       obj.categoryIds = message.categoryIds;
     }
-    if (message.variants?.length) {
-      obj.variants = message.variants.map((e) => ProductVariant.toJSON(e));
+    if (message.variantOptions?.length) {
+      obj.variantOptions = message.variantOptions.map((e) => VariantOption.toJSON(e));
     }
     if (message.status !== 0) {
       obj.status = activeStatusToJSON(message.status);
+    }
+    if (message.shopId !== "") {
+      obj.shopId = message.shopId;
     }
     return obj;
   },
@@ -479,8 +811,9 @@ export const CreateProductRequest: MessageFns<CreateProductRequest> = {
     message.name = object.name ?? "";
     message.descr = object.descr ?? undefined;
     message.categoryIds = object.categoryIds?.map((e) => e) || [];
-    message.variants = object.variants?.map((e) => ProductVariant.fromPartial(e)) || [];
+    message.variantOptions = object.variantOptions?.map((e) => VariantOption.fromPartial(e)) || [];
     message.status = object.status ?? 0;
+    message.shopId = object.shopId ?? "";
     return message;
   },
 };
@@ -543,6 +876,174 @@ export const CreateProductResponse: MessageFns<CreateProductResponse> = {
   },
 };
 
+function createBaseGetProductsRequest(): GetProductsRequest {
+  return { search: "", sortBy: 0, desc: false, pageSize: 0, pageIndex: 0, status: [], shopId: "" };
+}
+
+export const GetProductsRequest: MessageFns<GetProductsRequest> = {
+  encode(message: GetProductsRequest, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
+    if (message.search !== "") {
+      writer.uint32(10).string(message.search);
+    }
+    if (message.sortBy !== 0) {
+      writer.uint32(16).int32(message.sortBy);
+    }
+    if (message.desc !== false) {
+      writer.uint32(24).bool(message.desc);
+    }
+    if (message.pageSize !== 0) {
+      writer.uint32(32).int32(message.pageSize);
+    }
+    if (message.pageIndex !== 0) {
+      writer.uint32(40).int32(message.pageIndex);
+    }
+    writer.uint32(50).fork();
+    for (const v of message.status) {
+      writer.int32(v);
+    }
+    writer.join();
+    if (message.shopId !== "") {
+      writer.uint32(58).string(message.shopId);
+    }
+    return writer;
+  },
+
+  decode(input: BinaryReader | Uint8Array, length?: number): GetProductsRequest {
+    const reader = input instanceof BinaryReader ? input : new BinaryReader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseGetProductsRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1: {
+          if (tag !== 10) {
+            break;
+          }
+
+          message.search = reader.string();
+          continue;
+        }
+        case 2: {
+          if (tag !== 16) {
+            break;
+          }
+
+          message.sortBy = reader.int32() as any;
+          continue;
+        }
+        case 3: {
+          if (tag !== 24) {
+            break;
+          }
+
+          message.desc = reader.bool();
+          continue;
+        }
+        case 4: {
+          if (tag !== 32) {
+            break;
+          }
+
+          message.pageSize = reader.int32();
+          continue;
+        }
+        case 5: {
+          if (tag !== 40) {
+            break;
+          }
+
+          message.pageIndex = reader.int32();
+          continue;
+        }
+        case 6: {
+          if (tag === 48) {
+            message.status.push(reader.int32() as any);
+
+            continue;
+          }
+
+          if (tag === 50) {
+            const end2 = reader.uint32() + reader.pos;
+            while (reader.pos < end2) {
+              message.status.push(reader.int32() as any);
+            }
+
+            continue;
+          }
+
+          break;
+        }
+        case 7: {
+          if (tag !== 58) {
+            break;
+          }
+
+          message.shopId = reader.string();
+          continue;
+        }
+      }
+      if ((tag & 7) === 4 || tag === 0) {
+        break;
+      }
+      reader.skip(tag & 7);
+    }
+    return message;
+  },
+
+  fromJSON(object: any): GetProductsRequest {
+    return {
+      search: isSet(object.search) ? globalThis.String(object.search) : "",
+      sortBy: isSet(object.sortBy) ? productSortByFromJSON(object.sortBy) : 0,
+      desc: isSet(object.desc) ? globalThis.Boolean(object.desc) : false,
+      pageSize: isSet(object.pageSize) ? globalThis.Number(object.pageSize) : 0,
+      pageIndex: isSet(object.pageIndex) ? globalThis.Number(object.pageIndex) : 0,
+      status: globalThis.Array.isArray(object?.status) ? object.status.map((e: any) => activeStatusFromJSON(e)) : [],
+      shopId: isSet(object.shopId) ? globalThis.String(object.shopId) : "",
+    };
+  },
+
+  toJSON(message: GetProductsRequest): unknown {
+    const obj: any = {};
+    if (message.search !== "") {
+      obj.search = message.search;
+    }
+    if (message.sortBy !== 0) {
+      obj.sortBy = productSortByToJSON(message.sortBy);
+    }
+    if (message.desc !== false) {
+      obj.desc = message.desc;
+    }
+    if (message.pageSize !== 0) {
+      obj.pageSize = Math.round(message.pageSize);
+    }
+    if (message.pageIndex !== 0) {
+      obj.pageIndex = Math.round(message.pageIndex);
+    }
+    if (message.status?.length) {
+      obj.status = message.status.map((e) => activeStatusToJSON(e));
+    }
+    if (message.shopId !== "") {
+      obj.shopId = message.shopId;
+    }
+    return obj;
+  },
+
+  create<I extends Exact<DeepPartial<GetProductsRequest>, I>>(base?: I): GetProductsRequest {
+    return GetProductsRequest.fromPartial(base ?? ({} as any));
+  },
+  fromPartial<I extends Exact<DeepPartial<GetProductsRequest>, I>>(object: I): GetProductsRequest {
+    const message = createBaseGetProductsRequest();
+    message.search = object.search ?? "";
+    message.sortBy = object.sortBy ?? 0;
+    message.desc = object.desc ?? false;
+    message.pageSize = object.pageSize ?? 0;
+    message.pageIndex = object.pageIndex ?? 0;
+    message.status = object.status?.map((e) => e) || [];
+    message.shopId = object.shopId ?? "";
+    return message;
+  },
+};
+
 function createBaseGetProductsResponse(): GetProductsResponse {
   return { items: [], totalResults: 0, pageSize: 0, pageIndex: 0, maxPageIndex: 0 };
 }
@@ -550,7 +1051,7 @@ function createBaseGetProductsResponse(): GetProductsResponse {
 export const GetProductsResponse: MessageFns<GetProductsResponse> = {
   encode(message: GetProductsResponse, writer: BinaryWriter = new BinaryWriter()): BinaryWriter {
     for (const v of message.items) {
-      ProductData.encode(v!, writer.uint32(10).fork()).join();
+      ProductVariantData.encode(v!, writer.uint32(10).fork()).join();
     }
     if (message.totalResults !== 0) {
       writer.uint32(16).int64(message.totalResults);
@@ -579,7 +1080,7 @@ export const GetProductsResponse: MessageFns<GetProductsResponse> = {
             break;
           }
 
-          message.items.push(ProductData.decode(reader, reader.uint32()));
+          message.items.push(ProductVariantData.decode(reader, reader.uint32()));
           continue;
         }
         case 2: {
@@ -625,7 +1126,9 @@ export const GetProductsResponse: MessageFns<GetProductsResponse> = {
 
   fromJSON(object: any): GetProductsResponse {
     return {
-      items: globalThis.Array.isArray(object?.items) ? object.items.map((e: any) => ProductData.fromJSON(e)) : [],
+      items: globalThis.Array.isArray(object?.items)
+        ? object.items.map((e: any) => ProductVariantData.fromJSON(e))
+        : [],
       totalResults: isSet(object.totalResults) ? globalThis.Number(object.totalResults) : 0,
       pageSize: isSet(object.pageSize) ? globalThis.Number(object.pageSize) : 0,
       pageIndex: isSet(object.pageIndex) ? globalThis.Number(object.pageIndex) : 0,
@@ -636,7 +1139,7 @@ export const GetProductsResponse: MessageFns<GetProductsResponse> = {
   toJSON(message: GetProductsResponse): unknown {
     const obj: any = {};
     if (message.items?.length) {
-      obj.items = message.items.map((e) => ProductData.toJSON(e));
+      obj.items = message.items.map((e) => ProductVariantData.toJSON(e));
     }
     if (message.totalResults !== 0) {
       obj.totalResults = Math.round(message.totalResults);
@@ -658,7 +1161,7 @@ export const GetProductsResponse: MessageFns<GetProductsResponse> = {
   },
   fromPartial<I extends Exact<DeepPartial<GetProductsResponse>, I>>(object: I): GetProductsResponse {
     const message = createBaseGetProductsResponse();
-    message.items = object.items?.map((e) => ProductData.fromPartial(e)) || [];
+    message.items = object.items?.map((e) => ProductVariantData.fromPartial(e)) || [];
     message.totalResults = object.totalResults ?? 0;
     message.pageSize = object.pageSize ?? 0;
     message.pageIndex = object.pageIndex ?? 0;
@@ -668,7 +1171,15 @@ export const GetProductsResponse: MessageFns<GetProductsResponse> = {
 };
 
 function createBaseProductCategoryData(): ProductCategoryData {
-  return { id: "", name: "", status: 0, parentCategory: undefined, shopId: "" };
+  return {
+    id: "",
+    name: "",
+    status: 0,
+    parentCategory: undefined,
+    parentCategoryId: undefined,
+    updatedAt: undefined,
+    shopId: "",
+  };
 }
 
 export const ProductCategoryData: MessageFns<ProductCategoryData> = {
@@ -685,8 +1196,14 @@ export const ProductCategoryData: MessageFns<ProductCategoryData> = {
     if (message.parentCategory !== undefined) {
       ProductCategoryData.encode(message.parentCategory, writer.uint32(34).fork()).join();
     }
+    if (message.parentCategoryId !== undefined) {
+      writer.uint32(42).string(message.parentCategoryId);
+    }
+    if (message.updatedAt !== undefined) {
+      writer.uint32(50).string(message.updatedAt);
+    }
     if (message.shopId !== "") {
-      writer.uint32(42).string(message.shopId);
+      writer.uint32(58).string(message.shopId);
     }
     return writer;
   },
@@ -735,6 +1252,22 @@ export const ProductCategoryData: MessageFns<ProductCategoryData> = {
             break;
           }
 
+          message.parentCategoryId = reader.string();
+          continue;
+        }
+        case 6: {
+          if (tag !== 50) {
+            break;
+          }
+
+          message.updatedAt = reader.string();
+          continue;
+        }
+        case 7: {
+          if (tag !== 58) {
+            break;
+          }
+
           message.shopId = reader.string();
           continue;
         }
@@ -753,6 +1286,8 @@ export const ProductCategoryData: MessageFns<ProductCategoryData> = {
       name: isSet(object.name) ? globalThis.String(object.name) : "",
       status: isSet(object.status) ? activeStatusFromJSON(object.status) : 0,
       parentCategory: isSet(object.parentCategory) ? ProductCategoryData.fromJSON(object.parentCategory) : undefined,
+      parentCategoryId: isSet(object.parentCategoryId) ? globalThis.String(object.parentCategoryId) : undefined,
+      updatedAt: isSet(object.updatedAt) ? globalThis.String(object.updatedAt) : undefined,
       shopId: isSet(object.shopId) ? globalThis.String(object.shopId) : "",
     };
   },
@@ -771,6 +1306,12 @@ export const ProductCategoryData: MessageFns<ProductCategoryData> = {
     if (message.parentCategory !== undefined) {
       obj.parentCategory = ProductCategoryData.toJSON(message.parentCategory);
     }
+    if (message.parentCategoryId !== undefined) {
+      obj.parentCategoryId = message.parentCategoryId;
+    }
+    if (message.updatedAt !== undefined) {
+      obj.updatedAt = message.updatedAt;
+    }
     if (message.shopId !== "") {
       obj.shopId = message.shopId;
     }
@@ -788,6 +1329,8 @@ export const ProductCategoryData: MessageFns<ProductCategoryData> = {
     message.parentCategory = (object.parentCategory !== undefined && object.parentCategory !== null)
       ? ProductCategoryData.fromPartial(object.parentCategory)
       : undefined;
+    message.parentCategoryId = object.parentCategoryId ?? undefined;
+    message.updatedAt = object.updatedAt ?? undefined;
     message.shopId = object.shopId ?? "";
     return message;
   },

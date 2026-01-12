@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package theme;
+
+option csharp_namespace = "ShopifyClone.ProtoCs.Theme.Events";
+
+message ThemeEvent {
+  oneof oneof_type {
+    ThemeCreated created = 1;
+  }
+}
+
+message ThemeCreated {
+  string shop_id = 1;
+}

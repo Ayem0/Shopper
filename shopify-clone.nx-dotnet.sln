@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "oidc-service", "apps\servic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "authz-service", "apps\services\authz-service\src\authz-service\authz-service.csproj", "{44C5C82F-1058-4B1B-BFE1-7BA414C3EDD9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "theme-service", "apps\services\theme-service\src\theme-service\theme-service.csproj", "{3547A612-D906-4E9B-8A8F-713EEF4AE724}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -165,6 +167,18 @@ Global
 		{44C5C82F-1058-4B1B-BFE1-7BA414C3EDD9}.Release|x64.Build.0 = Release|Any CPU
 		{44C5C82F-1058-4B1B-BFE1-7BA414C3EDD9}.Release|x86.ActiveCfg = Release|Any CPU
 		{44C5C82F-1058-4B1B-BFE1-7BA414C3EDD9}.Release|x86.Build.0 = Release|Any CPU
+		{3547A612-D906-4E9B-8A8F-713EEF4AE724}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3547A612-D906-4E9B-8A8F-713EEF4AE724}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3547A612-D906-4E9B-8A8F-713EEF4AE724}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3547A612-D906-4E9B-8A8F-713EEF4AE724}.Debug|x64.Build.0 = Debug|Any CPU
+		{3547A612-D906-4E9B-8A8F-713EEF4AE724}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3547A612-D906-4E9B-8A8F-713EEF4AE724}.Debug|x86.Build.0 = Debug|Any CPU
+		{3547A612-D906-4E9B-8A8F-713EEF4AE724}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3547A612-D906-4E9B-8A8F-713EEF4AE724}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3547A612-D906-4E9B-8A8F-713EEF4AE724}.Release|x64.ActiveCfg = Release|Any CPU
+		{3547A612-D906-4E9B-8A8F-713EEF4AE724}.Release|x64.Build.0 = Release|Any CPU
+		{3547A612-D906-4E9B-8A8F-713EEF4AE724}.Release|x86.ActiveCfg = Release|Any CPU
+		{3547A612-D906-4E9B-8A8F-713EEF4AE724}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -184,5 +198,6 @@ Global
 		{06F7D261-401F-4EA7-914B-7AAD29DE0854} = {7D78A933-E070-91E6-0665-0550164ABA83}
 		{4A3426DE-79E6-42F7-A518-077BEAF318D4} = {7D78A933-E070-91E6-0665-0550164ABA83}
 		{44C5C82F-1058-4B1B-BFE1-7BA414C3EDD9} = {7D78A933-E070-91E6-0665-0550164ABA83}
+		{3547A612-D906-4E9B-8A8F-713EEF4AE724} = {7D78A933-E070-91E6-0665-0550164ABA83}
 	EndGlobalSection
 EndGlobal

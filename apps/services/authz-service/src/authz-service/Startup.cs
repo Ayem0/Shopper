@@ -1,7 +1,6 @@
 using Amazon;
 using Amazon.DynamoDBv2;
 using Amazon.DynamoDBv2.DataModel;
-using Amazon.Extensions.NETCore.Setup;
 using Amazon.Runtime;
 using authz_service.Services.AuthzRepository;
 using authz_service.Services.AuthzService;

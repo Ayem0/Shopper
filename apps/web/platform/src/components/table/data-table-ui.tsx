@@ -16,6 +16,7 @@ import {
   Table as TanstackTable,
 } from '@tanstack/react-table';
 import { motion } from 'motion/react';
+import { Fragment } from 'react';
 
 declare module '@tanstack/react-table' {
   export interface TableMeta<TData extends RowData> {
@@ -25,10 +26,16 @@ declare module '@tanstack/react-table' {
 }
 interface DataTableProps<TData> {
   table: TanstackTable<TData>;
+  expandedContent?: (row: TData) => React.ReactNode;
+  expandedContentProps?: {
+    className?: string;
+  };
 }
 
 export function DataTableUI<TData>({
   table,
+  expandedContent,
+  expandedContentProps,
 }: DataTableProps<TData & { id: string }>) {
   const isFetching = table.options.meta?.isFetching;
   const isPending = table.options.meta?.isPending;
@@ -40,7 +47,15 @@ export function DataTableUI<TData>({
             <TableRow key={headerGroup.id} className="border-b-0!">
               {headerGroup.headers.map((header) => {
                 return (
-                  <TableHead key={header.id} className="border-b">
+                  <TableHead
+                    key={header.id}
+                    className="border-b"
+                    style={{
+                      width: `${header.getSize()}px`,
+                      maxWidth: `${header.getSize()}px`,
+                      minWidth: `${header.getSize()}px`,
+                    }}
+                  >
                     {header.isPlaceholder
                       ? null
                       : flexRender(
@@ -57,7 +72,7 @@ export function DataTableUI<TData>({
           {isPending ? (
             Array.from({ length: 5 }).map((_, index) => (
               <tr key={`skeleton-${index}`}>
-                {table.getAllColumns().map((column) => (
+                {table.getVisibleLeafColumns().map((column) => (
                   <TableCell key={column.id} className="h-[49px]">
                     <Skeleton className="size-full" />
                   </TableCell>
@@ -66,16 +81,40 @@ export function DataTableUI<TData>({
             ))
           ) : table.getRowModel().rows?.length > 0 ? (
             table.getRowModel().rows.map((row) => (
-              <TableRow
-                key={row.id}
-                data-state={row.getIsSelected() && 'selected'}
-              >
-                {row.getVisibleCells().map((cell) => (
-                  <TableCell key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </TableCell>
-                ))}
-              </TableRow>
+              <Fragment key={row.id}>
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && 'selected'}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell
+                      key={cell.id}
+                      style={{
+                        width: `${cell.column.getSize()}px`,
+                        maxWidth: `${cell.column.getSize()}px`,
+                        minWidth: `${cell.column.getSize()}px`,
+                      }}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                {row.getCanExpand() &&
+                  row.getIsExpanded() &&
+                  expandedContent && (
+                    <tr>
+                      <td
+                        colSpan={row.getAllCells().length}
+                        className={expandedContentProps?.className}
+                      >
+                        {expandedContent?.(row.original)}
+                      </td>
+                    </tr>
+                  )}
+              </Fragment>
             ))
           ) : (
             <tr>

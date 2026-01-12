@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 
 import { cn } from '../utils/utils';
 import { Command, CommandGroup, CommandItem, CommandList } from './command';
+import { Spinner } from './spinner';
 
 export interface Option {
   label: string;
@@ -28,10 +29,16 @@ interface MultipleSelectorProps {
   /** manually controlled options */
   options?: Option[];
   placeholder?: string;
-  /** Loading component. */
-  loadingIndicator?: React.ReactNode;
-  /** Empty component. */
-  emptyIndicator?: React.ReactNode;
+  // /** Loading component. */
+  // loadingIndicator?: React.ReactNode;
+  // /** Empty component. */
+  // emptyIndicator?: React.ReactNode;
+  isFetching?: boolean;
+  showEmpty?: boolean;
+  isFetchingNextPage?: boolean;
+  hasNextPage?: boolean;
+  fetchNextPage?: () => void;
+
   /** Debounce time for async search. Only work with `onSearch`. */
   delay?: number;
   /**
@@ -40,7 +47,7 @@ interface MultipleSelectorProps {
    **/
   triggerSearchOnFocus?: boolean;
   /** async search */
-  onSearch?: (value: string) => Promise<Option[]>;
+  onSearch?: (value: string) => void;
   /**
    * sync search. This search will not showing loadingIndicator.
    * The rest props are the same as async search.
@@ -173,8 +180,8 @@ function MultipleSelector({
   delay,
   onSearch,
   onSearchSync,
-  loadingIndicator,
-  emptyIndicator,
+  isFetching,
+  showEmpty,
   maxSelected = Number.MAX_SAFE_INTEGER,
   onMaxSelected,
   hidePlaceholderWhenSelected,
@@ -187,13 +194,16 @@ function MultipleSelector({
   triggerSearchOnFocus = false,
   commandProps,
   inputProps,
+  isFetchingNextPage,
+  hasNextPage,
+  fetchNextPage,
   hideClearAllButton = false,
   'aria-invalid': ariaInvalid = false,
 }: MultipleSelectorProps) {
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
   const [onScrollbar, setOnScrollbar] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
+  // const [isLoading, setIsLoading] = React.useState(false);
   const dropdownRef = React.useRef<HTMLDivElement>(null); // Added this
 
   const [selected, setSelected] = React.useState<Option[]>(value || []);
@@ -269,7 +279,7 @@ function MultipleSelector({
 
   useEffect(() => {
     /** If `onSearch` is provided, do not trigger options updated. */
-    if (!arrayOptions || onSearch) {
+    if (!arrayOptions) {
       return;
     }
     const newOption = transToGroupOption(arrayOptions || [], groupBy);
@@ -305,22 +315,22 @@ function MultipleSelector({
     /** async search */
 
     const doSearch = async () => {
-      setIsLoading(true);
-      const res = await onSearch?.(debouncedSearchTerm);
-      setOptions(transToGroupOption(res || [], groupBy));
-      setIsLoading(false);
+      // setIsLoading(true);
+      // const res = await onSearch?.(debouncedSearchTerm);
+      onSearch?.(debouncedSearchTerm);
+      // setOptions(transToGroupOption(res || [], groupBy));
+      // setIsLoading(false);
     };
 
     const exec = async () => {
       if (!onSearch || !open) return;
 
-      if (triggerSearchOnFocus) {
-        await doSearch();
-      }
+      // if (triggerSearchOnFocus) {
+      //   await doSearch();
+      // }
 
-      if (debouncedSearchTerm) {
-        await doSearch();
-      }
+      // if (debouncedSearchTerm) {
+      await doSearch();
     };
 
     void exec();
@@ -364,7 +374,7 @@ function MultipleSelector({
     }
 
     // For async search creatable. avoid showing creatable item before loading at first.
-    if (onSearch && debouncedSearchTerm.length > 0 && !isLoading) {
+    if (onSearch && debouncedSearchTerm.length > 0 && !isFetching) {
       return Item;
     }
 
@@ -372,19 +382,19 @@ function MultipleSelector({
   };
 
   const EmptyItem = React.useCallback(() => {
-    if (!emptyIndicator) return undefined;
+    if (!showEmpty) return undefined;
 
     // For async search that showing emptyIndicator
     if (onSearch && !creatable && Object.keys(options).length === 0) {
       return (
         <CommandItem value="-" disabled>
-          {emptyIndicator}
+          No results found
         </CommandItem>
       );
     }
 
-    return <CommandEmpty>{emptyIndicator}</CommandEmpty>;
-  }, [creatable, emptyIndicator, onSearch, options]);
+    return <CommandEmpty>No results found</CommandEmpty>;
+  }, [creatable, onSearch, options]);
 
   const selectables = React.useMemo<GroupOption>(
     () => removePickedOption(options, selected),
@@ -405,6 +415,14 @@ function MultipleSelector({
     // Using default filter in `cmdk`. We don&lsquo;t have to provide it.
     return undefined;
   }, [creatable, commandProps?.filter]);
+
+  const handleScroll = async (e: React.UIEvent<HTMLDivElement>) => {
+    if (isFetching || isFetchingNextPage || !hasNextPage) return;
+    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+    if (scrollHeight - scrollTop === clientHeight) {
+      fetchNextPage?.();
+    }
+  };
 
   return (
     <Command
@@ -554,12 +572,15 @@ function MultipleSelector({
               onMouseEnter={() => {
                 setOnScrollbar(true);
               }}
+              onScroll={handleScroll}
               onMouseUp={() => {
                 inputRef?.current?.focus();
               }}
             >
-              {isLoading ? (
-                <>{loadingIndicator}</>
+              {isFetching ? (
+                <CommandEmpty className="w-full text-center">
+                  <Spinner className="mx-auto block" />
+                </CommandEmpty>
               ) : (
                 <>
                   {EmptyItem()}
@@ -607,6 +628,11 @@ function MultipleSelector({
                       </>
                     </CommandGroup>
                   ))}
+                  {isFetchingNextPage && (
+                    <CommandEmpty className="w-full text-center">
+                      <Spinner className="mx-auto block" />
+                    </CommandEmpty>
+                  )}
                 </>
               )}
             </CommandList>

@@ -25,76 +25,76 @@ namespace ShopifyClone.ProtoCs.Product.Types {
       byte[] descriptorData = global::System.Convert.FromBase64String(
           string.Concat(
             "Chtwcm9kdWN0L3Byb2R1Y3RfdHlwZXMucHJvdG8SB3Byb2R1Y3QaGWNvbW1v",
-            "bi9jb21tb25fdHlwZXMucHJvdG8ilAIKC1Byb2R1Y3REYXRhEg4KAmlkGAEg",
+            "bi9jb21tb25fdHlwZXMucHJvdG8i2wEKC1Byb2R1Y3REYXRhEg4KAmlkGAEg",
             "ASgJUgJpZBISCgRuYW1lGAIgASgJUgRuYW1lEhkKBWRlc2NyGAMgASgJSABS",
             "BWRlc2NyiAEBEjwKCmNhdGVnb3JpZXMYBCADKAsyHC5wcm9kdWN0LlByb2R1",
-            "Y3RDYXRlZ29yeURhdGFSCmNhdGVnb3JpZXMSNwoIdmFyaWFudHMYBSADKAsy",
-            "Gy5wcm9kdWN0LlByb2R1Y3RWYXJpYW50RGF0YVIIdmFyaWFudHMSLAoGc3Rh",
-            "dHVzGAYgASgOMhQuY29tbW9uLkFjdGl2ZVN0YXR1c1IGc3RhdHVzEhcKB3No",
-            "b3BfaWQYByABKAlSBnNob3BJZEIICgZfZGVzY3Ii1AEKElByb2R1Y3RWYXJp",
-            "YW50RGF0YRIOCgJpZBgBIAEoCVICaWQSFwoHc2hvcF9pZBgCIAEoCVIGc2hv",
-            "cElkEhIKBG5hbWUYAyABKAlSBG5hbWUSLAoGc3RhdHVzGAQgASgOMhQuY29t",
-            "bW9uLkFjdGl2ZVN0YXR1c1IGc3RhdHVzElMKFXZhcmlhbnRfb3B0aW9uX3Zh",
-            "bHVlcxgFIAMoCzIfLnByb2R1Y3QuVmFyaWFudE9wdGlvblZhbHVlRGF0YVIT",
-            "dmFyaWFudE9wdGlvblZhbHVlcyKTAQoWVmFyaWFudE9wdGlvblZhbHVlRGF0",
-            "YRIOCgJpZBgBIAEoCVICaWQSFwoHc2hvcF9pZBgCIAEoCVIGc2hvcElkEhIK",
-            "BG5hbWUYAyABKAlSBG5hbWUSFAoFdmFsdWUYBCABKAlSBXZhbHVlEiYKD29w",
-            "dGlvbl92YWx1ZV9pZBgFIAEoCVINb3B0aW9uVmFsdWVJZCI7Cg1WYXJpYW50",
-            "T3B0aW9uEhIKBG5hbWUYASABKAlSBG5hbWUSFgoGdmFsdWVzGAIgAygJUgZ2",
-            "YWx1ZXMi+gEKFENyZWF0ZVByb2R1Y3RSZXF1ZXN0EhIKBG5hbWUYASABKAlS",
-            "BG5hbWUSGQoFZGVzY3IYAiABKAlIAFIFZGVzY3KIAQESIQoMY2F0ZWdvcnlf",
-            "aWRzGAMgAygJUgtjYXRlZ29yeUlkcxI/Cg92YXJpYW50X29wdGlvbnMYBCAD",
-            "KAsyFi5wcm9kdWN0LlZhcmlhbnRPcHRpb25SDnZhcmlhbnRPcHRpb25zEiwK",
-            "BnN0YXR1cxgFIAEoDjIULmNvbW1vbi5BY3RpdmVTdGF0dXNSBnN0YXR1cxIX",
-            "CgdzaG9wX2lkGAYgASgJUgZzaG9wSWRCCAoGX2Rlc2NyIjYKFUNyZWF0ZVBy",
-            "b2R1Y3RSZXNwb25zZRIdCgpwcm9kdWN0X2lkGAEgASgJUglwcm9kdWN0SWQi",
-            "9AEKEkdldFByb2R1Y3RzUmVxdWVzdBIWCgZzZWFyY2gYASABKAlSBnNlYXJj",
-            "aBIvCgdzb3J0X2J5GAIgASgOMhYucHJvZHVjdC5Qcm9kdWN0U29ydEJ5UgZz",
-            "b3J0QnkSEgoEZGVzYxgDIAEoCFIEZGVzYxIbCglwYWdlX3NpemUYBCABKAVS",
-            "CHBhZ2VTaXplEh0KCnBhZ2VfaW5kZXgYBSABKAVSCXBhZ2VJbmRleBIsCgZz",
-            "dGF0dXMYBiADKA4yFC5jb21tb24uQWN0aXZlU3RhdHVzUgZzdGF0dXMSFwoH",
-            "c2hvcF9pZBgHIAEoCVIGc2hvcElkIsgBChNHZXRQcm9kdWN0c1Jlc3BvbnNl",
-            "EioKBWl0ZW1zGAEgAygLMhQucHJvZHVjdC5Qcm9kdWN0RGF0YVIFaXRlbXMS",
-            "IwoNdG90YWxfcmVzdWx0cxgCIAEoA1IMdG90YWxSZXN1bHRzEhsKCXBhZ2Vf",
-            "c2l6ZRgDIAEoBVIIcGFnZVNpemUSHQoKcGFnZV9pbmRleBgEIAEoBVIJcGFn",
-            "ZUluZGV4EiQKDm1heF9wYWdlX2luZGV4GAUgASgFUgxtYXhQYWdlSW5kZXgi",
-            "3QIKE1Byb2R1Y3RDYXRlZ29yeURhdGESDgoCaWQYASABKAlSAmlkEhIKBG5h",
-            "bWUYAiABKAlSBG5hbWUSLAoGc3RhdHVzGAMgASgOMhQuY29tbW9uLkFjdGl2",
-            "ZVN0YXR1c1IGc3RhdHVzEkoKD3BhcmVudF9jYXRlZ29yeRgEIAEoCzIcLnBy",
-            "b2R1Y3QuUHJvZHVjdENhdGVnb3J5RGF0YUgAUg5wYXJlbnRDYXRlZ29yeYgB",
-            "ARIxChJwYXJlbnRfY2F0ZWdvcnlfaWQYBSABKAlIAVIQcGFyZW50Q2F0ZWdv",
-            "cnlJZIgBARIiCgp1cGRhdGVkX2F0GAYgASgJSAJSCXVwZGF0ZWRBdIgBARIX",
-            "CgdzaG9wX2lkGAcgASgJUgZzaG9wSWRCEgoQX3BhcmVudF9jYXRlZ29yeUIV",
-            "ChNfcGFyZW50X2NhdGVnb3J5X2lkQg0KC191cGRhdGVkX2F0IsMBChxDcmVh",
-            "dGVQcm9kdWN0Q2F0ZWdvcnlSZXF1ZXN0EhcKB3Nob3BfaWQYASABKAlSBnNo",
-            "b3BJZBISCgRuYW1lGAIgASgJUgRuYW1lEiwKBnN0YXR1cxgDIAEoDjIULmNv",
-            "bW1vbi5BY3RpdmVTdGF0dXNSBnN0YXR1cxIxChJwYXJlbnRfY2F0ZWdvcnlf",
-            "aWQYBCABKAlIAFIQcGFyZW50Q2F0ZWdvcnlJZIgBAUIVChNfcGFyZW50X2Nh",
-            "dGVnb3J5X2lkIkAKHUNyZWF0ZVByb2R1Y3RDYXRlZ29yeVJlc3BvbnNlEh8K",
-            "C2NhdGVnb3J5X2lkGAEgASgJUgpjYXRlZ29yeUlkIoUCChtHZXRQcm9kdWN0",
-            "Q2F0ZWdvcmllc1JlcXVlc3QSFgoGc2VhcmNoGAEgASgJUgZzZWFyY2gSNwoH",
-            "c29ydF9ieRgCIAEoDjIeLnByb2R1Y3QuUHJvZHVjdENhdGVnb3J5U29ydEJ5",
-            "UgZzb3J0QnkSEgoEZGVzYxgDIAEoCFIEZGVzYxIbCglwYWdlX3NpemUYBCAB",
-            "KAVSCHBhZ2VTaXplEh0KCnBhZ2VfaW5kZXgYBSABKAVSCXBhZ2VJbmRleBIs",
-            "CgZzdGF0dXMYBiADKA4yFC5jb21tb24uQWN0aXZlU3RhdHVzUgZzdGF0dXMS",
-            "FwoHc2hvcF9pZBgHIAEoCVIGc2hvcElkItkBChxHZXRQcm9kdWN0Q2F0ZWdv",
-            "cmllc1Jlc3BvbnNlEjIKBWl0ZW1zGAEgAygLMhwucHJvZHVjdC5Qcm9kdWN0",
-            "Q2F0ZWdvcnlEYXRhUgVpdGVtcxIjCg10b3RhbF9yZXN1bHRzGAIgASgDUgx0",
-            "b3RhbFJlc3VsdHMSGwoJcGFnZV9zaXplGAMgASgFUghwYWdlU2l6ZRIdCgpw",
-            "YWdlX2luZGV4GAQgASgFUglwYWdlSW5kZXgSJAoObWF4X3BhZ2VfaW5kZXgY",
-            "BSABKAVSDG1heFBhZ2VJbmRleCpqCg1Qcm9kdWN0U29ydEJ5Eh8KG1BST0RV",
-            "Q1RfU09SVF9CWV9VTlNQRUNJRklFRBAAEhgKFFBST0RVQ1RfU09SVF9CWV9O",
-            "QU1FEAESHgoaUFJPRFVDVF9TT1JUX0JZX1VQREFURURfQVQQAiqNAQoVUHJv",
-            "ZHVjdENhdGVnb3J5U29ydEJ5EigKJFBST0RVQ1RfQ0FURUdPUllfU09SVF9C",
-            "WV9VTlNQRUNJRklFRBAAEiEKHVBST0RVQ1RfQ0FURUdPUllfU09SVF9CWV9O",
-            "QU1FEAESJwojUFJPRFVDVF9DQVRFR09SWV9TT1JUX0JZX1VQREFURURfQVQQ",
-            "AkIlqgIiU2hvcGlmeUNsb25lLlByb3RvQ3MuUHJvZHVjdC5UeXBlc2IGcHJv",
-            "dG8z"));
+            "Y3RDYXRlZ29yeURhdGFSCmNhdGVnb3JpZXMSLAoGc3RhdHVzGAUgASgOMhQu",
+            "Y29tbW9uLkFjdGl2ZVN0YXR1c1IGc3RhdHVzEhcKB3Nob3BfaWQYBiABKAlS",
+            "BnNob3BJZEIICgZfZGVzY3IihAIKElByb2R1Y3RWYXJpYW50RGF0YRIOCgJp",
+            "ZBgBIAEoCVICaWQSFwoHc2hvcF9pZBgCIAEoCVIGc2hvcElkEhIKBG5hbWUY",
+            "AyABKAlSBG5hbWUSLAoGc3RhdHVzGAQgASgOMhQuY29tbW9uLkFjdGl2ZVN0",
+            "YXR1c1IGc3RhdHVzElMKFXZhcmlhbnRfb3B0aW9uX3ZhbHVlcxgFIAMoCzIf",
+            "LnByb2R1Y3QuVmFyaWFudE9wdGlvblZhbHVlRGF0YVITdmFyaWFudE9wdGlv",
+            "blZhbHVlcxIuCgdwcm9kdWN0GAYgASgLMhQucHJvZHVjdC5Qcm9kdWN0RGF0",
+            "YVIHcHJvZHVjdCKTAQoWVmFyaWFudE9wdGlvblZhbHVlRGF0YRIOCgJpZBgB",
+            "IAEoCVICaWQSFwoHc2hvcF9pZBgCIAEoCVIGc2hvcElkEhIKBG5hbWUYAyAB",
+            "KAlSBG5hbWUSFAoFdmFsdWUYBCABKAlSBXZhbHVlEiYKD29wdGlvbl92YWx1",
+            "ZV9pZBgFIAEoCVINb3B0aW9uVmFsdWVJZCI7Cg1WYXJpYW50T3B0aW9uEhIK",
+            "BG5hbWUYASABKAlSBG5hbWUSFgoGdmFsdWVzGAIgAygJUgZ2YWx1ZXMi+gEK",
+            "FENyZWF0ZVByb2R1Y3RSZXF1ZXN0EhIKBG5hbWUYASABKAlSBG5hbWUSGQoF",
+            "ZGVzY3IYAiABKAlIAFIFZGVzY3KIAQESIQoMY2F0ZWdvcnlfaWRzGAMgAygJ",
+            "UgtjYXRlZ29yeUlkcxI/Cg92YXJpYW50X29wdGlvbnMYBCADKAsyFi5wcm9k",
+            "dWN0LlZhcmlhbnRPcHRpb25SDnZhcmlhbnRPcHRpb25zEiwKBnN0YXR1cxgF",
+            "IAEoDjIULmNvbW1vbi5BY3RpdmVTdGF0dXNSBnN0YXR1cxIXCgdzaG9wX2lk",
+            "GAYgASgJUgZzaG9wSWRCCAoGX2Rlc2NyIjYKFUNyZWF0ZVByb2R1Y3RSZXNw",
+            "b25zZRIdCgpwcm9kdWN0X2lkGAEgASgJUglwcm9kdWN0SWQi9AEKEkdldFBy",
+            "b2R1Y3RzUmVxdWVzdBIWCgZzZWFyY2gYASABKAlSBnNlYXJjaBIvCgdzb3J0",
+            "X2J5GAIgASgOMhYucHJvZHVjdC5Qcm9kdWN0U29ydEJ5UgZzb3J0QnkSEgoE",
+            "ZGVzYxgDIAEoCFIEZGVzYxIbCglwYWdlX3NpemUYBCABKAVSCHBhZ2VTaXpl",
+            "Eh0KCnBhZ2VfaW5kZXgYBSABKAVSCXBhZ2VJbmRleBIsCgZzdGF0dXMYBiAD",
+            "KA4yFC5jb21tb24uQWN0aXZlU3RhdHVzUgZzdGF0dXMSFwoHc2hvcF9pZBgH",
+            "IAEoCVIGc2hvcElkIs8BChNHZXRQcm9kdWN0c1Jlc3BvbnNlEjEKBWl0ZW1z",
+            "GAEgAygLMhsucHJvZHVjdC5Qcm9kdWN0VmFyaWFudERhdGFSBWl0ZW1zEiMK",
+            "DXRvdGFsX3Jlc3VsdHMYAiABKANSDHRvdGFsUmVzdWx0cxIbCglwYWdlX3Np",
+            "emUYAyABKAVSCHBhZ2VTaXplEh0KCnBhZ2VfaW5kZXgYBCABKAVSCXBhZ2VJ",
+            "bmRleBIkCg5tYXhfcGFnZV9pbmRleBgFIAEoBVIMbWF4UGFnZUluZGV4It0C",
+            "ChNQcm9kdWN0Q2F0ZWdvcnlEYXRhEg4KAmlkGAEgASgJUgJpZBISCgRuYW1l",
+            "GAIgASgJUgRuYW1lEiwKBnN0YXR1cxgDIAEoDjIULmNvbW1vbi5BY3RpdmVT",
+            "dGF0dXNSBnN0YXR1cxJKCg9wYXJlbnRfY2F0ZWdvcnkYBCABKAsyHC5wcm9k",
+            "dWN0LlByb2R1Y3RDYXRlZ29yeURhdGFIAFIOcGFyZW50Q2F0ZWdvcnmIAQES",
+            "MQoScGFyZW50X2NhdGVnb3J5X2lkGAUgASgJSAFSEHBhcmVudENhdGVnb3J5",
+            "SWSIAQESIgoKdXBkYXRlZF9hdBgGIAEoCUgCUgl1cGRhdGVkQXSIAQESFwoH",
+            "c2hvcF9pZBgHIAEoCVIGc2hvcElkQhIKEF9wYXJlbnRfY2F0ZWdvcnlCFQoT",
+            "X3BhcmVudF9jYXRlZ29yeV9pZEINCgtfdXBkYXRlZF9hdCLDAQocQ3JlYXRl",
+            "UHJvZHVjdENhdGVnb3J5UmVxdWVzdBIXCgdzaG9wX2lkGAEgASgJUgZzaG9w",
+            "SWQSEgoEbmFtZRgCIAEoCVIEbmFtZRIsCgZzdGF0dXMYAyABKA4yFC5jb21t",
+            "b24uQWN0aXZlU3RhdHVzUgZzdGF0dXMSMQoScGFyZW50X2NhdGVnb3J5X2lk",
+            "GAQgASgJSABSEHBhcmVudENhdGVnb3J5SWSIAQFCFQoTX3BhcmVudF9jYXRl",
+            "Z29yeV9pZCJACh1DcmVhdGVQcm9kdWN0Q2F0ZWdvcnlSZXNwb25zZRIfCgtj",
+            "YXRlZ29yeV9pZBgBIAEoCVIKY2F0ZWdvcnlJZCKFAgobR2V0UHJvZHVjdENh",
+            "dGVnb3JpZXNSZXF1ZXN0EhYKBnNlYXJjaBgBIAEoCVIGc2VhcmNoEjcKB3Nv",
+            "cnRfYnkYAiABKA4yHi5wcm9kdWN0LlByb2R1Y3RDYXRlZ29yeVNvcnRCeVIG",
+            "c29ydEJ5EhIKBGRlc2MYAyABKAhSBGRlc2MSGwoJcGFnZV9zaXplGAQgASgF",
+            "UghwYWdlU2l6ZRIdCgpwYWdlX2luZGV4GAUgASgFUglwYWdlSW5kZXgSLAoG",
+            "c3RhdHVzGAYgAygOMhQuY29tbW9uLkFjdGl2ZVN0YXR1c1IGc3RhdHVzEhcK",
+            "B3Nob3BfaWQYByABKAlSBnNob3BJZCLZAQocR2V0UHJvZHVjdENhdGVnb3Jp",
+            "ZXNSZXNwb25zZRIyCgVpdGVtcxgBIAMoCzIcLnByb2R1Y3QuUHJvZHVjdENh",
+            "dGVnb3J5RGF0YVIFaXRlbXMSIwoNdG90YWxfcmVzdWx0cxgCIAEoA1IMdG90",
+            "YWxSZXN1bHRzEhsKCXBhZ2Vfc2l6ZRgDIAEoBVIIcGFnZVNpemUSHQoKcGFn",
+            "ZV9pbmRleBgEIAEoBVIJcGFnZUluZGV4EiQKDm1heF9wYWdlX2luZGV4GAUg",
+            "ASgFUgxtYXhQYWdlSW5kZXgqagoNUHJvZHVjdFNvcnRCeRIfChtQUk9EVUNU",
+            "X1NPUlRfQllfVU5TUEVDSUZJRUQQABIYChRQUk9EVUNUX1NPUlRfQllfTkFN",
+            "RRABEh4KGlBST0RVQ1RfU09SVF9CWV9VUERBVEVEX0FUEAIqjQEKFVByb2R1",
+            "Y3RDYXRlZ29yeVNvcnRCeRIoCiRQUk9EVUNUX0NBVEVHT1JZX1NPUlRfQllf",
+            "VU5TUEVDSUZJRUQQABIhCh1QUk9EVUNUX0NBVEVHT1JZX1NPUlRfQllfTkFN",
+            "RRABEicKI1BST0RVQ1RfQ0FURUdPUllfU09SVF9CWV9VUERBVEVEX0FUEAJC",
+            "JaoCIlNob3BpZnlDbG9uZS5Qcm90b0NzLlByb2R1Y3QuVHlwZXNiBnByb3Rv",
+            "Mw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { global::ShopifyClone.ProtoCs.Common.Types.CommonTypesReflection.Descriptor, },
           new pbr::GeneratedClrTypeInfo(new[] {typeof(global::ShopifyClone.ProtoCs.Product.Types.ProductSortBy), typeof(global::ShopifyClone.ProtoCs.Product.Types.ProductCategorySortBy), }, null, new pbr::GeneratedClrTypeInfo[] {
-            new pbr::GeneratedClrTypeInfo(typeof(global::ShopifyClone.ProtoCs.Product.Types.ProductData), global::ShopifyClone.ProtoCs.Product.Types.ProductData.Parser, new[]{ "Id", "Name", "Descr", "Categories", "Variants", "Status", "ShopId" }, new[]{ "Descr" }, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::ShopifyClone.ProtoCs.Product.Types.ProductVariantData), global::ShopifyClone.ProtoCs.Product.Types.ProductVariantData.Parser, new[]{ "Id", "ShopId", "Name", "Status", "VariantOptionValues" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ShopifyClone.ProtoCs.Product.Types.ProductData), global::ShopifyClone.ProtoCs.Product.Types.ProductData.Parser, new[]{ "Id", "Name", "Descr", "Categories", "Status", "ShopId" }, new[]{ "Descr" }, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::ShopifyClone.ProtoCs.Product.Types.ProductVariantData), global::ShopifyClone.ProtoCs.Product.Types.ProductVariantData.Parser, new[]{ "Id", "ShopId", "Name", "Status", "VariantOptionValues", "Product" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ShopifyClone.ProtoCs.Product.Types.VariantOptionValueData), global::ShopifyClone.ProtoCs.Product.Types.VariantOptionValueData.Parser, new[]{ "Id", "ShopId", "Name", "Value", "OptionValueId" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ShopifyClone.ProtoCs.Product.Types.VariantOption), global::ShopifyClone.ProtoCs.Product.Types.VariantOption.Parser, new[]{ "Name", "Values" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::ShopifyClone.ProtoCs.Product.Types.CreateProductRequest), global::ShopifyClone.ProtoCs.Product.Types.CreateProductRequest.Parser, new[]{ "Name", "Descr", "CategoryIds", "VariantOptions", "Status", "ShopId" }, new[]{ "Descr" }, null, null, null),
@@ -166,7 +166,6 @@ namespace ShopifyClone.ProtoCs.Product.Types {
       name_ = other.name_;
       descr_ = other.descr_;
       categories_ = other.categories_.Clone();
-      variants_ = other.variants_.Clone();
       status_ = other.status_;
       shopId_ = other.shopId_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -239,19 +238,8 @@ namespace ShopifyClone.ProtoCs.Product.Types {
       get { return categories_; }
     }
 
-    /// <summary>Field number for the "variants" field.</summary>
-    public const int VariantsFieldNumber = 5;
-    private static readonly pb::FieldCodec<global::ShopifyClone.ProtoCs.Product.Types.ProductVariantData> _repeated_variants_codec
-        = pb::FieldCodec.ForMessage(42, global::ShopifyClone.ProtoCs.Product.Types.ProductVariantData.Parser);
-    private readonly pbc::RepeatedField<global::ShopifyClone.ProtoCs.Product.Types.ProductVariantData> variants_ = new pbc::RepeatedField<global::ShopifyClone.ProtoCs.Product.Types.ProductVariantData>();
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::ShopifyClone.ProtoCs.Product.Types.ProductVariantData> Variants {
-      get { return variants_; }
-    }
-
     /// <summary>Field number for the "status" field.</summary>
-    public const int StatusFieldNumber = 6;
+    public const int StatusFieldNumber = 5;
     private global::ShopifyClone.ProtoCs.Common.Types.ActiveStatus status_ = global::ShopifyClone.ProtoCs.Common.Types.ActiveStatus.Unspecified;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -263,7 +251,7 @@ namespace ShopifyClone.ProtoCs.Product.Types {
     }
 
     /// <summary>Field number for the "shop_id" field.</summary>
-    public const int ShopIdFieldNumber = 7;
+    public const int ShopIdFieldNumber = 6;
     private string shopId_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
@@ -293,7 +281,6 @@ namespace ShopifyClone.ProtoCs.Product.Types {
       if (Name != other.Name) return false;
       if (Descr != other.Descr) return false;
       if(!categories_.Equals(other.categories_)) return false;
-      if(!variants_.Equals(other.variants_)) return false;
       if (Status != other.Status) return false;
       if (ShopId != other.ShopId) return false;
       return Equals(_unknownFields, other._unknownFields);
@@ -307,7 +294,6 @@ namespace ShopifyClone.ProtoCs.Product.Types {
       if (Name.Length != 0) hash ^= Name.GetHashCode();
       if (HasDescr) hash ^= Descr.GetHashCode();
       hash ^= categories_.GetHashCode();
-      hash ^= variants_.GetHashCode();
       if (Status != global::ShopifyClone.ProtoCs.Common.Types.ActiveStatus.Unspecified) hash ^= Status.GetHashCode();
       if (ShopId.Length != 0) hash ^= ShopId.GetHashCode();
       if (_unknownFields != null) {
@@ -341,13 +327,12 @@ namespace ShopifyClone.ProtoCs.Product.Types {
         output.WriteString(Descr);
       }
       categories_.WriteTo(output, _repeated_categories_codec);
-      variants_.WriteTo(output, _repeated_variants_codec);
       if (Status != global::ShopifyClone.ProtoCs.Common.Types.ActiveStatus.Unspecified) {
-        output.WriteRawTag(48);
+        output.WriteRawTag(40);
         output.WriteEnum((int) Status);
       }
       if (ShopId.Length != 0) {
-        output.WriteRawTag(58);
+        output.WriteRawTag(50);
         output.WriteString(ShopId);
       }
       if (_unknownFields != null) {
@@ -373,13 +358,12 @@ namespace ShopifyClone.ProtoCs.Product.Types {
         output.WriteString(Descr);
       }
       categories_.WriteTo(ref output, _repeated_categories_codec);
-      variants_.WriteTo(ref output, _repeated_variants_codec);
       if (Status != global::ShopifyClone.ProtoCs.Common.Types.ActiveStatus.Unspecified) {
-        output.WriteRawTag(48);
+        output.WriteRawTag(40);
         output.WriteEnum((int) Status);
       }
       if (ShopId.Length != 0) {
-        output.WriteRawTag(58);
+        output.WriteRawTag(50);
         output.WriteString(ShopId);
       }
       if (_unknownFields != null) {
@@ -402,7 +386,6 @@ namespace ShopifyClone.ProtoCs.Product.Types {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(Descr);
       }
       size += categories_.CalculateSize(_repeated_categories_codec);
-      size += variants_.CalculateSize(_repeated_variants_codec);
       if (Status != global::ShopifyClone.ProtoCs.Common.Types.ActiveStatus.Unspecified) {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Status);
       }
@@ -431,7 +414,6 @@ namespace ShopifyClone.ProtoCs.Product.Types {
         Descr = other.Descr;
       }
       categories_.Add(other.categories_);
-      variants_.Add(other.variants_);
       if (other.Status != global::ShopifyClone.ProtoCs.Common.Types.ActiveStatus.Unspecified) {
         Status = other.Status;
       }
@@ -473,15 +455,11 @@ namespace ShopifyClone.ProtoCs.Product.Types {
             categories_.AddEntriesFrom(input, _repeated_categories_codec);
             break;
           }
-          case 42: {
-            variants_.AddEntriesFrom(input, _repeated_variants_codec);
-            break;
-          }
-          case 48: {
+          case 40: {
             Status = (global::ShopifyClone.ProtoCs.Common.Types.ActiveStatus) input.ReadEnum();
             break;
           }
-          case 58: {
+          case 50: {
             ShopId = input.ReadString();
             break;
           }
@@ -520,15 +498,11 @@ namespace ShopifyClone.ProtoCs.Product.Types {
             categories_.AddEntriesFrom(ref input, _repeated_categories_codec);
             break;
           }
-          case 42: {
-            variants_.AddEntriesFrom(ref input, _repeated_variants_codec);
-            break;
-          }
-          case 48: {
+          case 40: {
             Status = (global::ShopifyClone.ProtoCs.Common.Types.ActiveStatus) input.ReadEnum();
             break;
           }
-          case 58: {
+          case 50: {
             ShopId = input.ReadString();
             break;
           }
@@ -579,6 +553,7 @@ namespace ShopifyClone.ProtoCs.Product.Types {
       name_ = other.name_;
       status_ = other.status_;
       variantOptionValues_ = other.variantOptionValues_.Clone();
+      product_ = other.product_ != null ? other.product_.Clone() : null;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -647,6 +622,18 @@ namespace ShopifyClone.ProtoCs.Product.Types {
       get { return variantOptionValues_; }
     }
 
+    /// <summary>Field number for the "product" field.</summary>
+    public const int ProductFieldNumber = 6;
+    private global::ShopifyClone.ProtoCs.Product.Types.ProductData product_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::ShopifyClone.ProtoCs.Product.Types.ProductData Product {
+      get { return product_; }
+      set {
+        product_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -667,6 +654,7 @@ namespace ShopifyClone.ProtoCs.Product.Types {
       if (Name != other.Name) return false;
       if (Status != other.Status) return false;
       if(!variantOptionValues_.Equals(other.variantOptionValues_)) return false;
+      if (!object.Equals(Product, other.Product)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -679,6 +667,7 @@ namespace ShopifyClone.ProtoCs.Product.Types {
       if (Name.Length != 0) hash ^= Name.GetHashCode();
       if (Status != global::ShopifyClone.ProtoCs.Common.Types.ActiveStatus.Unspecified) hash ^= Status.GetHashCode();
       hash ^= variantOptionValues_.GetHashCode();
+      if (product_ != null) hash ^= Product.GetHashCode();
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -714,6 +703,10 @@ namespace ShopifyClone.ProtoCs.Product.Types {
         output.WriteEnum((int) Status);
       }
       variantOptionValues_.WriteTo(output, _repeated_variantOptionValues_codec);
+      if (product_ != null) {
+        output.WriteRawTag(50);
+        output.WriteMessage(Product);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -741,6 +734,10 @@ namespace ShopifyClone.ProtoCs.Product.Types {
         output.WriteEnum((int) Status);
       }
       variantOptionValues_.WriteTo(ref output, _repeated_variantOptionValues_codec);
+      if (product_ != null) {
+        output.WriteRawTag(50);
+        output.WriteMessage(Product);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -764,6 +761,9 @@ namespace ShopifyClone.ProtoCs.Product.Types {
         size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Status);
       }
       size += variantOptionValues_.CalculateSize(_repeated_variantOptionValues_codec);
+      if (product_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(Product);
+      }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
       }
@@ -789,6 +789,12 @@ namespace ShopifyClone.ProtoCs.Product.Types {
         Status = other.Status;
       }
       variantOptionValues_.Add(other.variantOptionValues_);
+      if (other.product_ != null) {
+        if (product_ == null) {
+          Product = new global::ShopifyClone.ProtoCs.Product.Types.ProductData();
+        }
+        Product.MergeFrom(other.Product);
+      }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
 
@@ -828,6 +834,13 @@ namespace ShopifyClone.ProtoCs.Product.Types {
             variantOptionValues_.AddEntriesFrom(input, _repeated_variantOptionValues_codec);
             break;
           }
+          case 50: {
+            if (product_ == null) {
+              Product = new global::ShopifyClone.ProtoCs.Product.Types.ProductData();
+            }
+            input.ReadMessage(Product);
+            break;
+          }
         }
       }
     #endif
@@ -865,6 +878,13 @@ namespace ShopifyClone.ProtoCs.Product.Types {
           }
           case 42: {
             variantOptionValues_.AddEntriesFrom(ref input, _repeated_variantOptionValues_codec);
+            break;
+          }
+          case 50: {
+            if (product_ == null) {
+              Product = new global::ShopifyClone.ProtoCs.Product.Types.ProductData();
+            }
+            input.ReadMessage(Product);
             break;
           }
         }
@@ -2479,12 +2499,12 @@ namespace ShopifyClone.ProtoCs.Product.Types {
 
     /// <summary>Field number for the "items" field.</summary>
     public const int ItemsFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::ShopifyClone.ProtoCs.Product.Types.ProductData> _repeated_items_codec
-        = pb::FieldCodec.ForMessage(10, global::ShopifyClone.ProtoCs.Product.Types.ProductData.Parser);
-    private readonly pbc::RepeatedField<global::ShopifyClone.ProtoCs.Product.Types.ProductData> items_ = new pbc::RepeatedField<global::ShopifyClone.ProtoCs.Product.Types.ProductData>();
+    private static readonly pb::FieldCodec<global::ShopifyClone.ProtoCs.Product.Types.ProductVariantData> _repeated_items_codec
+        = pb::FieldCodec.ForMessage(10, global::ShopifyClone.ProtoCs.Product.Types.ProductVariantData.Parser);
+    private readonly pbc::RepeatedField<global::ShopifyClone.ProtoCs.Product.Types.ProductVariantData> items_ = new pbc::RepeatedField<global::ShopifyClone.ProtoCs.Product.Types.ProductVariantData>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
-    public pbc::RepeatedField<global::ShopifyClone.ProtoCs.Product.Types.ProductData> Items {
+    public pbc::RepeatedField<global::ShopifyClone.ProtoCs.Product.Types.ProductVariantData> Items {
       get { return items_; }
     }
 

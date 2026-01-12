@@ -1,5 +1,4 @@
-import { ColumnDef } from '@tanstack/react-table';
-import { UseQueryStatesKeysMap, Values } from 'nuqs';
+import { ColumnDef, Row } from '@tanstack/react-table';
 import { TableFilterDef } from './data-table-filter';
 import { TableSortOption } from './data-table-sort';
 
@@ -17,23 +16,36 @@ export type NoBaseOverlap<T extends object> = {
   [K in keyof T]: K extends BaseFieldKeys ? never : T[K];
 };
 
+export interface TableStateAdapter<TState> {
+  useState(): [
+    state: TState,
+    setState: (updater: (prev: TState) => TState) => void
+  ];
+}
+
 export type DataTableConfig<
   TSort extends number,
-  TExtra extends NoBaseOverlap<object>,
-  TRow extends { id: string },
-  TParser extends UseQueryStatesKeysMap<Base<TSort> & TExtra>
+  TExtra extends NoBaseOverlap<any>,
+  TRow extends { id: string }
 > = {
-  state: TParser;
-  filters: readonly TableFilterDef<Values<Omit<TParser, keyof Base<TSort>>>>[];
+  stateAdapter: TableStateAdapter<Base<TSort> & TExtra>;
+  filters: readonly TableFilterDef<Omit<TExtra, BaseFieldKeys>>[];
   columns: ColumnDef<TRow>[];
-  urlKeys: Record<keyof TParser, string>;
+  expendable?: {
+    expandedContent?: (row: TRow) => React.ReactNode;
+    getRowCanExpand: (row: Row<TRow>) => boolean;
+  };
+  groupable?: {
+    groupingState: string[];
+  };
+  alwaysHiddenColumns?: string[];
   hasSelection: boolean;
   pageSizes: readonly number[];
   sortOptions: TableSortOption<TSort>[];
   createButton: string;
   queryKey: readonly unknown[];
   fetchFn: (
-    state: Values<TParser>,
+    state: Base<TSort> & TExtra,
     signal: AbortSignal
   ) => Promise<{
     items: TRow[];
@@ -46,9 +58,8 @@ export type DataTableConfig<
 
 export function createTableConfig<
   TSort extends number,
-  TExtra extends NoBaseOverlap<object>,
   TRow extends { id: string },
-  TParser extends UseQueryStatesKeysMap<Base<TSort> & TExtra>
->(config: DataTableConfig<TSort, TExtra, TRow, TParser>) {
+  TExtra extends NoBaseOverlap<any>
+>(config: DataTableConfig<TSort, TExtra, TRow>) {
   return config;
 }

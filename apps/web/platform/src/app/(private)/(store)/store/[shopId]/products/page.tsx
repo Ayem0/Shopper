@@ -5,13 +5,17 @@ import { productSearchParamsCache } from '@/lib/search-params/product-search-par
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { SearchParams } from 'nuqs/server';
 
-type PageProps = {
+type ProductsPageProps = {
   searchParams: Promise<SearchParams>;
-};
+} & PageProps<'/store/[shopId]/products'>;
 
-export default async function ProductsPage({ searchParams }: PageProps) {
-  const { search, pageIndex, pageSize, sort, desc } =
+export default async function ProductsPage({
+  searchParams,
+  params,
+}: ProductsPageProps) {
+  const { search, pageIndex, pageSize, sort, desc, status } =
     await productSearchParamsCache.parse(searchParams);
+  const { shopId } = await params;
 
   const queryClient = getQueryClient();
 
@@ -28,10 +32,12 @@ export default async function ProductsPage({ searchParams }: PageProps) {
       getProducts(
         {
           sortBy: sort,
-          pageSize,
-          pageIndex,
-          sortDescending: desc,
-          searchTerm: search,
+          pageSize: pageSize,
+          pageIndex: pageIndex,
+          desc: desc,
+          search: search,
+          shopId: shopId,
+          status: status,
         },
         signal
       ),

@@ -4,6 +4,7 @@ import { Trash } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { productFormOptions } from './product-form-options';
 
+// TODO REFAIRE EN UTILISANT BASEFIELD
 export const ProductVariantField = withForm({
   ...productFormOptions,
   props: {
@@ -72,7 +73,7 @@ export const ProductVariantField = withForm({
         }}
       >
         {!isEditing ? (
-          <form.Field name={`variants[${index}]`}>
+          <form.AppField name={`variants[${index}]`}>
             {(field) => {
               return (
                 <div className="flex flex-col gap-2 cursor-pointer">
@@ -102,7 +103,7 @@ export const ProductVariantField = withForm({
                 </div>
               );
             }}
-          </form.Field>
+          </form.AppField>
         ) : (
           // Edit Mode
           <div className="flex flex-col gap-4">
@@ -123,15 +124,16 @@ export const ProductVariantField = withForm({
                   ref={nameInputRef}
                   type="text"
                   placeholder="e.g. Size, Color"
+                  field={field}
                 />
               )}
             </form.AppField>
             <form.AppField name={`variants[${index}].values`} mode="array">
               {(field) => (
-                <field.MultiSelect
+                <field.CreatableMultiSelect
                   label="Options"
                   placeholder="Add value (e.g. Small, Red)"
-                  creatable={true}
+                  field={field}
                 />
               )}
             </form.AppField>

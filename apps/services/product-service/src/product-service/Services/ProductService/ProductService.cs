@@ -22,7 +22,7 @@ public class ProductService : IProductService
     private readonly IMapper _mapper;
     private readonly IProductCategoryService _productCategoryService;
     private const string _topic = nameof(ProductEvent);
-    private static readonly Dictionary<ProductSortBy, Expression<Func<ProductDTO, object?>>> _sortMap =
+    private static readonly Dictionary<ProductSortBy, Expression<Func<ProductVariantDTO, object?>>> _sortMap =
         new()
         {
             { ProductSortBy.Name, s => s.Name},
@@ -67,31 +67,39 @@ public class ProductService : IProductService
     {
         try
         {
-            var (items, totalResults, maxPageIndex, pageIndex, pageSize) = await _context.Products
+            var (items, totalResults, maxPageIndex, pageIndex, pageSize) = await _context.ProductVariants
                .Where(p => p.ShopId == shopId)
                // TODO voir si les fields selected match le proto
-               .Select(p => new ProductDTO
+               .Select(pv => new ProductVariantDTO
                {
-                   Id = p.Id,
-                   Name = p.Name,
-                   ShopId = p.ShopId,
-                   Status = p.Status,
-                   UpdatedAt = p.UpdatedAt,
-                   Categories = p.Categories.Select(c => new ProductCategoryDTO
+                   Id = pv.Id,
+                   Name = pv.Name,
+                   ShopId = pv.ShopId,
+                   Status = pv.Status,
+                   UpdatedAt = pv.UpdatedAt,
+                   Product = new ProductDTO
                    {
-                       Id = c.Id,
-                       Name = c.Name,
-                   }).ToList(),
-                   ProductVariants = p.ProductVariants.Select(pv => new ProductVariantDTO
-                   {
-                       Id = pv.Id,
-                       Name = pv.Name,
-                       VariantOptionValues = pv.VariantOptionValues.Select(vov => new VariantOptionValueDTO
+                       Id = pv.Product.Id,
+                       Name = pv.Product.Name,
+                       Descr = pv.Product.Name,
+                       ShopId = pv.Product.ShopId,
+                       Status = pv.Product.Status,
+                       UpdatedAt = pv.Product.UpdatedAt,
+                       Categories = pv.Product.Categories.Select(c => new ProductCategoryDTO
                        {
-                           Id = vov.Id,
-                           Value = vov.Value,
-                           OptionName = vov.VariantOption.Name
-                       }).ToList()
+                           Id = c.Id,
+                           Name = c.Name,
+                           ShopId = c.ShopId,
+                       }).ToList(),
+                   },
+                   CreatedAt = pv.CreatedAt,
+                   VariantOptionValues = pv.VariantOptionValues.Select(vov => new VariantOptionValueDTO
+                   {
+                       Id = vov.Id,
+                       Value = vov.Value,
+                       OptionId = vov.VariantOptionId,
+                       ShopId = vov.ShopId,
+                       OptionName = vov.VariantOption.Name
                    }).ToList()
                })
                .TableQuery(new()
@@ -113,7 +121,7 @@ public class ProductService : IProductService
                 PageSize = pageSize,
                 TotalResults = totalResults,
                 MaxPageIndex = maxPageIndex,
-                Items = { _mapper.Map<ProductData[]>(items) }
+                Items = { _mapper.Map<ProductVariantData[]>(items) }
             };
             return res;
         }
@@ -140,6 +148,16 @@ public class ProductService : IProductService
             if (req.VariantOptions.Count > 0)
             {
                 product.ProductVariants = CreateProductVariants(req.VariantOptions, product);
+            }
+            else
+            {
+                product.ProductVariants = [new ProductVariant {
+                    Product = product,
+                    ProductId = product.Id,
+                    ShopId = shopId,
+                    Status = req.Status,
+                    Name = product.Name
+                }];
             }
 
             var productId = product.Id.ToString();

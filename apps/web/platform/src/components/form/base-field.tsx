@@ -1,4 +1,3 @@
-import { useFieldContext } from '@/hooks/use-app-form';
 import {
   Field,
   FieldContent,
@@ -6,70 +5,122 @@ import {
   FieldError,
   FieldLabel,
 } from '@shopify-clone/ui';
-import { useStore } from '@tanstack/react-form';
-import { ReactNode } from 'react';
+import { FieldApi, useStore } from '@tanstack/react-form';
+import { memo, ReactNode } from 'react';
 
-export interface FieldProps {
-  label: string;
+export interface FieldProps<T> {
+  label?: string;
   description?: string;
   orientation?: 'horizontal' | 'vertical' | 'responsive';
   descriptionBefore?: boolean;
+  field: TypedFieldApi<T>;
 }
 
-type BaseFieldChildren = (props: {
-  field: ReturnType<typeof useFieldContext>;
+type TypedFieldApi<T> = FieldApi<
+  any,
+  any,
+  T,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any,
+  any
+>;
+
+type BaseFieldChildren<T> = (props: {
+  field: TypedFieldApi<T>;
   isInvalid: boolean;
   isSubmitting: boolean;
+  // value: T;
+  // onChange: (value: T) => void;
 }) => ReactNode;
 
-interface BaseFieldProps extends FieldProps {
-  children: BaseFieldChildren;
+interface BaseFieldProps<T> extends FieldProps<T> {
+  children: BaseFieldChildren<T>;
 }
 
-export function BaseField({
+function BaseFieldImpl<T>({
   label,
   description,
   descriptionBefore,
   orientation,
+  field,
   children,
-}: BaseFieldProps) {
-  const field = useFieldContext();
-  const store = useStore(field.form.store);
-  const errors = field.state.meta.errors;
-  const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-  const isSubmitting = store.isSubmitting;
+}: BaseFieldProps<T>) {
+  const isSubmitting = useStore(
+    field.form.store,
+    (state) => state.isSubmitting
+  );
+
+  const errors = useStore(field.store, (state) => state.meta.errors);
+
+  const isInvalid = useStore(
+    field.store,
+    (state) => state.meta.isTouched && !state.meta.isValid
+  );
 
   const descrElem = description ? (
     <FieldDescription>{description}</FieldDescription>
   ) : null;
 
+  const labelElem = label ? (
+    <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
+  ) : null;
+
   const errorElem = isInvalid && <FieldError errors={errors} />;
+
+  const childrenElem = children({ field, isInvalid, isSubmitting });
+
+  // const childrenElem = (
+  //   <DebounceComponent
+  //     value={field.state.value}
+  //     onChange={field.handleChange}
+
+  //   />
+  // );
 
   return (
     <Field data-invalid={isInvalid} orientation={orientation}>
       {descriptionBefore ? (
         <>
           <FieldContent>
-            <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
+            {labelElem}
             {descrElem}
           </FieldContent>
-          {children({ field, isInvalid, isSubmitting })}
+          {childrenElem}
           {errorElem}
         </>
       ) : description ? (
         <>
-          <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
+          {labelElem}
           {errorElem}
-          {children({ field, isInvalid, isSubmitting })}
+          {childrenElem}
           {descrElem}
         </>
       ) : (
         <>
-          <FieldLabel htmlFor={field.name}>{label}</FieldLabel>
-          {children({ field, isInvalid, isSubmitting })}
+          {labelElem}
+          {childrenElem}
           {errorElem}
         </>
       )}
     </Field>
   );
 }
+
+export const BaseField = memo(BaseFieldImpl) as typeof BaseFieldImpl;

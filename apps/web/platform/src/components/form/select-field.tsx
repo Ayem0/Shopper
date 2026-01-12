@@ -7,18 +7,18 @@ import {
 } from '@shopify-clone/ui';
 import { BaseField, FieldProps } from './base-field';
 
-interface SelectFieldProps extends FieldProps {
+interface SelectFieldProps<T> extends FieldProps<T> {
   placeholder: string;
   options: { label: string; value: string }[];
-  mapValue: (value: string) => unknown;
+  mapValue: (value: string) => T;
 }
 
-export function SelectField({
+export function SelectField<T>({
   placeholder,
   options,
   mapValue,
   ...props
-}: SelectFieldProps) {
+}: SelectFieldProps<T>) {
   return (
     <BaseField
       {...props}

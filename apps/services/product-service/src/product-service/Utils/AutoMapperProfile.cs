@@ -45,6 +45,7 @@ public class AutoMapperProfile : Profile
             .ForMember(dest => dest.ShopId, opt => opt.MapFrom(s => s.ShopId.ToString()))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(s => s.Status))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(s => s.Name))
+            .ForMember(dest => dest.Product, opt => opt.MapFrom(s => s.Product))
             .ForMember(dest => dest.VariantOptionValues, opt =>
                 {
                     opt.MapFrom(s => s.VariantOptionValues);
@@ -59,12 +60,6 @@ public class AutoMapperProfile : Profile
            .ForMember(dest => dest.Categories, opt =>
                 {
                     opt.MapFrom(s => s.Categories);
-                    opt.UseDestinationValue();
-                }
-            )
-            .ForMember(dest => dest.Variants, opt =>
-                {
-                    opt.MapFrom(s => s.ProductVariants);
                     opt.UseDestinationValue();
                 }
             )

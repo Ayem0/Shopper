@@ -9,13 +9,92 @@ import {
   FieldLabel,
 } from '@shopify-clone/ui';
 
+import { getProductCategories } from '@/lib/queries/product-category/get-product-categories';
+import { createProductQuery } from '@/lib/queries/product/create-product-query';
 import { activeStatusOptionsStr } from '@/lib/types/active-status';
+import {
+  CreateProductRequest,
+  ProductCategorySortBy,
+} from '@shopify-clone/proto-ts';
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
+import { useParams, useRouter } from 'next/navigation';
+import { useMemo, useState } from 'react';
+import { toast } from 'sonner';
 import { productFormOptions } from './product-form-options';
 import { ProductVariantField } from './product-variant-field';
 
 export function ProductForm() {
-  const form = useAppForm(productFormOptions);
+  const [searchCategory, setSearchCategory] = useState('');
+  const queryClient = useQueryClient();
+  const router = useRouter();
+  const { shopId } = useParams<{ shopId: string }>();
+  const form = useAppForm({
+    ...productFormOptions,
+    onSubmit: ({ value }) => {
+      createProductMutation.mutate({
+        categoryIds: value.categories.map((category) => category.value),
+        name: value.name,
+        descr: value.descr,
+        status: value.status,
+        shopId: shopId,
+        variantOptions: value.variants,
+      });
+    },
+  });
+  const createProductMutation = useMutation({
+    mutationFn: async (req: CreateProductRequest) =>
+      await createProductQuery(req),
+    onSettled: async () =>
+      await queryClient.invalidateQueries({
+        predicate: (query) =>
+          query.queryKey[0] === 'products' && query.queryKey[1] === shopId,
+      }),
+    onSuccess: (data, variables) => {
+      toast.success(`Product '${variables.name}' successfully created.`);
+      form.reset();
+      // TODO: modify when storing table search params
+      router.push(`/store/${shopId}/products`);
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+  const key = useMemo(
+    () => ['product-categories', shopId, searchCategory],
+    [shopId, searchCategory]
+  );
+
+  const { data, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage } =
+    useInfiniteQuery({
+      queryKey: key,
+      queryFn: ({ signal, pageParam }) =>
+        getProductCategories(
+          {
+            pageIndex: pageParam,
+            pageSize: 10,
+            sortBy: ProductCategorySortBy.PRODUCT_CATEGORY_SORT_BY_NAME,
+            desc: false,
+            search: searchCategory,
+            status: [],
+            shopId: shopId,
+          },
+          signal
+        ),
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      retry: false,
+      getNextPageParam: (lastPage) =>
+        lastPage.maxPageIndex === lastPage.pageIndex
+          ? undefined
+          : lastPage.pageIndex + 1,
+      initialPageParam: 0,
+    });
 
   return (
     <div className="w-full">
@@ -32,7 +111,12 @@ export function ProductForm() {
             <FieldGroup>
               <form.AppField name="name">
                 {(field) => (
-                  <field.Input label="Name" placeholder="Name" type="text" />
+                  <field.Input
+                    label="Name"
+                    placeholder="Name"
+                    type="text"
+                    field={field}
+                  />
                 )}
               </form.AppField>
               <form.AppField name="descr">
@@ -41,20 +125,29 @@ export function ProductForm() {
                     label="Description"
                     placeholder="Description"
                     description="Max 2048 characters"
+                    field={field}
                   />
                 )}
               </form.AppField>
               <form.AppField name="categories">
                 {(field) => (
-                  <field.MultiSelect
-                    inputProps={{}}
+                  <field.AsyncMultiSelect
                     label="Categories"
                     placeholder="Categories"
-                    options={[
-                      { label: 'Shirt', value: 'someid' },
-                      { label: 'Pants', value: 'someid2' },
-                      { label: 'Jacket', value: 'someid3' },
-                    ]}
+                    options={data?.pages.flatMap((page) =>
+                      page.items.map((item) => ({
+                        label: item.name,
+                        value: item.id,
+                      }))
+                    )}
+                    onSearchChange={(value) => {
+                      setSearchCategory(value);
+                    }}
+                    isFetching={isFetching}
+                    isFetchingNextPage={isFetchingNextPage}
+                    fetchNextPage={fetchNextPage}
+                    hasNextPage={hasNextPage}
+                    field={field}
                   />
                 )}
               </form.AppField>
@@ -96,10 +189,11 @@ export function ProductForm() {
                     placeholder="Status"
                     mapValue={(value) => Number(value)}
                     options={activeStatusOptionsStr}
+                    field={field}
                   />
                 )}
               </form.AppField>
-              <form.AppField name="template">
+              {/* <form.AppField name="template">
                 {(field) => (
                   <field.Select
                     label="Template"
@@ -121,7 +215,7 @@ export function ProductForm() {
                     ]}
                   />
                 )}
-              </form.AppField>
+              </form.AppField> */}
               <form.AppForm>
                 <form.SubmitButton label="Create" />
               </form.AppForm>

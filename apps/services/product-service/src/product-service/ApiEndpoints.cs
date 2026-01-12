@@ -10,7 +10,6 @@ using ShopifyClone.Cs.Shared.src.Infra.AWS;
 using Services.ProductService;
 using product_service.DTO;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Http.Features;
 
 [assembly: LambdaSerializer(typeof(CustomLambdaJsonSerializer))]
 
@@ -49,7 +48,34 @@ ILogger<ApiEndpoints> logger,
         {
             context.Logger.LogInformation("NOT ALLOWED");
         }
-        var res = await _productService.CreateAsync(DtoToProto(req));
+        var res = await _productService.CreateProductAsync(DtoToProto(req), new Guid(req.ShopId));
+        return res;
+    }
+
+    [LambdaFunction()]
+    [HttpApi(LambdaHttpMethod.Get, "/product")]
+    public async Task<GetProductsResponse> GetProducts(
+        ILambdaContext context,
+        [FromQuery] string? shopId,
+        [FromQuery] string? search,
+        [FromQuery] IEnumerable<int>? status,
+        [FromQuery] bool? desc,
+        [FromQuery] int? sortBy,
+        [FromQuery] int? pageIndex,
+        [FromQuery] int? pageSize
+    )
+    {
+        // TODO fake userId to remove when auth is working
+        var userId = new Guid("5549c55e-a7f7-4c30-935a-22eeeef2264f");
+        if (shopId == null)
+            throw new Exception("SHOPID is REQUIRED");
+        var authzRes = await _authzClient.Authorize(new AuthorizeRequest { ShopId = shopId, UserId = "5549c55e-a7f7-4c30-935a-22eeeef2264f" });
+        if (!authzRes.IsAllowed)
+        {
+            context.Logger.LogInformation("NOT ALLOWED");
+        }
+        var req = CreateGetProductsRequest(status, search, sortBy, pageIndex, pageSize, desc, shopId);
+        var res = await _productService.GetProductsAsync(req, new Guid(req.ShopId));
         return res;
     }
 
@@ -64,7 +90,7 @@ ILogger<ApiEndpoints> logger,
         {
             context.Logger.LogInformation("NOT ALLOWED");
         }
-        var res = await _productCategoryService.CreateProductCategoryAsync(req, userId);
+        var res = await _productCategoryService.CreateProductCategoryAsync(req, new Guid(req.ShopId));
         return res;
     }
 
@@ -91,7 +117,7 @@ ILogger<ApiEndpoints> logger,
             context.Logger.LogInformation("NOT ALLOWED");
         }
         var req = CreateGetProductCategoriesRequest(status, search, sortBy, pageIndex, pageSize, desc, shopId);
-        var res = await _productCategoryService.GetProductCategoriesAsync(req);
+        var res = await _productCategoryService.GetProductCategoriesAsync(req, new Guid(shopId));
         return res;
     }
 
@@ -140,6 +166,41 @@ ILogger<ApiEndpoints> logger,
             safeSortBy = ProductCategorySortBy.UpdatedAt;
         }
         var req = new GetProductCategoriesRequest
+        {
+            Desc = desc ?? false,
+            SortBy = safeSortBy,
+            Search = search ?? "",
+            PageIndex = pageIndex ?? 0,
+            PageSize = validPageSize,
+            ShopId = shopId
+        };
+        if (status != null && status.Any())
+        {
+            // Filter out wrong enum indexes
+            var validStatus = status.Where(t => Enum.IsDefined(typeof(ActiveStatus), t)).Select(t => (ActiveStatus)t);
+            req.Status.AddRange(validStatus);
+        }
+        return req;
+    }
+
+    private static GetProductsRequest CreateGetProductsRequest(
+        IEnumerable<int>? status,
+        string? search,
+        int? sortBy,
+        int? pageIndex,
+        int? pageSize,
+        bool? desc,
+        string shopId
+    )
+    {
+        var validPageSize = pageSize == null || (pageSize != 10 && pageSize != 25 && pageSize != 50) ? 10 : pageSize.Value;
+        // useless because default switch will fallback to updatedAt but better safe than sorry if i update the GetShops method
+        var safeSortBy = (ProductSortBy?)sortBy ?? ProductSortBy.UpdatedAt;
+        if (sortBy.HasValue && !Enum.IsDefined(typeof(ProductSortBy), safeSortBy))
+        {
+            safeSortBy = ProductSortBy.UpdatedAt;
+        }
+        var req = new GetProductsRequest
         {
             Desc = desc ?? false,
             SortBy = safeSortBy,

@@ -7,12 +7,17 @@ const variantSchema = z.object({
   values: z.array(z.string().min(1).max(255)).min(1),
 });
 
+const categorySchema = z.object({
+  label: z.string().min(1).max(255),
+  value: z.guid(),
+});
+
 const schema = z.object({
   name: z.string().min(1).max(255),
   descr: z.string().max(2048).optional(),
-  categories: z.array(z.guid()).min(1),
+  categories: z.array(categorySchema).min(1),
   variants: z.array(variantSchema),
-  template: z.guid(),
+  // template: z.guid(),
   status: z.enum(ActiveStatus, 'Status is required').exclude(['UNRECOGNIZED']),
 });
 
